@@ -33,6 +33,8 @@ def schedule():
     table_headers_1 = {'Depart Bremerton':'Arrive Seattle'}
     table_headers_2 = {'Depart Seattle':'Arrive Bremerton'}
 
+    ### Depart Bremerton schedule code begins
+    
     # Create empty lists for storing schedule times
     depart_bremerton_schedule = []
     arrive_seattle_schedule = []
@@ -52,6 +54,10 @@ def schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
 
+    ### Depart Bremerton schedule code ends
+
+    ### Depart Seattle schedule code
+    
     # Create empty lists for storing schedule times
     depart_seattle_schedule = []
     arrive_bremerton_schedule = []
@@ -70,6 +76,8 @@ def schedule():
 
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
+
+    ### Depart Seattle schedule code ends
     
     return render_template('schedule.html',
                            times_1=times_1.items(),
