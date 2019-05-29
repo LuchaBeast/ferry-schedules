@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<table>
-    <th>Depart Bremerton</th>
-    <th>Arrive Seattle</th>
-    {% for depart, arrive in times %}
-    <tr>
-        <td>{{ depart }}</td>
-        <td>{{ arrive }}</td>
-    </tr>
-    {% endfor %}
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            {% for header1, header2 in table_headers %}
+            <th scope="col">{{ header1 }}</th>
+            <th scope="col">{{ header2 }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for depart, arrive in times %}
+        <tr>
+            <td>{{ depart }}</td>
+            <td>{{ arrive }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock %}

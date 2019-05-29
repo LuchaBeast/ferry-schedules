@@ -19,21 +19,24 @@ def homepage():
 def schedule():
     schedule = sheet.get_worksheet(1)
 
-    depart_bremerton = []
-    arrive_seattle = []
+    h1 = "Bremerton Ferry Schedule"
+    table_headers = {'Depart Bremerton':'Arrive Seattle'}
 
-    depart_bremerton_cells = schedule.range('A1:A15')
-    arrive_seattle_cells = schedule.range('B1:B15')
+    depart_bremerton_schedule = []
+    arrive_seattle_schedule = []
+
+    depart_bremerton_cells = schedule.range('A2:A16')
+    arrive_seattle_cells = schedule.range('B2:B16')
 
     for cell in depart_bremerton_cells:
-        depart_bremerton.append(cell.value)
+        depart_bremerton_schedule.append(cell.value)
 
     for cell in arrive_seattle_cells:
-        arrive_seattle.append(cell.value)
+        arrive_seattle_schedule.append(cell.value)
 
-    times = dict(zip(depart_bremerton, arrive_seattle))
+    times = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
 
-    return render_template('schedule.html', times=times.items())
+    return render_template('schedule.html', times=times.items(), table_headers=table_headers.items(), h1=h1)
 
 if __name__ == '__main__':
     app.debug = True
