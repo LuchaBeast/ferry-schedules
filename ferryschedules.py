@@ -71,10 +71,14 @@ def schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
     
-
-    
-
-    return render_template('schedule.html', times_1=times_1.items(), times_2=times_2.items(), table_headers_1=table_headers_1.items(), table_headers_2=table_headers_2.items(), title=title, h1=h1, leadcopy=leadcopy)
+    return render_template('schedule.html',
+                           times_1=times_1.items(),
+                           times_2=times_2.items(),
+                           table_headers_1=table_headers_1.items(),
+                           table_headers_2=table_headers_2.items(),
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy)
 
 if __name__ == '__main__':
     app.debug = True
