@@ -15,6 +15,7 @@ sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
 def homepage():
     return render_template('index.html')
 
+# Bremerton Ferry Schedule route
 @app.route('/bremerton-seattle/')
 def schedule():
     # Get worksheet with schedules
@@ -87,6 +88,18 @@ def schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy)
+
+# Bainbridge Ferry Schedule route
+@app.route('/bainbridge-seattle/')
+def schedule():
+    return 'Bainbridge'
+
+# Staten Island Ferry schedule route
+@app.route('/staten-island/')
+def schedule():
+    return 'Staten Island'
+    
+
 
 if __name__ == '__main__':
     app.debug = True
