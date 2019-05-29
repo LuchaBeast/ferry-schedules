@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block h1 %}{{ h1 }}{% endblock %}
+{% block leadcopy %}{{ leadcopy }}{% endblock %}
+
 {% block content %}
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            {% for header1, header2 in table_headers %}
-            <th scope="col">{{ header1 }}</th>
-            <th scope="col">{{ header2 }}</th>
+            {% for header1, header2 in table_headers_1 %}
+            <th scope="col" style="width: 50%">{{ header1 }}</th>
+            <th scope="col" style="width: 50%">{{ header2 }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
-        {% for depart, arrive in times %}
+        {% for depart, arrive in times_1 %}
         <tr>
             <td>{{ depart }}</td>
             <td>{{ arrive }}</td>
@@ -18,4 +24,22 @@
         {% endfor %}
     </tbody>
 </table>
+<table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                {% for header1, header2 in table_headers_2 %}
+                <th scope="col" style="width: 50%">{{ header1 }}</th>
+                <th scope="col" style="width: 50%">{{ header2 }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for depart, arrive in times_2 %}
+            <tr>
+                <td>{{ depart }}</td>
+                <td>{{ arrive }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
