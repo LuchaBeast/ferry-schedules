@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block content %}    
-    <table>
-        <th>Depart Bremerton</th>
-        <th>Arrive Seattle</th>
-        {% for departure, arrival in schedule %}
-        <tr>
-            <td>{{departure}}</td>
-            <td>{{arrival}}</td>
-        </tr>
-        {% endfor %}
-    </table>
+{% block content %}
+<table>
+    <th>Depart Bremerton</th>
+    <th>Arrive Seattle</th>
+    {% for depart, arrive in times %}
+    <tr>
+        <td>{{ depart }}</td>
+        <td>{{ arrive }}</td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}
