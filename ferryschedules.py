@@ -77,6 +77,8 @@ def bremerton_schedule():
     # Get the cells for each schedule
     depart_seattle_schedule = ws.col_values(7)
     arrive_bremerton_schedule = ws.col_values(8)
+    del depart_seattle_schedule[0]
+    del arrive_bremerton_schedule[0]
 
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
