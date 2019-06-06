@@ -44,6 +44,11 @@ def homepage():
 # Bremerton Ferry Schedule route
 @app.route('/bremerton-seattle/')
 def bremerton_schedule():
+    
+    # Set standard schedule variable to true
+    # to indicate no special schedules
+    standard_schedule = True
+    
     # Get worksheet with schedules
     ws = sheet.get_worksheet(1)
 
@@ -86,6 +91,7 @@ def bremerton_schedule():
     ### Depart Seattle schedule code ends
     
     return render_template('schedule.html',
+                           standard_schedule=standard_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            table_headers_1=table_headers_1.items(),
@@ -97,39 +103,34 @@ def bremerton_schedule():
 # Bainbridge Ferry Schedule route
 @app.route('/bainbridge-seattle/')
 def bainbridge_schedule():
+    
+    # Set special schedule variable to true
+    # to indicate special schedule template
+    special_schedule = True
+
     # Get worksheet with schedules
     ws = sheet.get_worksheet(2)
 
     # Set title tag variable
-    title = ws.acell('E3').value
+    title = ws.acell('B1').value
     
     # Set h1 tag variable
-    h1 = ws.acell('E4').value
+    h1 = ws.acell('B2').value
 
     # Set leadcopy variable
-    leadcopy = ws.acell('E5').value
+    leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {'Depart Bainbridge Island':'Arrive Seattle'}
-    table_headers_2 = {'Depart Seattle':'Arrive Bainbridge Island'}
+    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
     ### Depart Bremerton schedule code begins
-    
-    # Create empty lists for storing schedule times
-    depart_bainbridge_schedule = []
-    arrive_seattle_schedule = []
 
-    # Get the cells for each schedule
-    depart_bainbridge_cells = ws.range('A28:A50')
-    arrive_seattle_cells = ws.range('B28:B50')
-
-    # Iterate through each set of cells
-    # and add the value to each list
-    for cell in depart_bainbridge_cells:
-        depart_bainbridge_schedule.append(cell.value)
-
-    for cell in arrive_seattle_cells:
-        arrive_seattle_schedule.append(cell.value)
+    # Get each schedule and delete header cells
+    depart_bainbridge_schedule = ws.col_values(5)
+    arrive_seattle_schedule = ws.col_values(6)
+    del depart_bainbridge_schedule[0]
+    del arrive_seattle_schedule[0]
 
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_bainbridge_schedule, arrive_seattle_schedule))
@@ -137,22 +138,12 @@ def bainbridge_schedule():
     ### Depart Bremerton schedule code ends
 
     ### Depart Seattle schedule code
-    
-    # Create empty lists for storing schedule times
-    depart_seattle_schedule = []
-    arrive_bainbridge_schedule = []
 
-    # Get the cells for each schedule
-    depart_seattle_cells = ws.range('A3:A25')
-    arrive_bainbridge_cells = ws.range('B3:B25')
-    
-    # Iterate through each set of cells
-    # and add the value to each list
-    for cell in depart_seattle_cells:
-        depart_seattle_schedule.append(cell.value)
-
-    for cell in arrive_bainbridge_cells:
-        arrive_bainbridge_schedule.append(cell.value)
+    # Get each schedule and delete header cells
+    depart_seattle_schedule = ws.col_values(7)
+    arrive_bainbridge_schedule = ws.col_values(8)
+    del depart_seattle_schedule[0]
+    del arrive_bainbridge_schedule[0]
 
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bainbridge_schedule))
@@ -160,6 +151,7 @@ def bainbridge_schedule():
     ### Depart Seattle schedule code ends
     
     return render_template('schedule.html',
+                           special_schedule=special_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            table_headers_1=table_headers_1.items(),
