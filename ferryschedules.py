@@ -65,6 +65,9 @@ def bremerton_schedule():
     table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
     ### Depart Bremerton schedule code begins
 
     # Get the cells for each schedule and delete header cell from list
@@ -98,7 +101,9 @@ def bremerton_schedule():
                            table_headers_2=table_headers_2.items(),
                            title=title,
                            h1=h1,
-                           leadcopy=leadcopy)
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2)
 
 # Bainbridge Ferry Schedule route
 @app.route('/bainbridge-seattle/')
