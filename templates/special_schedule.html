@@ -1,36 +1,94 @@
-<table class="table table-striped table-sm">
-    <thead class="thead-dark">
-        <tr>
-            {% for header1, header2 in table_headers_1 %}
-            <th scope="col" style="width: 50%">{{ header1 }}</th>
-            <th scope="col" style="width: 50%">{{ header2 }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for depart, arrive in times_1 %}
-        <tr>
-            <td>{{ depart }}</td>
-            <td>{{ arrive }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<table class="table table-striped table-sm">
-    <thead class="thead-dark">
-        <tr>
-            {% for header1, header2 in table_headers_2 %}
-            <th scope="col" style="width: 50%">{{ header1 }}</th>
-            <th scope="col" style="width: 50%">{{ header2 }}</th>
-            {% endfor %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for depart, arrive in times_2 %}
-        <tr>
-            <td>{{ depart }}</td>
-            <td>{{ arrive }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-sm">
+        <h2>{{ h2_1 }}</h2>
+        <h3>{{ h3_1 }}</h3>
+        <table class="table table-striped table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    {% for header1, header2 in table_headers_1 %}
+                    <th scope="col" style="width: 50%">{{ header1 }}</th>
+                    <th scope="col" style="width: 50%">{{ header2 }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for depart, arrive in times_1 %}
+                <tr>
+                    <td>{{ depart }}</td>
+                    <td>{{ arrive }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-sm">
+        <h2>&nbsp;</h2>
+        <h3>{{ h3_2 }}</h3>
+        <table class="table table-striped table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    {% for header1, header2 in table_headers_1 %}
+                    <th scope="col" style="width: 50%">{{ header1 }}</th>
+                    <th scope="col" style="width: 50%">{{ header2 }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for depart, arrive in times_3 %}
+                <tr>
+                    <td>{{ depart }}</td>
+                    <td>{{ arrive }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+        <div class="col-sm">
+            <h2>{{ h2_2 }}</h2>
+            <h3>{{ h3_1 }}</h3>
+            <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        {% for header1, header2 in table_headers_2 %}
+                        <th scope="col" style="width: 50%">{{ header1 }}</th>
+                        <th scope="col" style="width: 50%">{{ header2 }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for depart, arrive in times_2 %}
+                    <tr>
+                        <td>{{ depart }}</td>
+                        <td>{{ arrive }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="col-sm">
+            <h2>&nbsp;</h2>
+            <h3>{{ h3_2 }}</h3>
+            <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        {% for header1, header2 in table_headers_2 %}
+                        <th scope="col" style="width: 50%">{{ header1 }}</th>
+                        <th scope="col" style="width: 50%">{{ header2 }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for depart, arrive in times_4 %}
+                    <tr>
+                        <td>{{ depart }}</td>
+                        <td>{{ arrive }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
