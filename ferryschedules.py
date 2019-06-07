@@ -23,34 +23,35 @@ def has_no_empty_params(rule):
 def homepage():
     
     # Create list of url routes
-    links_list = []
+    wa_links_list = []
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
-            url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links_list.append((url, rule.endpoint))
+            if str(rule).find('/wa/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                wa_links_list.append((url, rule.endpoint))
     
     # Sort list and then delete homepage from list
-    links_list.sort()
-    del links_list[0]
+    wa_links_list.sort()
+    #del links_list[0]
 
     # Convert list to dictionary
-    links = dict(links_list)
+    wa_links = dict(wa_links_list)
 
     # Modify the endpoints into pretty names
-    for k, v in links.items():
+    for k, v in wa_links.items():
         update_name = {k: v.title().replace('_',' ')}
-        links.update(update_name)
+        wa_links.update(update_name)
         
-    return render_template('index.html', links=links.items())
+    return render_template('index.html', wa_links=wa_links.items())
 
 # Bremerton Ferry Schedule route
-@app.route('/bremerton-seattle/')
+@app.route('/wa/bremerton-seattle/')
 #@cache.cached(timeout=30)
-def bremerton_schedule():
+def bremerton_ferry_schedule():
     
-    # Set standard schedule variable to true
-    # to indicate no special schedules
-    standard_schedule = True
+    # Set bremerton schedule variable to true
+    # to indicate which template to use
+    bremerton_schedule = True
     
     # Get worksheet with schedules
     ws = sheet.get_worksheet(1)
@@ -97,7 +98,7 @@ def bremerton_schedule():
     ### Depart Seattle schedule code ends
     
     return render_template('schedule.html',
-                           standard_schedule=standard_schedule,
+                           bremerton_schedule=bremerton_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            table_headers_1=table_headers_1.items(),
@@ -109,13 +110,13 @@ def bremerton_schedule():
                            h2_2=h2_2)
 
 # Bainbridge Ferry Schedule route
-@app.route('/bainbridge-seattle/')
+@app.route('/wa/bainbridge-island-seattle/')
 #@cache.cached(timeout=30)
-def bainbridge_schedule():
+def bainbridge_island_ferry_schedule():
     
-    # Set special schedule variable to true
-    # to indicate special schedule template
-    special_schedule = True
+    # Set bainbridge schedule variable to true
+    # to indicate which template to use
+    bainbridge_schedule = True
 
     # Get worksheet with schedules
     ws = sheet.get_worksheet(2)
@@ -190,7 +191,7 @@ def bainbridge_schedule():
     ### Depart Seattle schedule code ends
     
     return render_template('schedule.html',
-                           special_schedule=special_schedule,
+                           bainbridge_schedule=bainbridge_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            times_3=times_3.items(),
@@ -206,9 +207,87 @@ def bainbridge_schedule():
                            h3_2=h3_2)
 
 # Staten Island Ferry schedule route
-@app.route('/staten-island/')
-def staten_island_schedule():
-    return 'Staten Island'
+@app.route('/wa/anacortes-san-juan-island-sidney-bc/')
+#@cache.cached(timeout=30)
+def anacortes_ferry_schedule():
+    
+    # Set anacortes schedule variable to true
+    # to indicate which template to use
+    anacortes_schedule = True
+
+    # Get Anacortes schedule worksheet
+    ws = sheet.get_worksheet(3)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set H2 tags for each schedule
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    wb_schedule = []
+    temp_list = []
+
+    wb_anacortes = ws.col_values(5)
+    wb_lopez_island = ws.col_values(6)
+    wb_shaw_island = ws.col_values(7)
+    wb_orcas_island = ws.col_values(8)
+    wb_san_juan = ws.col_values(9)
+    wb_sidney_bc = ws.col_values(10)
+
+    del wb_anacortes[0]
+    del wb_lopez_island[0]
+    del wb_shaw_island[0]
+    del wb_orcas_island[0]
+    del wb_san_juan[0]
+    del wb_sidney_bc[0]
+
+    c = 0
+
+    while c < len(wb_anacortes):
+        temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
+        wb_schedule.append(temp_list)
+        c += 1
+
+    eb_schedule = []
+    temp_list = []
+
+    eb_anacortes = ws.col_values(12)
+    eb_lopez_island = ws.col_values(13)
+    eb_shaw_island = ws.col_values(14)
+    eb_orcas_island = ws.col_values(15)
+    eb_san_juan = ws.col_values(16)
+    eb_sidney_bc = ws.col_values(17)
+
+    del eb_anacortes[0]
+    del eb_lopez_island[0]
+    del eb_shaw_island[0]
+    del eb_orcas_island[0]
+    del eb_san_juan[0]
+    del eb_sidney_bc[0]
+
+    c = 0
+
+    while c < len(eb_anacortes):
+        temp_list = [eb_anacortes[c], eb_lopez_island[c], eb_shaw_island[c], eb_orcas_island[c], eb_san_juan[c], eb_sidney_bc[c]]
+        eb_schedule.append(temp_list)
+        c += 1
+
+    return render_template('schedule.html',
+                           anacortes_schedule=anacortes_schedule,
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2,
+                           wb_schedule=wb_schedule,
+                           eb_schedule=eb_schedule)
     
 
 

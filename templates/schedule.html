@@ -6,9 +6,11 @@
 {% block leadcopy %}{{ leadcopy }}{% endblock %}
 
 {% block content %}
-    {% if standard_schedule %}
-        {% include "standard_schedule.html" %}
-    {% elif special_schedule %}
-        {% include "special_schedule.html" %}
+    {% if bremerton_schedule %}
+        {% include "bremerton_schedule.html" %}
+    {% elif bainbridge_schedule %}
+        {% include "bainbridge_schedule.html" %}
+    {% elif anacortes_schedule %}
+        {% include "anacortes_schedule.html" %}
     {% endif %}
 {% endblock %}
