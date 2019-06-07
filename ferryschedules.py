@@ -1,9 +1,11 @@
 from flask import Flask, render_template, url_for, jsonify
+from flask_caching import Cache
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import string
 
 app = Flask(__name__)
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -43,6 +45,7 @@ def homepage():
 
 # Bremerton Ferry Schedule route
 @app.route('/bremerton-seattle/')
+#@cache.cached(timeout=30)
 def bremerton_schedule():
     
     # Set standard schedule variable to true
@@ -107,6 +110,7 @@ def bremerton_schedule():
 
 # Bainbridge Ferry Schedule route
 @app.route('/bainbridge-seattle/')
+#@cache.cached(timeout=30)
 def bainbridge_schedule():
     
     # Set special schedule variable to true
