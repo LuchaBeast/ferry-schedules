@@ -231,9 +231,12 @@ def anacortes_ferry_schedule():
     h2_1 = ws.acell('B5').value
     h2_2 = ws.acell('B6').value
 
+    # Initiate blank lists to store westbound schedules
     wb_schedule = []
     temp_list = []
+    wb_table_headers = []
 
+    # Retrieve westbound schedule times
     wb_anacortes = ws.col_values(5)
     wb_lopez_island = ws.col_values(6)
     wb_shaw_island = ws.col_values(7)
@@ -241,6 +244,15 @@ def anacortes_ferry_schedule():
     wb_san_juan = ws.col_values(9)
     wb_sidney_bc = ws.col_values(10)
 
+    # Create list of table headers
+    wb_table_headers.extend([wb_anacortes[0],
+                             wb_lopez_island[0],
+                             wb_shaw_island[0],
+                             wb_orcas_island[0],
+                             wb_san_juan[0],
+                             wb_sidney_bc[0]])
+
+    # Remove table headers
     del wb_anacortes[0]
     del wb_lopez_island[0]
     del wb_shaw_island[0]
@@ -248,8 +260,11 @@ def anacortes_ferry_schedule():
     del wb_san_juan[0]
     del wb_sidney_bc[0]
 
+    # Set counter = 0
     c = 0
 
+    # Create temp list for each time row
+    # Append temp list to schedule list
     while c < len(wb_anacortes):
         temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
         wb_schedule.append(temp_list)
@@ -257,25 +272,34 @@ def anacortes_ferry_schedule():
 
     eb_schedule = []
     temp_list = []
+    eb_table_headers = []
 
-    eb_anacortes = ws.col_values(12)
-    eb_lopez_island = ws.col_values(13)
-    eb_shaw_island = ws.col_values(14)
-    eb_orcas_island = ws.col_values(15)
-    eb_san_juan = ws.col_values(16)
-    eb_sidney_bc = ws.col_values(17)
+    eb_sidney_bc = ws.col_values(12)
+    eb_san_juan = ws.col_values(13)
+    eb_orcas_island = ws.col_values(14)
+    eb_shaw_island = ws.col_values(15)
+    eb_lopez_island = ws.col_values(16)
+    eb_anacortes = ws.col_values(17)
+    
+    # Create list of table headers
+    eb_table_headers.extend([eb_sidney_bc[0],
+                             eb_san_juan[0],
+                             eb_orcas_island[0],
+                             eb_shaw_island[0],
+                             eb_lopez_island[0],
+                             eb_anacortes[0]])
 
-    del eb_anacortes[0]
-    del eb_lopez_island[0]
-    del eb_shaw_island[0]
-    del eb_orcas_island[0]
-    del eb_san_juan[0]
     del eb_sidney_bc[0]
+    del eb_san_juan[0]
+    del eb_orcas_island[0]
+    del eb_shaw_island[0]
+    del eb_lopez_island[0]
+    del eb_anacortes[0]
 
     c = 0
 
     while c < len(eb_anacortes):
-        temp_list = [eb_anacortes[c], eb_lopez_island[c], eb_shaw_island[c], eb_orcas_island[c], eb_san_juan[c], eb_sidney_bc[c]]
+        temp_list = [eb_sidney_bc[c], eb_san_juan[c], eb_orcas_island[c], eb_shaw_island[c], eb_lopez_island[c], eb_anacortes[c]]
         eb_schedule.append(temp_list)
         c += 1
 
@@ -286,6 +310,8 @@ def anacortes_ferry_schedule():
                            leadcopy=leadcopy,
                            h2_1=h2_1,
                            h2_2=h2_2,
+                           wb_table_headers=wb_table_headers,
+                           eb_table_headers=eb_table_headers,
                            wb_schedule=wb_schedule,
                            eb_schedule=eb_schedule)
     
