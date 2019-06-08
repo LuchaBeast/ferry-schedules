@@ -206,7 +206,7 @@ def bainbridge_island_ferry_schedule():
                            h3_1=h3_1,
                            h3_2=h3_2)
 
-# Staten Island Ferry schedule route
+# Anacortes Ferry schedule route
 @app.route('/wa/anacortes-san-juan-island-sidney-bc/')
 #@cache.cached(timeout=30)
 def anacortes_ferry_schedule():
@@ -263,7 +263,7 @@ def anacortes_ferry_schedule():
     # Set counter = 0
     c = 0
 
-    # Create temp list for each time row
+    # Create temp list for each westbound time row
     # Append temp list to schedule list
     while c < len(wb_anacortes):
         wb_temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
@@ -271,10 +271,12 @@ def anacortes_ferry_schedule():
         c += 1
 
     
+    # Initiate empty eastbound schedule variables
     eb_schedule = []
     eb_temp_list = []
     eb_table_headers = []
 
+    # Retrieve eastbound schedule times
     eb_sidney_bc = ws.col_values(12)
     eb_san_juan = ws.col_values(13)
     eb_orcas_island = ws.col_values(14)
@@ -290,6 +292,7 @@ def anacortes_ferry_schedule():
                              eb_lopez_island[0],
                              eb_anacortes[0]])
 
+    # Remove eastbound table headers from each list
     del eb_sidney_bc[0]
     del eb_san_juan[0]
     del eb_orcas_island[0]
@@ -297,8 +300,11 @@ def anacortes_ferry_schedule():
     del eb_lopez_island[0]
     del eb_anacortes[0]
 
+    # Set counter variable
     c = 0
 
+    # Create temp list for each eastbound time row
+    # Append temp list to schedule list
     while c < len(eb_anacortes):
         eb_temp_list = [eb_sidney_bc[c], eb_san_juan[c], eb_orcas_island[c], eb_shaw_island[c], eb_lopez_island[c], eb_anacortes[c]]
         eb_schedule.append(eb_temp_list)
@@ -315,9 +321,12 @@ def anacortes_ferry_schedule():
                            eb_table_headers=eb_table_headers,
                            wb_schedule=wb_schedule,
                            eb_schedule=eb_schedule)
-    
 
-
+# Kingston Ferry schedule route
+@app.route('/wa/kingston-edmonds/')
+#@cache.cached(timeout=30)
+def kingston_ferry_schedule():
+    return 'Kingston'
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
