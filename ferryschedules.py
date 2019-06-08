@@ -233,7 +233,7 @@ def anacortes_ferry_schedule():
 
     # Initiate blank lists to store westbound schedules
     wb_schedule = []
-    temp_list = []
+    wb_temp_list = []
     wb_table_headers = []
 
     # Retrieve westbound schedule times
@@ -244,7 +244,7 @@ def anacortes_ferry_schedule():
     wb_san_juan = ws.col_values(9)
     wb_sidney_bc = ws.col_values(10)
 
-    # Create list of table headers
+    # Create list of westbound table headers
     wb_table_headers.extend([wb_anacortes[0],
                              wb_lopez_island[0],
                              wb_shaw_island[0],
@@ -266,12 +266,13 @@ def anacortes_ferry_schedule():
     # Create temp list for each time row
     # Append temp list to schedule list
     while c < len(wb_anacortes):
-        temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
-        wb_schedule.append(temp_list)
+        wb_temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
+        wb_schedule.append(wb_temp_list)
         c += 1
 
+    
     eb_schedule = []
-    temp_list = []
+    eb_temp_list = []
     eb_table_headers = []
 
     eb_sidney_bc = ws.col_values(12)
@@ -281,7 +282,7 @@ def anacortes_ferry_schedule():
     eb_lopez_island = ws.col_values(16)
     eb_anacortes = ws.col_values(17)
     
-    # Create list of table headers
+    # Create list of eastbound table headers
     eb_table_headers.extend([eb_sidney_bc[0],
                              eb_san_juan[0],
                              eb_orcas_island[0],
@@ -299,8 +300,8 @@ def anacortes_ferry_schedule():
     c = 0
 
     while c < len(eb_anacortes):
-        temp_list = [eb_sidney_bc[c], eb_san_juan[c], eb_orcas_island[c], eb_shaw_island[c], eb_lopez_island[c], eb_anacortes[c]]
-        eb_schedule.append(temp_list)
+        eb_temp_list = [eb_sidney_bc[c], eb_san_juan[c], eb_orcas_island[c], eb_shaw_island[c], eb_lopez_island[c], eb_anacortes[c]]
+        eb_schedule.append(eb_temp_list)
         c += 1
 
     return render_template('schedule.html',
