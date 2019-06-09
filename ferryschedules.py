@@ -19,6 +19,42 @@ def has_no_empty_params(rule):
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 
+def navbar():
+    
+    # Create list of url routes
+    wa_links_list = []
+    ny_links_list = []
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            if str(rule).find('/wa/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                wa_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ny/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ny_links_list.append((url, rule.endpoint))
+    
+    # Sort list and then delete homepage from list
+    wa_links_list.sort()
+    #del links_list[0]
+    ny_links_list.sort()
+
+    # Convert list to dictionary
+    wa_links = dict(wa_links_list)
+    ny_links = dict(ny_links_list)
+
+    # Modify the endpoints into pretty names
+    for k, v in wa_links.items():
+        update_name = {k: v.title().replace('_',' ')}
+        wa_links.update(update_name)
+
+    for k, v in ny_links.items():
+        update_name = {k: v.title().replace('_',' ')}
+        ny_links.update(update_name)
+        
+    return render_template('navbar.html',
+                           wa_links=wa_links.items(),
+                           ny_links=ny_links.items())
+
 @app.route('/')
 def homepage():
     
