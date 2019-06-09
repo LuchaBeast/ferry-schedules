@@ -24,25 +24,37 @@ def homepage():
     
     # Create list of url routes
     wa_links_list = []
+    ny_links_list = []
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             if str(rule).find('/wa/') is 0:
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 wa_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ny/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ny_links_list.append((url, rule.endpoint))
     
     # Sort list and then delete homepage from list
     wa_links_list.sort()
     #del links_list[0]
+    ny_links_list.sort()
 
     # Convert list to dictionary
     wa_links = dict(wa_links_list)
+    ny_links = dict(ny_links_list)
 
     # Modify the endpoints into pretty names
     for k, v in wa_links.items():
         update_name = {k: v.title().replace('_',' ')}
         wa_links.update(update_name)
+
+    for k, v in ny_links.items():
+        update_name = {k: v.title().replace('_',' ')}
+        ny_links.update(update_name)
         
-    return render_template('index.html', wa_links=wa_links.items())
+    return render_template('index.html',
+                           wa_links=wa_links.items(),
+                           ny_links=ny_links.items())
 
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
@@ -326,7 +338,166 @@ def anacortes_ferry_schedule():
 @app.route('/wa/kingston-edmonds/')
 #@cache.cached(timeout=30)
 def kingston_ferry_schedule():
-    return 'Kingston'
+    # Set kingston schedule variable to true
+    # to indicate which template to use
+    kingston_schedule = True
+    
+    # Get worksheet with schedules
+    ws = sheet.get_worksheet(4)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set table headers for each schedule
+    table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
+    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    ### Depart Kingston schedule code begins
+
+    # Get the cells for each schedule and delete header cell from list
+    depart_kingston_schedule = ws.col_values(4)
+    arrive_edmonds_schedule = ws.col_values(5)
+    del depart_kingston_schedule[0]
+    del arrive_edmonds_schedule[0]
+
+    times_1 = dict(zip(depart_kingston_schedule, arrive_edmonds_schedule))
+
+    ### Depart Kingston schedule code ends
+
+    ### Depart Edmonds schedule code begins
+    
+    # Get the cells for each schedule
+    depart_edmonds_schedule = ws.col_values(7)
+    arrive_kingston_schedule = ws.col_values(8)
+    del depart_edmonds_schedule[0]
+    del arrive_kingston_schedule[0]
+
+    # Convert schedule columns into a single dictionary
+    times_2 = dict(zip(depart_edmonds_schedule, arrive_kingston_schedule))
+
+    ### Depart Edmonds schedule code ends
+    
+    return render_template('schedule.html',
+                           kingston_schedule=kingston_schedule,
+                           times_1=times_1.items(),
+                           times_2=times_2.items(),
+                           table_headers_1=table_headers_1.items(),
+                           table_headers_2=table_headers_2.items(),
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2)
+
+# Staten Island Ferry Schedule route
+@app.route('/ny/staten-island/')
+#@cache.cached(timeout=30)
+def staten_island_ferry_schedule():
+    
+    # Set bainbridge schedule variable to true
+    # to indicate which template to use
+    staten_island_schedule = True
+
+    # Get worksheet with schedules
+    ws = sheet.get_worksheet(5)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set table headers for each schedule
+    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+
+    # Set H2 tags for each schedule
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    # Set H3 tags for each schedule
+    h3_1 = ws.acell('D1').value
+    h3_2 = ws.acell('I1').value
+
+    ### Depart Staten Island weekday schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_si_weekday_schedule = ws.col_values(5)
+    arrive_manhattan_weekday_schedule = ws.col_values(6)
+    del depart_si_weekday_schedule[0]
+    del arrive_manhattan_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_1 = dict(zip(depart_si_weekday_schedule, arrive_manhattan_weekday_schedule))
+
+    ### Depart Staten Island weekday schedule code ends
+
+    ### Depart Manhattan weekday schedule code
+
+    # Get each schedule and delete header cells
+    depart_manhattan_weekday_schedule = ws.col_values(7)
+    arrive_si_weekday_schedule = ws.col_values(8)
+    del depart_manhattan_weekday_schedule[0]
+    del arrive_si_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_2 = dict(zip(depart_manhattan_weekday_schedule, arrive_si_weekday_schedule))
+
+    ### Depart Manhattan weekday schedule code ends
+
+    ### Depart Staten Island Weekend schedule code begins 
+    # Get each schedule and delete header cells
+    depart_si_weekend_schedule = ws.col_values(10)
+    arrive_manhattan_weekend_schedule = ws.col_values(11)
+    del depart_si_weekend_schedule[0]
+    del arrive_manhattan_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_3 = dict(zip(depart_si_weekend_schedule, arrive_manhattan_weekend_schedule))
+
+    ### Depart Staten Island Weekday schedule code ends
+
+    ### Depart Manhattan weekend schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_manhattan_weekend_schedule = ws.col_values(12)
+    arrive_si_weekend_schedule = ws.col_values(13)
+    del depart_manhattan_weekend_schedule[0]
+    del arrive_si_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_4 = dict(zip(depart_manhattan_weekend_schedule, arrive_si_weekend_schedule))
+
+    ### Depart Manhattan weekend schedule code ends
+    
+    return render_template('schedule.html',
+                           staten_island_schedule=staten_island_schedule,
+                           times_1=times_1.items(),
+                           times_2=times_2.items(),
+                           times_3=times_3.items(),
+                           times_4=times_4.items(),
+                           table_headers_1=table_headers_1.items(),
+                           table_headers_2=table_headers_2.items(),
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2,
+                           h3_1=h3_1,
+                           h3_2=h3_2)
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
