@@ -1,12 +1,31 @@
 .navbar {
     list-style-type: none;
-    background-color: #0375B4;
+    background-color: #1D2731;
 }
 
 .nav-link {
-    color: #ffffff;
+    color: #FFFFFF;
 }
 
 .nav-link:hover {
-    color: #aaaaaa;
+    color: #328CC1;
+}
+
+.card {
+    background-color: #1D2731;
+    border-radius: 0 !important;
+}
+
+.card a {
+    color: #FFFFFF;
+}
+
+.card .btn {
+    background-color: #0B3C5D;
+    border-radius: 0 !important;
+    border-style: none;
+}
+
+thead tr th {
+    background-color: #0B3C5D !important;
 }
