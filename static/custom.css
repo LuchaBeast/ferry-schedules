@@ -1,3 +1,12 @@
 .navbar {
     list-style-type: none;
+    background-color: #0375B4;
+}
+
+.nav-link {
+    color: #ffffff;
+}
+
+.nav-link:hover {
+    color: #aaaaaa;
 }

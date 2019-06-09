@@ -11,7 +11,7 @@
 <div class="row">
         {% for href in row %}
         {% if href %}
-        <div class="col">
+        <div class="col p-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
@@ -32,7 +32,7 @@
 <div class="row">
         {% for href in row %}
         {% if href %}
-        <div class="col">
+        <div class="col p-2">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
@@ -42,7 +42,7 @@
             </div>
         </div>
         {% else %}
-        <div class="col"></div>
+        <div class="col p-2"></div>
         {% endif %}
         {% endfor %}
 </div>
