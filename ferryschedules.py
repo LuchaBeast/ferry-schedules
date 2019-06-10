@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, jsonify
+from flask import Flask, render_template, url_for, jsonify, request
 from flask_caching import Cache
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -55,9 +55,38 @@ def navbar():
                            wa_links=wa_links.items(),
                            ny_links=ny_links.items())
 
+def generate_breadcrumb():
+    
+    # Get path of the route
+    url = request.path
+
+    # Split each directory in the route
+    split_url = url.split('/')
+
+    # Filter out empty list items and grab first path in list
+    path_extract = list(filter(None, split_url))[0]
+
+    # Rebuild path for state page
+    bc_path = "/" + path_extract + "/"
+
+    # Create the anchor text for the State part of the breadcrumb
+    bc_state_text = path_extract.upper()
+
+    # Get the endpoint name
+    endpoint = request.endpoint
+
+    # Replace underscores with spaces in endpoint name and convert to title case
+    bc_schedule_text = endpoint.title().replace('_',' ')
+
+    print(bc_path)
+    print(bc_state_text)
+    print(bc_schedule_text)
+
+    return bc_path, bc_state_text, bc_schedule_text
+
 @app.route('/')
 def homepage():
-    
+    homepage = True
     # Create list of url routes
     wa_links_list = []
     ny_links_list = []
@@ -89,6 +118,7 @@ def homepage():
         ny_links.update(update_name)
         
     return render_template('index.html',
+                           homepage=homepage,
                            wa_links=wa_links.items(),
                            ny_links=ny_links.items())
 
@@ -96,11 +126,14 @@ def homepage():
 @app.route('/wa/bremerton-seattle/')
 #@cache.cached(timeout=30)
 def bremerton_ferry_schedule():
-    
+
     # Set bremerton schedule variable to true
     # to indicate which template to use
     bremerton_schedule = True
-    
+
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
     # Get worksheet with schedules
     ws = sheet.get_worksheet(1)
 
@@ -143,7 +176,7 @@ def bremerton_ferry_schedule():
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
 
-    ### Depart Seattle schedule code ends
+    ### Depart Seattle schedule code ends    
     
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
@@ -155,7 +188,10 @@ def bremerton_ferry_schedule():
                            h1=h1,
                            leadcopy=leadcopy,
                            h2_1=h2_1,
-                           h2_2=h2_2)
+                           h2_2=h2_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2])
 
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')

@@ -1,19 +1,30 @@
 .navbar {
     list-style-type: none;
-    background-color: #1D2731;
+    background-color: #FFFFFF;
+}
+
+.navbar-light .navbar-brand {
+    color: #1D2731;
 }
 
 .nav-link {
-    color: #FFFFFF;
+    color: #1D2731;
 }
 
 .nav-link:hover {
-    color: #328CC1;
+    color: #0B3C5D;
+}
+
+.page-header {
+    background-color: #1D2731;
+    color: #FFFFFF;
 }
 
 .card {
     background-color: #1D2731;
     border-radius: 0 !important;
+    box-shadow: 0 1px 9px rgba(15,18,18,.35);
+    
 }
 
 .card a {
@@ -24,6 +35,10 @@
     background-color: #0B3C5D;
     border-radius: 0 !important;
     border-style: none;
+}
+
+table {
+    box-shadow: 0 1px 9px rgba(15,18,18,.35);
 }
 
 thead tr th {

@@ -13,13 +13,16 @@
     </head>
     <body>
         {% include "navbar.html" %}
+        <div class="page-header mb-5 py-5 px-5">
+            <h1 class="text-justify">{% block h1 %}{% endblock %}</h1>
+            <p class="text-justify">{% block leadcopy %}{% endblock %}</p>
+        </div>
         <div class="container">
-            <div class="page-header">
-                <h1 class="text-justify">{% block h1 %}{% endblock %}</h1>
-                <p class="text-justify">{% block leadcopy %}{% endblock %}</p>
-            </div>
-            {% block content %}
-            {% endblock %}
+            {% if homepage %}
+            {% else %}
+            {% include "breadcrumb.html" %}
+            {% endif %}
+            {% block content %}{% endblock %}
         </div>
         
         <!-- Optional JavaScript -->
