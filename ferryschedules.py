@@ -78,10 +78,6 @@ def generate_breadcrumb():
     # Replace underscores with spaces in endpoint name and convert to title case
     bc_schedule_text = endpoint.title().replace('_',' ')
 
-    print(bc_path)
-    print(bc_state_text)
-    print(bc_schedule_text)
-
     return bc_path, bc_state_text, bc_schedule_text
 
 @app.route('/')
@@ -202,6 +198,9 @@ def bainbridge_island_ferry_schedule():
     # to indicate which template to use
     bainbridge_schedule = True
 
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
     # Get worksheet with schedules
     ws = sheet.get_worksheet(2)
 
@@ -288,7 +287,10 @@ def bainbridge_island_ferry_schedule():
                            h2_1=h2_1,
                            h2_2=h2_2,
                            h3_1=h3_1,
-                           h3_2=h3_2)
+                           h3_2=h3_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2])
 
 # Anacortes Ferry schedule route
 @app.route('/wa/anacortes-san-juan-island-sidney-bc/')
@@ -298,6 +300,9 @@ def anacortes_ferry_schedule():
     # Set anacortes schedule variable to true
     # to indicate which template to use
     anacortes_schedule = True
+
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
 
     # Get Anacortes schedule worksheet
     ws = sheet.get_worksheet(3)
@@ -404,7 +409,10 @@ def anacortes_ferry_schedule():
                            wb_table_headers=wb_table_headers,
                            eb_table_headers=eb_table_headers,
                            wb_schedule=wb_schedule,
-                           eb_schedule=eb_schedule)
+                           eb_schedule=eb_schedule,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2])
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
@@ -413,6 +421,9 @@ def kingston_ferry_schedule():
     # Set kingston schedule variable to true
     # to indicate which template to use
     kingston_schedule = True
+
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
     
     # Get worksheet with schedules
     ws = sheet.get_worksheet(4)
@@ -468,7 +479,10 @@ def kingston_ferry_schedule():
                            h1=h1,
                            leadcopy=leadcopy,
                            h2_1=h2_1,
-                           h2_2=h2_2)
+                           h2_2=h2_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2])
 
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
@@ -478,6 +492,9 @@ def staten_island_ferry_schedule():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
     staten_island_schedule = True
+
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
 
     # Get worksheet with schedules
     ws = sheet.get_worksheet(5)
@@ -568,7 +585,10 @@ def staten_island_ferry_schedule():
                            h2_1=h2_1,
                            h2_2=h2_2,
                            h3_1=h3_1,
-                           h3_2=h3_2)
+                           h3_2=h3_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2])
 
 if __name__ == '__main__':
     app.debug = True
