@@ -3,48 +3,48 @@
 {% block title %}Ferry Schedules{% endblock %}
 
 {% block h1 %}Ferry Schedules{% endblock %}
-{% block leadcopy %}Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.{% endblock %}
+{% block leadcopy %}A comprehensive, up-to-date directory of all Ferry Schedules in the United States.{% endblock %}
 
 {% block content %}
 <h2>New York</h2>
 {% for row in ny_links|batch(3,'') %}
 <div class="row">
+    <div class="card-deck">
     {% for href in row %}
-    {% if href %}
-    <div class="col p-2">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
-                {# <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> #}
-                <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a>
+        {% if href %}
+            <div class="card my-2" style="width: 18rem; height: 10rem;">
+                <div class="card-body">
+                    <h3 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
+                    {# <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> #}
+                    {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
+                </div>
             </div>
-        </div>
+        {# {% else %}
+            <div class="card blank-card my-2" style="width: 18rem; height: 10rem;"></div> #}
+        {% endif %}
+        {% endfor %}
     </div>
-    {% else %}
-    <div class="col p-2"></div>
-    {% endif %}
-    {% endfor %}
 </div>
 {% endfor %}
 
 <h2>Washington</h2>
 {% for row in wa_links|batch(3,'') %}
 <div class="row">
+    <div class="card-deck">
     {% for href in row %}
     {% if href %}
-    <div class="col p-2">
-        <div class="card">
+        <div class="card my-2" style="width: 18rem; height: 10rem;">
             <div class="card-body">
                 <h3 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
                 {# <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> #}
-                <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a>
+                {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
             </div>
         </div>
-    </div>
-    {% else %}
-    <div class="col p-2"></div>
+    {# {% else %}
+        <div class="card blank-card my-2" style="width: 18rem; height: 10rem;"></div> #}
     {% endif %}
     {% endfor %}
+    </div>
 </div>
 {% endfor %}
 {% endblock %}
