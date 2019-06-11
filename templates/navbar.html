@@ -10,7 +10,7 @@
                 New York
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for link in ny_links %}
+                {% for link in ny_nav_links %}
                 <a class="dropdown-item" href="{{ link.0 }}">{{ link.1 }}</a>
                 {% endfor %}   
             </div>
@@ -20,7 +20,7 @@
                 Washington
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                {% for link in wa_links %}
+                {% for link in wa_nav_links %}
                 <a class="dropdown-item" href="{{ link.0 }}">{{ link.1 }}</a>
                 {% endfor %}   
             </div>
