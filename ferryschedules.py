@@ -39,21 +39,24 @@ def navbar():
     ny_links_list.sort()
 
     # Convert list to dictionary
-    wa_links = dict(wa_links_list)
-    ny_links = dict(ny_links_list)
+    wa_nav_links = dict(wa_links_list)
+    ny_nav_links = dict(ny_links_list)
 
     # Modify the endpoints into pretty names
-    for k, v in wa_links.items():
+    for k, v in wa_nav_links.items():
         update_name = {k: v.title().replace('_',' ')}
-        wa_links.update(update_name)
+        wa_nav_links.update(update_name)
 
-    for k, v in ny_links.items():
+    for k, v in ny_nav_links.items():
         update_name = {k: v.title().replace('_',' ')}
-        ny_links.update(update_name)
-        
-    return render_template('navbar.html',
-                           wa_links=wa_links.items(),
-                           ny_links=ny_links.items())
+        ny_nav_links.update(update_name)
+
+    # Delete state directory pages
+    # We do not want them listed in the nav
+    del ny_nav_links['/ny/']
+    del wa_nav_links['/wa/']
+
+    return ny_nav_links.items(), wa_nav_links.items()
 
 def generate_breadcrumb():
     
@@ -82,6 +85,10 @@ def generate_breadcrumb():
 
 @app.route('/')
 def homepage():
+    
+    # Create instance of navbar()
+    nav = navbar()
+    
     homepage = True
     # Create list of url routes
     wa_links_list = []
@@ -112,11 +119,86 @@ def homepage():
     for k, v in ny_links.items():
         update_name = {k: v.title().replace('_',' ')}
         ny_links.update(update_name)
+
+    # Delete state directory pages from dict
+    # We do not want them listed on the page
+    del ny_links['/ny/']
+    del wa_links['/wa/']
         
     return render_template('index.html',
                            homepage=homepage,
-                           wa_links=wa_links.items(),
-                           ny_links=ny_links.items())
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1],
+                           ny_links=ny_links.items(),
+                           wa_links=wa_links.items())
+
+# New York directory page
+@app.route('/ny/')
+def new_york_ferry_schedules():
+    
+    # Create instance of navbar()
+    nav = navbar()
+
+    # Create instance of generate_breadcrumb()
+    # bc = generate_breadcrumb()
+
+    # Create empty list to store New York links
+    ny_schedule_list = []
+
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            if str(rule).find('/ny/') is 0:
+                ny_url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ny_schedule_list.append((ny_url, rule.endpoint))
+
+    ny_schedule_list.sort()
+
+    ny_schedules = dict(ny_schedule_list)
+
+    for key, value in ny_schedules.items():
+        update_name = {key: value.title().replace('_',' ')}
+        ny_schedules.update(update_name)
+
+    del ny_schedules['/ny/']
+
+    return render_template('ny.html',
+                           ny_schedules=ny_schedules.items(),
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
+
+# Washington directory page
+@app.route('/wa/')
+def washington_ferry_schedules():
+    
+    # Create instance of navbar()
+    nav = navbar()
+
+    # Create instance of generate_breadcrumb()
+    # bc = generate_breadcrumb()
+
+    # Create empty list to store New York links
+    wa_schedule_list = []
+
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            if str(rule).find('/wa/') is 0:
+                wa_url = url_for(rule.endpoint, **(rule.defaults or {}))
+                wa_schedule_list.append((wa_url, rule.endpoint))
+
+    wa_schedule_list.sort()
+
+    wa_schedules = dict(wa_schedule_list)
+
+    for key, value in wa_schedules.items():
+        update_name = {key: value.title().replace('_',' ')}
+        wa_schedules.update(update_name)
+
+    del wa_schedules['/wa/']
+
+    return render_template('wa.html',
+                           ny_schedules=wa_schedules.items(),
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
@@ -126,6 +208,9 @@ def bremerton_ferry_schedule():
     # Set bremerton schedule variable to true
     # to indicate which template to use
     bremerton_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
 
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
@@ -187,7 +272,9 @@ def bremerton_ferry_schedule():
                            h2_2=h2_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
-                           bc_schedule_text=bc[2])
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')
@@ -198,6 +285,9 @@ def bainbridge_island_ferry_schedule():
     # to indicate which template to use
     bainbridge_schedule = True
 
+    # Create instance of navbar()
+    nav = navbar()
+    
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -290,10 +380,12 @@ def bainbridge_island_ferry_schedule():
                            h3_2=h3_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
-                           bc_schedule_text=bc[2])
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 # Anacortes Ferry schedule route
-@app.route('/wa/anacortes-san-juan-island-sidney-bc/')
+@app.route('/wa/anacortes/')
 #@cache.cached(timeout=30)
 def anacortes_ferry_schedule():
     
@@ -301,6 +393,9 @@ def anacortes_ferry_schedule():
     # to indicate which template to use
     anacortes_schedule = True
 
+    # Create instance of navbar()
+    nav = navbar()
+    
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -412,7 +507,9 @@ def anacortes_ferry_schedule():
                            eb_schedule=eb_schedule,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
-                           bc_schedule_text=bc[2])
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
@@ -422,6 +519,9 @@ def kingston_ferry_schedule():
     # to indicate which template to use
     kingston_schedule = True
 
+    # Create instance of navbar()
+    nav = navbar()
+    
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
     
@@ -482,7 +582,9 @@ def kingston_ferry_schedule():
                            h2_2=h2_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
-                           bc_schedule_text=bc[2])
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
@@ -492,6 +594,9 @@ def staten_island_ferry_schedule():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
     staten_island_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
 
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
@@ -588,7 +693,9 @@ def staten_island_ferry_schedule():
                            h3_2=h3_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
-                           bc_schedule_text=bc[2])
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
 
 if __name__ == '__main__':
     app.debug = True
