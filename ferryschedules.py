@@ -101,6 +101,7 @@ def homepage():
     
     homepage = True
     # Create list of url routes
+    ca_links_list = []
     wa_links_list = []
     ny_links_list = []
     for rule in app.url_map.iter_rules():
@@ -111,17 +112,25 @@ def homepage():
             elif str(rule).find('/ny/') is 0:
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 ny_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ca/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ca_links_list.append((url, rule.endpoint))
     
-    # Sort list and then delete homepage from list
+    # Sort lists
+    ca_links_list.sort()
     wa_links_list.sort()
-    #del links_list[0]
     ny_links_list.sort()
 
-    # Convert list to dictionary
+    # Convert lists to dictionaries
+    ca_links = dict(ca_links_list)
     wa_links = dict(wa_links_list)
     ny_links = dict(ny_links_list)
 
     # Modify the endpoints into pretty names
+    for k, v in ca_links.items():
+        update_name = {k: v.title().replace('_',' ')}
+        ca_links.update(update_name)
+
     for k, v in wa_links.items():
         update_name = {k: v.title().replace('_',' ')}
         wa_links.update(update_name)
@@ -139,8 +148,49 @@ def homepage():
                            homepage=homepage,
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
+                           ca_nav_links=nav[2],
+                           ca_links=ca_links.items(),
                            ny_links=ny_links.items(),
                            wa_links=wa_links.items())
+
+# California directory page
+@app.route('/ca/')
+def california_ferry_schedules():
+    
+    # Create instance of navbar()
+    nav = navbar()
+
+    california = True
+
+    # Create instance of generate_breadcrumb()
+    bc = generate_breadcrumb()
+
+    # Create empty list to store New York links
+    ca_schedule_list = []
+
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            if str(rule).find('/ca/') is 0:
+                ca_url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ca_schedule_list.append((ny_url, rule.endpoint))
+
+    ca_schedule_list.sort()
+
+    ca_schedules = dict(ca_schedule_list)
+
+    for key, value in ca_schedules.items():
+        update_name = {key: value.title().replace('_',' ')}
+        ca_schedules.update(update_name)
+
+    del ca_schedules['/ca/']
+
+    return render_template('ca.html',
+                           california=california,
+                           ca_schedules=ca_schedules.items(),
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2],
+                           bc_state_text=bc[1])
 
 # New York directory page
 @app.route('/ny/')
