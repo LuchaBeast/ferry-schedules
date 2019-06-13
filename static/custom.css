@@ -1,6 +1,7 @@
-.container {
+.container-schedule {
     box-shadow: 0 1px 9px rgba(15,18,18,.35);
 }
+
 .navbar {
     list-style-type: none;
     background-color: #FFFFFF;
@@ -21,23 +22,29 @@
 .page-header {
     background-color: #1D2731;
     color: #FFFFFF;
+
 }
 
 .card {
     background-color: #1D2731;
+    /* background-color: #0B3C5D; */
     border-radius: 0 !important;
     
 }
 
-.card a {
+.card-title a {
     color: #FFFFFF;
 }
 
-.card .btn {
+/* .card .btn {
     background-color: #0B3C5D;
     border-radius: 0 !important;
     border-style: none;
-}
+} */
+
+/* .btn-primary {
+    color: #D9B310;
+} */
 
 .blank-card {
     background-color: #FFFFFF;
@@ -45,9 +52,7 @@
     border: none !important;
 }
 
-table {
-    box-shadow: 0 1px 9px rgba(15,18,18,.35);
-}
+
 
 thead tr th {
     background-color: #0B3C5D !important;

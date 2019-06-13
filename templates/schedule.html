@@ -7,14 +7,14 @@
 
 {% block content %}
     {% if bremerton_schedule %}
-        {% include "bremerton_schedule.html" %}
+        {% include "daily_schedule.html" %}
     {% elif bainbridge_schedule %}
-        {% include "bainbridge_schedule.html" %}
+        {% include "weekday_weekend_holiday_schedule.html" %}
     {% elif anacortes_schedule %}
         {% include "anacortes_schedule.html" %}
     {% elif kingston_schedule %}
-        {% include "kingston_schedule.html" %}
+        {% include "daily_schedule.html" %}
     {% elif staten_island_schedule %}
-        {% include "staten_island_schedule.html" %}
+        {% include "weekday_weekend_holiday_schedule.html" %}
     {% endif %}
 {% endblock %}
