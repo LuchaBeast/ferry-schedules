@@ -22,6 +22,7 @@ def has_no_empty_params(rule):
 def navbar():
     
     # Create list of url routes
+    ca_links_list = []
     wa_links_list = []
     ny_links_list = []
     for rule in app.url_map.iter_rules():
@@ -32,17 +33,25 @@ def navbar():
             elif str(rule).find('/ny/') is 0:
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 ny_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ca/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ca_links_list.append((url, rule.endpoint))
     
     # Sort list and then delete homepage from list
+    ca_links_list.sort()
     wa_links_list.sort()
-    #del links_list[0]
     ny_links_list.sort()
 
     # Convert list to dictionary
+    ca_nav_links = dict(ca_links_list)
     wa_nav_links = dict(wa_links_list)
     ny_nav_links = dict(ny_links_list)
 
     # Modify the endpoints into pretty names
+    for k, v in ca_nav_links.items():
+        update_name = {k: v.title().replace('_',' ')}
+        ca_nav_links.update(update_name)
+
     for k, v in wa_nav_links.items():
         update_name = {k: v.title().replace('_',' ')}
         wa_nav_links.update(update_name)
@@ -53,10 +62,11 @@ def navbar():
 
     # Delete state directory pages
     # We do not want them listed in the nav
+    #del ca_nav_links['/ca/']
     del ny_nav_links['/ny/']
     del wa_nav_links['/wa/']
 
-    return ny_nav_links.items(), wa_nav_links.items()
+    return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
 
 def generate_breadcrumb():
     
@@ -168,6 +178,7 @@ def new_york_ferry_schedules():
                            ny_schedules=ny_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
+                           ca_nav_links=nav[2],
                            bc_state_text=bc[1])
 
 # Washington directory page
@@ -206,6 +217,7 @@ def washington_ferry_schedules():
                            ny_schedules=wa_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
+                           ca_nav_links=nav[2],
                            bc_state_text=bc[1])
 
 # Bremerton Ferry Schedule route
@@ -282,7 +294,8 @@ def bremerton_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')
@@ -390,7 +403,8 @@ def bainbridge_island_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Anacortes Ferry schedule route
 @app.route('/wa/anacortes/')
@@ -517,7 +531,8 @@ def anacortes_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
@@ -592,7 +607,8 @@ def kingston_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
@@ -703,7 +719,8 @@ def staten_island_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Larkspur Ferry Schedule route
 @app.route('/ca/larkspur/')
@@ -814,7 +831,8 @@ def larkspur_ferry_schedule():
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 if __name__ == '__main__':
     app.debug = True
