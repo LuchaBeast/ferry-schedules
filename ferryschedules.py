@@ -141,6 +141,7 @@ def homepage():
 
     # Delete state directory pages from dict
     # We do not want them listed on the page
+    del ca_links['/ca/']
     del ny_links['/ny/']
     del wa_links['/wa/']
         
