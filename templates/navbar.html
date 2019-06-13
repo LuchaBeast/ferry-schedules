@@ -12,7 +12,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for link in ny_nav_links %}
                 <a class="dropdown-item" href="{{ link.0 }}">{{ link.1 }}</a>
-                {% endfor %}   
+                {% endfor %} 
+                <a class="dropdown-item" href="/ny/">View All</a>  
             </div>
         </li>
         <li class="nav-item dropdown">
@@ -22,7 +23,8 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 {% for link in wa_nav_links %}
                 <a class="dropdown-item" href="{{ link.0 }}">{{ link.1 }}</a>
-                {% endfor %}   
+                {% endfor %}
+                <a class="dropdown-item" href="/wa/">View All</a>
             </div>
         </li>
     </div>

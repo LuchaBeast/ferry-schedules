@@ -139,8 +139,10 @@ def new_york_ferry_schedules():
     # Create instance of navbar()
     nav = navbar()
 
+    new_york = True
+
     # Create instance of generate_breadcrumb()
-    # bc = generate_breadcrumb()
+    bc = generate_breadcrumb()
 
     # Create empty list to store New York links
     ny_schedule_list = []
@@ -162,9 +164,11 @@ def new_york_ferry_schedules():
     del ny_schedules['/ny/']
 
     return render_template('ny.html',
+                           new_york=new_york,
                            ny_schedules=ny_schedules.items(),
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           bc_state_text=bc[1])
 
 # Washington directory page
 @app.route('/wa/')
@@ -173,8 +177,10 @@ def washington_ferry_schedules():
     # Create instance of navbar()
     nav = navbar()
 
+    washington = True
+    
     # Create instance of generate_breadcrumb()
-    # bc = generate_breadcrumb()
+    bc = generate_breadcrumb()
 
     # Create empty list to store New York links
     wa_schedule_list = []
@@ -196,9 +202,11 @@ def washington_ferry_schedules():
     del wa_schedules['/wa/']
 
     return render_template('wa.html',
+                           washington=washington,
                            ny_schedules=wa_schedules.items(),
                            ny_nav_links=nav[0],
-                           wa_nav_links=nav[1])
+                           wa_nav_links=nav[1],
+                           bc_state_text=bc[1])
 
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
