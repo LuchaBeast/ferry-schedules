@@ -705,6 +705,117 @@ def staten_island_ferry_schedule():
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1])
 
+# Larkspur Ferry Schedule route
+@app.route('/ca/larkspur/')
+#@cache.cahced(timeout=30)
+def larkspur_ferry_schedule():
+    # Set bainbridge schedule variable to true
+    # to indicate which template to use
+    larkspur_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
+    
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
+    # Get worksheet with schedules
+    ws = sheet.get_worksheet(6)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set table headers for each schedule
+    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+
+    # Set H2 tags for each schedule
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    # Set H3 tags for each schedule
+    h3_1 = ws.acell('D1').value
+    h3_2 = ws.acell('I1').value
+
+    ### Depart Larkspur weekday schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_larkspur_weekday_schedule = ws.col_values(5)
+    arrive_sf_weekday_schedule = ws.col_values(6)
+    del depart_larkspur_weekday_schedule[0]
+    del arrive_sf_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_1 = dict(zip(depart_larkspur_weekday_schedule, arrive_sf_weekday_schedule))
+
+    ### Depart Larkspur weekday schedule code ends
+
+    ### Depart SF weekday schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_sf_weekday_schedule = ws.col_values(7)
+    arrive_larkspur_weekday_schedule = ws.col_values(8)
+    del depart_sf_weekday_schedule[0]
+    del arrive_larkspur_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_2 = dict(zip(depart_sf_weekday_schedule, arrive_larkspur_weekday_schedule))
+
+    ### Depart SF weekday schedule code ends
+
+    ### Depart Larkspur weekend schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_larkspur_weekend_schedule = ws.col_values(10)
+    arrive_sf_weekend_schedule = ws.col_values(11)
+    del depart_larkspur_weekend_schedule[0]
+    del arrive_sf_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_3 = dict(zip(depart_larkspur_weekend_schedule, arrive_sf_weekend_schedule))
+
+    ### Depart Larkspur weekend schedule code ends
+
+    ### Depart SF weekend schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_sf_weekend_schedule = ws.col_values(12)
+    arrive_larkspur_weekend_schedule = ws.col_values(13)
+    del depart_sf_weekend_schedule[0]
+    del arrive_larkspur_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_4 = dict(zip(depart_sf_weekend_schedule, arrive_larkspur_weekend_schedule))
+
+    ### Depart SF weekend schedule code ends
+    
+    return render_template('schedule.html',
+                           larkspur_schedule=larkspur_schedule,
+                           times_1=times_1.items(),
+                           times_2=times_2.items(),
+                           times_3=times_3.items(),
+                           times_4=times_4.items(),
+                           table_headers_1=table_headers_1.items(),
+                           table_headers_2=table_headers_2.items(),
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2,
+                           h3_1=h3_1,
+                           h3_2=h3_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1])
+
 if __name__ == '__main__':
     app.debug = True
     app.run(host='0.0.0.0', port=5000)
