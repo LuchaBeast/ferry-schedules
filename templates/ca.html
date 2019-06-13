@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Washington State Ferry Schedules{% endblock %}
+{% block title %}California Ferry Schedules{% endblock %}
 
-{% block h1 %}Washington State Ferry Schedules{% endblock %}
-{% block leadcopy %}A comprehensive, up-to-date directory of all Washington State Ferry Schedules.{% endblock %}
+{% block h1 %}California Ferry Schedules{% endblock %}
+{% block leadcopy %}A comprehensive, up-to-date directory of all California Ferry Schedules.{% endblock %}
 
 {% block content %}
-<h2>Washington</h2>
-{% for row in wa_schedules|batch(3,'') %}
+<h2>California</h2>
+{% for row in ca_schedules|batch(3,'') %}
 <div class="row">
     <div class="card-deck">
     {% for href in row %}

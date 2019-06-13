@@ -62,7 +62,7 @@ def navbar():
 
     # Delete state directory pages
     # We do not want them listed in the nav
-    #del ca_nav_links['/ca/']
+    del ca_nav_links['/ca/']
     del ny_nav_links['/ny/']
     del wa_nav_links['/wa/']
 
@@ -172,7 +172,7 @@ def california_ferry_schedules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             if str(rule).find('/ca/') is 0:
                 ca_url = url_for(rule.endpoint, **(rule.defaults or {}))
-                ca_schedule_list.append((ny_url, rule.endpoint))
+                ca_schedule_list.append((ca_url, rule.endpoint))
 
     ca_schedule_list.sort()
 
@@ -264,7 +264,7 @@ def washington_ferry_schedules():
 
     return render_template('wa.html',
                            washington=washington,
-                           ny_schedules=wa_schedules.items(),
+                           wa_schedules=wa_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2],
