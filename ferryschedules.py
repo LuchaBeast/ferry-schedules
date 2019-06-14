@@ -387,7 +387,7 @@ def bainbridge_island_ferry_schedule():
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
 
-    ### Depart Bainbridge schedule code begins
+    ### Depart Bainbridge weekday schedule code begins
 
     # Get each schedule and delete header cells
     depart_bainbridge_weekday_schedule = ws.col_values(5)
@@ -398,9 +398,9 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_bainbridge_weekday_schedule, arrive_seattle_weekday_schedule))
 
-    ### Depart Bainbridge schedule code ends
+    ### Depart Bainbridge weekday schedule code ends
 
-    ### Depart Seattle schedule code
+    ### Depart Seattle weekday schedule code begins
 
     # Get each schedule and delete header cells
     depart_seattle_weekday_schedule = ws.col_values(7)
@@ -411,6 +411,10 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_seattle_weekday_schedule, arrive_bainbridge_weekday_schedule))
 
+    ### Depart seattle weekday schedule code ends
+
+    ### Depart bainbridge weekend schedule code begins
+
     # Get each schedule and delete header cells
     depart_bainbridge_weekend_schedule = ws.col_values(10)
     arrive_seattle_weekend_schedule = ws.col_values(11)
@@ -420,9 +424,9 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_3 = dict(zip(depart_bainbridge_weekend_schedule, arrive_seattle_weekend_schedule))
 
-    ### Depart Bremerton schedule code ends
+    ### Depart bainbridge weekend schedule code ends
 
-    ### Depart Seattle schedule code
+    ### Depart Seattle weekend schedule code begins
 
     # Get each schedule and delete header cells
     depart_seattle_weekend_schedule = ws.col_values(12)
@@ -433,7 +437,7 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_4 = dict(zip(depart_seattle_weekend_schedule, arrive_bainbridge_weekend_schedule))
 
-    ### Depart Seattle schedule code ends
+    ### Depart Seattle weekend schedule code ends
     
     return render_template('schedule.html',
                            bainbridge_schedule=bainbridge_schedule,
@@ -654,6 +658,117 @@ def kingston_ferry_schedule():
                            leadcopy=leadcopy,
                            h2_1=h2_1,
                            h2_2=h2_2,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
+
+@app.route('/wa/southworth-vashon/')
+#@cache.cached(timeout=30)
+def southworth_ferry_schedule():
+    # Set southworth schedule variable to true
+    # to indicate which template to use
+    southworth_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
+    
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
+    # Get worksheet with schedules
+    ws = sheet.get_worksheet(7)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set table headers for each schedule
+    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+
+    # Set H2 tags for each schedule
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    # Set H3 tags for each schedule
+    h3_1 = ws.acell('D1').value
+    h3_2 = ws.acell('I1').value
+
+    ### Depart Southworth weekday schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_southworth_weekday_schedule = ws.col_values(5)
+    arrive_vashon_weekday_schedule = ws.col_values(6)
+    del depart_southworth_weekday_schedule[0]
+    del arrive_vashon_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_1 = dict(zip(depart_southworth_weekday_schedule, arrive_vashon_weekday_schedule))
+
+    ### Depart southworth weekday schedule code ends
+
+    ### Depart vashon weekday schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_vashon_weekday_schedule = ws.col_values(7)
+    arrive_southworth_weekday_schedule = ws.col_values(8)
+    del depart_vashon_weekday_schedule[0]
+    del arrive_southworth_weekday_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_2 = dict(zip(depart_vashon_weekday_schedule, arrive_southworth_weekday_schedule))
+
+    ### Depart vashon weekday schedule code ends
+
+    ### Depart southworth weekend schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_southworth_weekend_schedule = ws.col_values(10)
+    arrive_vashon_weekend_schedule = ws.col_values(11)
+    del depart_southworth_weekend_schedule[0]
+    del arrive_vashon_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_3 = dict(zip(depart_southworth_weekend_schedule, arrive_vashon_weekend_schedule))
+
+    ### Depart southworth weekend schedule code ends
+
+    ### Depart vashon weekend schedule code begins
+
+    # Get each schedule and delete header cells
+    depart_vashon_weekend_schedule = ws.col_values(12)
+    arrive_southworth_weekend_schedule = ws.col_values(13)
+    del depart_vashon_weekend_schedule[0]
+    del arrive_southworth_weekend_schedule[0]
+
+    # Convert both lists into a single dictionary
+    times_4 = dict(zip(depart_vashon_weekend_schedule, arrive_southworth_weekend_schedule))
+
+    ### Depart vashon weekend schedule code ends
+    
+    return render_template('schedule.html',
+                           southworth_schedule=southworth_schedule,
+                           times_1=times_1.items(),
+                           times_2=times_2.items(),
+                           times_3=times_3.items(),
+                           times_4=times_4.items(),
+                           table_headers_1=table_headers_1.items(),
+                           table_headers_2=table_headers_2.items(),
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2,
+                           h3_1=h3_1,
+                           h3_2=h3_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
