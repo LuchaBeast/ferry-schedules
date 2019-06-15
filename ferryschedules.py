@@ -1039,19 +1039,19 @@ def vallejo_ferry_schedule():
     depart_mare_island_weekday = ws.col_values(5)
     depart_vallejo_weekday = ws.col_values(6)
     arrive_sf_fb_weekday = ws.col_values(7)
-    arrive_sf_pier = ws.col_values(8)
+    arrive_sf_pier_weekday = ws.col_values(8)
 
-    # Create list of westbound table headers
+    # Create list of depart vallejo weekday table headers
     dv_weekday_table_headers.extend([depart_mare_island_weekday[0],
                              depart_vallejo_weekday[0],
                              arrive_sf_fb_weekday[0],
-                             arrive_sf_pier[0]])
+                             arrive_sf_pier_weekday[0]])
 
     # Remove table headers
     del depart_mare_island_weekday[0]
     del depart_vallejo_weekday[0]
     del arrive_sf_fb_weekday[0]
-    del arrive_sf_pier[0]
+    del arrive_sf_pier_weekday[0]
 
     # Set counter = 0
     c = 0
@@ -1062,8 +1062,44 @@ def vallejo_ferry_schedule():
         dv_weekday_temp_list = [depart_mare_island_weekday[c],
                                 depart_vallejo_weekday[c],
                                 arrive_sf_fb_weekday[c],
-                                arrive_sf_pier[c]]
+                                arrive_sf_pier_weekday[c]]
         dv_weekday_schedule.append(dv_weekday_temp_list)
+        c += 1
+
+    # Initiate blank lists to store vallejo weekend schedules
+    dv_weekend_schedule = []
+    dv_weekend_temp_list = []
+    dv_weekend_table_headers = []
+
+    # Retrieve vallejo weekend schedule times
+    depart_mare_island_weekend = ws.col_values(10)
+    depart_vallejo_weekend = ws.col_values(11)
+    arrive_sf_fb_weekend = ws.col_values(12)
+    arrive_sf_pier_weekend = ws.col_values(13)
+
+    # Create list of depart vallejo weekend table headers
+    dv_weekend_table_headers.extend([depart_mare_island_weekend[0],
+                             depart_vallejo_weekend[0],
+                             arrive_sf_fb_weekend[0],
+                             arrive_sf_pier_weekend[0]])
+
+    # Remove table headers
+    del depart_mare_island_weekend[0]
+    del depart_vallejo_weekend[0]
+    del arrive_sf_fb_weekend[0]
+    del arrive_sf_pier_weekend[0]
+
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each westbound time row
+    # Append temp list to schedule list
+    while c < len(depart_mare_island_weekend):
+        dv_weekend_temp_list = [depart_mare_island_weekend[c],
+                                depart_vallejo_weekend[c],
+                                arrive_sf_fb_weekend[c],
+                                arrive_sf_pier_weekend[c]]
+        dv_weekend_schedule.append(dv_weekend_temp_list)
         c += 1
 
     return render_template('schedule.html',
@@ -1075,6 +1111,8 @@ def vallejo_ferry_schedule():
                            h2_2=h2_2,
                            dv_weekday_schedule=dv_weekday_schedule,
                            dv_weekday_table_headers=dv_weekday_table_headers,
+                           dv_weekend_schedule=dv_weekend_schedule,
+                           dv_weekend_table_headers=dv_weekend_table_headers,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
