@@ -889,8 +889,8 @@ def staten_island_ferry_schedule():
                            ca_nav_links=nav[2])
 
 # Larkspur Ferry Schedule route
-@app.route('/ca/larkspur/')
-#@cache.cahced(timeout=30)
+@app.route('/ca/larkspur-sf/')
+#@cache.cached(timeout=30)
 def larkspur_ferry_schedule():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
@@ -999,6 +999,12 @@ def larkspur_ferry_schedule():
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
+
+# Vallejo Ferry Schedule route
+@app.route('/ca/vallejo-sf/')
+#cache.cached(timeout=30)
+def vallejo_ferry_schedule():
+    return 'Vallejo'
 
 if __name__ == '__main__':
     app.debug = True
