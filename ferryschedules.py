@@ -1004,7 +1004,83 @@ def larkspur_ferry_schedule():
 @app.route('/ca/vallejo-sf/')
 #cache.cached(timeout=30)
 def vallejo_ferry_schedule():
-    return 'Vallejo'
+    # Set anacortes schedule variable to true
+    # to indicate which template to use
+    vallejo_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
+    
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
+    # Get Anacortes schedule worksheet
+    ws = sheet.get_worksheet(8)
+
+    # Set title tag variable
+    title = ws.acell('B1').value
+    
+    # Set h1 tag variable
+    h1 = ws.acell('B2').value
+
+    # Set leadcopy variable
+    leadcopy = ws.acell('B3').value
+
+    # Set H2 tags for each schedule
+    h2_1 = ws.acell('B5').value
+    h2_2 = ws.acell('B6').value
+
+    # Initiate blank lists to store vallejo weekday schedules
+    dv_weekday_schedule = []
+    dv_weekday_temp_list = []
+    dv_weekday_table_headers = []
+
+    # Retrieve vallejo weekday schedule times
+    depart_mare_island_weekday = ws.col_values(5)
+    depart_vallejo_weekday = ws.col_values(6)
+    arrive_sf_fb_weekday = ws.col_values(7)
+    arrive_sf_pier = ws.col_values(8)
+
+    # Create list of westbound table headers
+    dv_weekday_table_headers.extend([depart_mare_island_weekday[0],
+                             depart_vallejo_weekday[0],
+                             arrive_sf_fb_weekday[0],
+                             arrive_sf_pier[0]])
+
+    # Remove table headers
+    del depart_mare_island_weekday[0]
+    del depart_vallejo_weekday[0]
+    del arrive_sf_fb_weekday[0]
+    del arrive_sf_pier[0]
+
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each westbound time row
+    # Append temp list to schedule list
+    while c < len(depart_mare_island_weekday):
+        dv_weekday_temp_list = [depart_mare_island_weekday[c],
+                                depart_vallejo_weekday[c],
+                                arrive_sf_fb_weekday[c],
+                                arrive_sf_pier[c]]
+        dv_weekday_schedule.append(dv_weekday_temp_list)
+        c += 1
+
+    return render_template('schedule.html',
+                           vallejo_schedule=vallejo_schedule,
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           h2_1=h2_1,
+                           h2_2=h2_2,
+                           dv_weekday_schedule=dv_weekday_schedule,
+                           dv_weekday_table_headers=dv_weekday_table_headers,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 if __name__ == '__main__':
     app.debug = True
