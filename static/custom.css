@@ -32,6 +32,10 @@
     
 }
 
+.departure-card {
+    background-color: transparent !important;
+}
+
 .card-title a {
     color: #FFFFFF;
 }
