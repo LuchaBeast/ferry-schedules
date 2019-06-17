@@ -3,6 +3,8 @@ from flask_caching import Cache
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import string
+#from datetime import datetime
+import pendulum
 
 app = Flask(__name__)
 cache = Cache(app, config={'CACHE_TYPE': 'simple'})
@@ -313,7 +315,19 @@ def bremerton_ferry_schedule():
     del depart_bremerton_schedule[0]
     del arrive_seattle_schedule[0]
 
+    # Convert schedule lists into dictionary
     times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
+
+    # Retrieve current time in Seattle
+    current_seattle_time = pendulum.now('America/Los_Angeles')
+
+    # Set next Bremerton departure time by comparing current time to each time in the schedule
+    for departure in depart_bremerton_schedule:
+        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+        if current_seattle_time < format_time:
+            next_bremerton_departure = departure
+            break
+
 
     ### Depart Bremerton schedule code ends
 
@@ -328,12 +342,21 @@ def bremerton_ferry_schedule():
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
 
+    # Set next Seattle departure time by comparing current time to each time in the schedule
+    for departure in depart_seattle_schedule:
+        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+        if current_seattle_time < format_time:
+            next_seattle_departure = departure
+            break
+
     ### Depart Seattle schedule code ends    
     
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
+                           next_bremerton_departure=next_bremerton_departure,
+                           next_seattle_departure=next_seattle_departure,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,
