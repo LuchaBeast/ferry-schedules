@@ -1056,7 +1056,7 @@ def vallejo_ferry_schedule():
     # Set counter = 0
     c = 0
 
-    # Create temp list for each westbound time row
+    # Create temp list for each vallejo weekday time row
     # Append temp list to schedule list
     while c < len(depart_mare_island_weekday):
         dv_weekday_temp_list = [depart_mare_island_weekday[c],
@@ -1092,7 +1092,7 @@ def vallejo_ferry_schedule():
     # Set counter = 0
     c = 0
 
-    # Create temp list for each westbound time row
+    # Create temp list for each vallejo weekend time row
     # Append temp list to schedule list
     while c < len(depart_mare_island_weekend):
         dv_weekend_temp_list = [depart_mare_island_weekend[c],
@@ -1100,6 +1100,78 @@ def vallejo_ferry_schedule():
                                 arrive_sf_fb_weekend[c],
                                 arrive_sf_pier_weekend[c]]
         dv_weekend_schedule.append(dv_weekend_temp_list)
+        c += 1
+
+    # Initiate blank lists to store sf weekday schedules
+    sf_weekday_schedule = []
+    sf_weekday_temp_list = []
+    sf_weekday_table_headers = []
+
+    # Retrieve sf weekday schedule times
+    depart_sf_fb_weekday = ws.col_values(15)
+    depart_sf_pier_weekday = ws.col_values(16)
+    arrive_vallejo_weekday = ws.col_values(17)
+    arrive_mare_island_weekday = ws.col_values(18)
+
+    # Create list of depart sf weekday table headers
+    sf_weekday_table_headers.extend([depart_sf_fb_weekday[0],
+                                    depart_sf_pier_weekday[0],
+                                    arrive_vallejo_weekday[0],
+                                    arrive_mare_island_weekday[0]])
+
+    # Remove table headers
+    del depart_sf_fb_weekday[0]
+    del depart_sf_pier_weekday[0]
+    del arrive_vallejo_weekday[0]
+    del arrive_mare_island_weekday[0]
+
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each depart sf weekday time row
+    # Append temp list to sf weekday schedule list
+    while c < len(depart_sf_fb_weekday):
+        sf_weekday_temp_list = [depart_sf_fb_weekday[c],
+                                depart_sf_pier_weekday[c],
+                                arrive_vallejo_weekday[c],
+                                arrive_mare_island_weekday[c]]
+        sf_weekday_schedule.append(sf_weekday_temp_list)
+        c += 1
+
+    # Initiate blank lists to store sf weekday schedules
+    sf_weekend_schedule = []
+    sf_weekend_temp_list = []
+    sf_weekend_table_headers = []
+
+    # Retrieve sf weekend schedule times
+    depart_sf_fb_weekend = ws.col_values(20)
+    depart_sf_pier_weekend = ws.col_values(21)
+    arrive_vallejo_weekend = ws.col_values(22)
+    arrive_mare_island_weekend = ws.col_values(23)
+
+    # Create list of depart sf weekend table headers
+    sf_weekend_table_headers.extend([depart_sf_fb_weekend[0],
+                                    depart_sf_pier_weekend[0],
+                                    arrive_vallejo_weekend[0],
+                                    arrive_mare_island_weekend[0]])
+
+    # Remove table headers
+    del depart_sf_fb_weekend[0]
+    del depart_sf_pier_weekend[0]
+    del arrive_vallejo_weekend[0]
+    del arrive_mare_island_weekend[0]
+
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each depart sf weekend time row
+    # Append temp list to sf weekend schedule list
+    while c < len(depart_sf_fb_weekend):
+        sf_weekend_temp_list = [depart_sf_fb_weekend[c],
+                                depart_sf_pier_weekend[c],
+                                arrive_vallejo_weekend[c],
+                                arrive_mare_island_weekend[c]]
+        sf_weekend_schedule.append(sf_weekend_temp_list)
         c += 1
 
     return render_template('schedule.html',
@@ -1113,6 +1185,10 @@ def vallejo_ferry_schedule():
                            dv_weekday_table_headers=dv_weekday_table_headers,
                            dv_weekend_schedule=dv_weekend_schedule,
                            dv_weekend_table_headers=dv_weekend_table_headers,
+                           sf_weekday_schedule=sf_weekday_schedule,
+                           sf_weekday_table_headers=sf_weekday_table_headers,
+                           sf_weekend_schedule=sf_weekend_schedule,
+                           sf_weekend_table_headers=sf_weekend_table_headers,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
