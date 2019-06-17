@@ -325,7 +325,7 @@ def bremerton_ferry_schedule():
     for departure in depart_bremerton_schedule:
         format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
         if current_seattle_time < format_time:
-            next_bremerton_departure = departure
+            next_departure_1 = departure
             break
 
 
@@ -346,7 +346,7 @@ def bremerton_ferry_schedule():
     for departure in depart_seattle_schedule:
         format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
         if current_seattle_time < format_time:
-            next_seattle_departure = departure
+            next_departure_2 = departure
             break
 
     ### Depart Seattle schedule code ends    
@@ -355,8 +355,8 @@ def bremerton_ferry_schedule():
                            bremerton_schedule=bremerton_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
-                           next_bremerton_departure=next_bremerton_departure,
-                           next_seattle_departure=next_seattle_departure,
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,
