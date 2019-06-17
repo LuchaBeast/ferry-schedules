@@ -304,8 +304,8 @@ def bremerton_ferry_schedule():
     table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     ### Depart Bremerton schedule code begins
 
@@ -362,8 +362,8 @@ def bremerton_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
@@ -403,8 +403,8 @@ def bainbridge_island_ferry_schedule():
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -473,8 +473,8 @@ def bainbridge_island_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
@@ -512,8 +512,8 @@ def anacortes_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Initiate blank lists to store westbound schedules
     wb_schedule = []
@@ -599,8 +599,8 @@ def anacortes_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            wb_table_headers=wb_table_headers,
                            eb_table_headers=eb_table_headers,
                            wb_schedule=wb_schedule,
@@ -642,8 +642,8 @@ def kingston_ferry_schedule():
     table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     ### Depart Kingston schedule code begins
 
@@ -679,8 +679,8 @@ def kingston_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
@@ -718,8 +718,8 @@ def southworth_ferry_schedule():
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -788,8 +788,8 @@ def southworth_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
@@ -831,8 +831,8 @@ def staten_island_ferry_schedule():
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -900,8 +900,8 @@ def staten_island_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
@@ -942,8 +942,8 @@ def larkspur_ferry_schedule():
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -1012,8 +1012,8 @@ def larkspur_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
@@ -1050,8 +1050,8 @@ def vallejo_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set H2 tags for each schedule
-    h2_1 = ws.acell('B5').value
-    h2_2 = ws.acell('B6').value
+    th_1 = ws.acell('B5').value
+    th_2 = ws.acell('B6').value
 
     # Initiate blank lists to store vallejo weekday schedules
     dv_weekday_schedule = []
@@ -1202,8 +1202,8 @@ def vallejo_ferry_schedule():
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           h2_1=h2_1,
-                           h2_2=h2_2,
+                           th_1=th_1,
+                           th_2=th_2,
                            dv_weekday_schedule=dv_weekday_schedule,
                            dv_weekday_table_headers=dv_weekday_table_headers,
                            dv_weekend_schedule=dv_weekend_schedule,
