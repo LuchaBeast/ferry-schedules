@@ -174,7 +174,7 @@ def california_ferry_schedules():
     # Create instance of generate_breadcrumb()
     bc = generate_breadcrumb()
 
-    # Create empty list to store New York links
+    # Create empty list to store California links
     ca_schedule_list = []
 
     for rule in app.url_map.iter_rules():
@@ -254,7 +254,7 @@ def washington_ferry_schedules():
     # Create instance of generate_breadcrumb()
     bc = generate_breadcrumb()
 
-    # Create empty list to store New York links
+    # Create empty list to store Washington links
     wa_schedule_list = []
 
     for rule in app.url_map.iter_rules():
@@ -1063,12 +1063,51 @@ def staten_island_ferry_schedule():
 
     # ***Depart Manhattan weekend schedule code ends***
 
+    # Calculate next departures
+    # Retrieve current time in Seattle
+    current_eastern_time = pendulum.now('America/New_York')
+    current_day = current_eastern_time.day_of_week
+
+    # Check whether weekday or weekend and calculate Bainbridge next departures
+    if current_day >= 1 and current_day <= 5:
+        for departure in depart_si_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/New_York')
+            if current_eastern_time < format_time:
+                next_departure_1 = departure
+                break
+    else:
+        for departure in depart_si_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/New_York')
+            if current_eastern_time < format_time:
+                next_departure_1 = departure
+                break
+
+    # Check whether weekday or weekend and calculate Seattle next departures
+    if current_day >= 1 and current_day <= 5:
+        for departure in depart_manhattan_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/New_York')
+            if current_eastern_time < format_time:
+                next_departure_2 = departure
+                break
+    else:
+        for departure in depart_manhattan_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/New_York')
+            if current_eastern_time < format_time:
+                next_departure_2 = departure
+                break
+
     return render_template('schedule.html',
                            staten_island_schedule=staten_island_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            times_3=times_3.items(),
                            times_4=times_4.items(),
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,

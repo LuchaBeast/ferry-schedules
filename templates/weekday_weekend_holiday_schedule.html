@@ -18,6 +18,12 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        {% if bainbridge_schedule %}<p class="mx-3" style="font-size: 0.75rem;">* Based on Pacific Daylight Time</p>{% endif %}
+        {% if staten_island_schedule %}<p class="mx-3" style="font-size: 0.75rem;">* Based on Eastern Daylight Time</p>{% endif %}
+        {% if larkspur_schedule %}<p class="mx-3" style="font-size: 0.75rem;">* Based on Pacific Daylight Time</p>{% endif %}
+        {% if southworth_schedule %}<p class="mx-3" style="font-size: 0.75rem;">* Based on Pacific Daylight Time</p>{% endif %}
+    </div>
 </div>
 <h5 class="mt-5">{{ th_1 }}</h5>
 <div class="container container-schedule pt-3">
