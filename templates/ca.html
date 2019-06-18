@@ -3,11 +3,11 @@
 {% block title %}California Ferry Schedules{% endblock %}
 
 {% block h1 %}California Ferry Schedules{% endblock %}
-{% block leadcopy %}A comprehensive, up-to-date directory of all California Ferry Schedules.{% endblock %}
+{% block leadcopy %}A comprehensive, up-to-date directory of California Ferry Schedules.{% endblock %}
 
 {% block content %}
+<h5>Browse ferry schedules in California</h2>
 <div class="container container-link-group">
-    <h4 class="mt-3 pt-3">California</h2>
     {% for row in ca_schedules|batch(3,'') %}
     <div class="row d-flex justify-content-center">
         <div class="card-deck m-3">
