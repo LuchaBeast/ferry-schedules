@@ -304,8 +304,13 @@ def bremerton_ferry_schedule():
     table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
     table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
 
+    # Set container headers
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
+
+    # Set next departure card headers
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
 
     ### Depart Bremerton schedule code begins
 
@@ -317,17 +322,6 @@ def bremerton_ferry_schedule():
 
     # Convert schedule lists into dictionary
     times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
-
-    # Retrieve current time in Seattle
-    current_seattle_time = pendulum.now('America/Los_Angeles')
-
-    # Set next Bremerton departure time by comparing current time to each time in the schedule
-    for departure in depart_bremerton_schedule:
-        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
-        if current_seattle_time < format_time:
-            next_departure_1 = departure
-            break
-
 
     ### Depart Bremerton schedule code ends
 
@@ -341,6 +335,17 @@ def bremerton_ferry_schedule():
 
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
+
+    # Calculate next departure times
+    # Retrieve current time in Seattle
+    current_seattle_time = pendulum.now('America/Los_Angeles')
+
+    # Set next Bremerton departure time by comparing current time to each time in the schedule
+    for departure in depart_bremerton_schedule:
+        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+        if current_seattle_time < format_time:
+            next_departure_1 = departure
+            break
 
     # Set next Seattle departure time by comparing current time to each time in the schedule
     for departure in depart_seattle_schedule:
@@ -364,6 +369,8 @@ def bremerton_ferry_schedule():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
@@ -405,6 +412,10 @@ def bainbridge_island_ferry_schedule():
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
+    
+    # Set next departure card headers
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -461,6 +472,12 @@ def bainbridge_island_ferry_schedule():
     times_4 = dict(zip(depart_seattle_weekend_schedule, arrive_bainbridge_weekend_schedule))
 
     ### Depart Seattle weekend schedule code ends
+
+    # Calculate next departures
+    # Retrieve current time in Seattle
+    current_seattle_time = pendulum.now('America/Los_Angeles')
+    current_seattle_day = current_seattle_time.day_of_week
+    
     
     return render_template('schedule.html',
                            bainbridge_schedule=bainbridge_schedule,
@@ -475,6 +492,8 @@ def bainbridge_island_ferry_schedule():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
