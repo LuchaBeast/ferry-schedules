@@ -1,12 +1,10 @@
 from flask import Flask, render_template, url_for, jsonify, request
-from flask_caching import Cache
-import gspread
+# from flask_caching import Cache
 from oauth2client.service_account import ServiceAccountCredentials
-import string
-import pendulum
+import string, gspread, pendulum
 
 app = Flask(__name__)
-cache = Cache(app, config={'CACHE_TYPE': 'simple'})
+# cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
