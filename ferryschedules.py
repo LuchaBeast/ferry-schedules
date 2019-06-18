@@ -1,7 +1,9 @@
 from flask import Flask, render_template, url_for, jsonify, request
 # from flask_caching import Cache
 from oauth2client.service_account import ServiceAccountCredentials
-import string, gspread, pendulum
+import string
+import gspread
+import pendulum
 
 app = Flask(__name__)
 # cache = Cache(app, config={'CACHE_TYPE': 'simple'})
@@ -27,6 +29,7 @@ def navbar():
     ca_links_list = []
     wa_links_list = []
     ny_links_list = []
+
     for rule in app.url_map.iter_rules():
         if "GET" in rule.methods and has_no_empty_params(rule):
             if str(rule).find('/wa/') is 0:
@@ -79,7 +82,8 @@ def generate_breadcrumb():
     # Split each directory in the route
     split_url = url.split('/')
 
-    # Filter out empty list items and grab first path in list
+    # Filter out empty list items 
+    # Retrieve state path from list
     path_extract = list(filter(None, split_url))[0]
 
     # Rebuild path for state page
