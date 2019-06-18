@@ -478,8 +478,15 @@ def bainbridge_island_ferry_schedule():
     current_seattle_time = pendulum.now('America/Los_Angeles')
     current_seattle_day = current_seattle_time.day_of_week
 
+    # Check whether weekday or weekend and calculate next departures
     if current_seattle_day >= 1 and current_seattle_day <= 5:
         for departure in depart_bainbridge_weekday_schedule:
+            format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+            if current_seattle_time < format_time:
+                next_departure_1 = departure
+                break
+    else:
+        for departure in depart_bainbridge_weekend_schedule:
             format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
             if current_seattle_time < format_time:
                 next_departure_1 = departure
