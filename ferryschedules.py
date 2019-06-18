@@ -10,18 +10,21 @@ cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json',
+                                                         scope)
 client = gspread.authorize(creds)
 
 sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
+
 
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
     arguments = rule.arguments if rule.arguments is not None else ()
     return len(defaults) >= len(arguments)
 
+
 def navbar():
-    
+
     # Create list of url routes
     ca_links_list = []
     wa_links_list = []
@@ -37,7 +40,7 @@ def navbar():
             elif str(rule).find('/ca/') is 0:
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 ca_links_list.append((url, rule.endpoint))
-    
+
     # Sort list and then delete homepage from list
     ca_links_list.sort()
     wa_links_list.sort()
@@ -50,15 +53,15 @@ def navbar():
 
     # Modify the endpoints into pretty names
     for k, v in ca_nav_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         ca_nav_links.update(update_name)
 
     for k, v in wa_nav_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         wa_nav_links.update(update_name)
 
     for k, v in ny_nav_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         ny_nav_links.update(update_name)
 
     # Delete state directory pages
@@ -69,8 +72,9 @@ def navbar():
 
     return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
 
+
 def generate_breadcrumb():
-    
+
     # Get path of the route
     url = request.path
 
@@ -89,17 +93,19 @@ def generate_breadcrumb():
     # Get the endpoint name
     endpoint = request.endpoint
 
-    # Replace underscores with spaces in endpoint name and convert to title case
-    bc_schedule_text = endpoint.title().replace('_',' ')
+    # Replace underscores with spaces in endpoint name
+    # Then convert to title case
+    bc_schedule_text = endpoint.title().replace('_', ' ')
 
     return bc_path, bc_state_text, bc_schedule_text
 
+
 @app.route('/')
 def homepage():
-    
+
     # Create instance of navbar()
     nav = navbar()
-    
+
     homepage = True
     # Create list of url routes
     ca_links_list = []
@@ -116,7 +122,7 @@ def homepage():
             elif str(rule).find('/ca/') is 0:
                 url = url_for(rule.endpoint, **(rule.defaults or {}))
                 ca_links_list.append((url, rule.endpoint))
-    
+
     # Sort lists
     ca_links_list.sort()
     wa_links_list.sort()
@@ -129,15 +135,15 @@ def homepage():
 
     # Modify the endpoints into pretty names
     for k, v in ca_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         ca_links.update(update_name)
 
     for k, v in wa_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         wa_links.update(update_name)
 
     for k, v in ny_links.items():
-        update_name = {k: v.title().replace('_',' ')}
+        update_name = {k: v.title().replace('_', ' ')}
         ny_links.update(update_name)
 
     # Delete state directory pages from dict
@@ -145,7 +151,7 @@ def homepage():
     del ca_links['/ca/']
     del ny_links['/ny/']
     del wa_links['/wa/']
-        
+
     return render_template('index.html',
                            homepage=homepage,
                            ny_nav_links=nav[0],
@@ -155,10 +161,11 @@ def homepage():
                            ny_links=ny_links.items(),
                            wa_links=wa_links.items())
 
+
 # California directory page
 @app.route('/ca/')
 def california_ferry_schedules():
-    
+
     # Create instance of navbar()
     nav = navbar()
 
@@ -181,7 +188,7 @@ def california_ferry_schedules():
     ca_schedules = dict(ca_schedule_list)
 
     for key, value in ca_schedules.items():
-        update_name = {key: value.title().replace('_',' ')}
+        update_name = {key: value.title().replace('_', ' ')}
         ca_schedules.update(update_name)
 
     del ca_schedules['/ca/']
@@ -194,10 +201,11 @@ def california_ferry_schedules():
                            ca_nav_links=nav[2],
                            bc_state_text=bc[1])
 
+
 # New York directory page
 @app.route('/ny/')
 def new_york_ferry_schedules():
-    
+
     # Create instance of navbar()
     nav = navbar()
 
@@ -220,7 +228,7 @@ def new_york_ferry_schedules():
     ny_schedules = dict(ny_schedule_list)
 
     for key, value in ny_schedules.items():
-        update_name = {key: value.title().replace('_',' ')}
+        update_name = {key: value.title().replace('_', ' ')}
         ny_schedules.update(update_name)
 
     del ny_schedules['/ny/']
@@ -233,15 +241,16 @@ def new_york_ferry_schedules():
                            ca_nav_links=nav[2],
                            bc_state_text=bc[1])
 
+
 # Washington directory page
 @app.route('/wa/')
 def washington_ferry_schedules():
-    
+
     # Create instance of navbar()
     nav = navbar()
 
     washington = True
-    
+
     # Create instance of generate_breadcrumb()
     bc = generate_breadcrumb()
 
@@ -259,7 +268,7 @@ def washington_ferry_schedules():
     wa_schedules = dict(wa_schedule_list)
 
     for key, value in wa_schedules.items():
-        update_name = {key: value.title().replace('_',' ')}
+        update_name = {key: value.title().replace('_', ' ')}
         wa_schedules.update(update_name)
 
     del wa_schedules['/wa/']
@@ -272,9 +281,10 @@ def washington_ferry_schedules():
                            ca_nav_links=nav[2],
                            bc_state_text=bc[1])
 
+
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def bremerton_ferry_schedule():
 
     # Set bremerton schedule variable to true
@@ -292,7 +302,7 @@ def bremerton_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -300,8 +310,8 @@ def bremerton_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     # Set container headers
     th_1 = ws.acell('B5').value
@@ -325,7 +335,7 @@ def bremerton_ferry_schedule():
     # ***Depart Bremerton schedule code ends***
 
     # ***Depart Seattle schedule code begins***
-    
+
     # Get the cells for each schedule
     depart_seattle_schedule = ws.col_values(7)
     arrive_bremerton_schedule = ws.col_values(8)
@@ -339,22 +349,26 @@ def bremerton_ferry_schedule():
     # Retrieve current time in Seattle
     current_seattle_time = pendulum.now('America/Los_Angeles')
 
-    # Set next Bremerton departure time by comparing current time to each time in the schedule
+    # Set next Bremerton departure time
+    # by comparing current time to each time in the schedule
     for departure in depart_bremerton_schedule:
-        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
         if current_seattle_time < format_time:
             next_departure_1 = departure
             break
 
-    # Set next Seattle departure time by comparing current time to each time in the schedule
+    # Set next Seattle departure time
+    # by comparing current time to each time in the schedule
     for departure in depart_seattle_schedule:
-        format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
         if current_seattle_time < format_time:
             next_departure_2 = departure
             break
 
     # ***Depart Seattle schedule code ends***
-    
+
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
                            times_1=times_1.items(),
@@ -377,18 +391,19 @@ def bremerton_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def bainbridge_island_ferry_schedule():
-    
+
     # Set bainbridge schedule variable to true
     # to indicate which template to use
     bainbridge_schedule = True
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -397,7 +412,7 @@ def bainbridge_island_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -405,13 +420,13 @@ def bainbridge_island_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
-    
+
     # Set next departure card headers
     ndh_1 = ws.acell('B7').value
     ndh_2 = ws.acell('B8').value
@@ -429,7 +444,8 @@ def bainbridge_island_ferry_schedule():
     del arrive_seattle_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_1 = dict(zip(depart_bainbridge_weekday_schedule, arrive_seattle_weekday_schedule))
+    times_1 = dict(zip(depart_bainbridge_weekday_schedule,
+                       arrive_seattle_weekday_schedule))
 
     # ***Depart Bainbridge weekday schedule code ends***
 
@@ -442,7 +458,8 @@ def bainbridge_island_ferry_schedule():
     del arrive_bainbridge_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_2 = dict(zip(depart_seattle_weekday_schedule, arrive_bainbridge_weekday_schedule))
+    times_2 = dict(zip(depart_seattle_weekday_schedule,
+                       arrive_bainbridge_weekday_schedule))
 
     # ***Depart seattle weekday schedule code ends***
 
@@ -455,7 +472,8 @@ def bainbridge_island_ferry_schedule():
     del arrive_seattle_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_3 = dict(zip(depart_bainbridge_weekend_schedule, arrive_seattle_weekend_schedule))
+    times_3 = dict(zip(depart_bainbridge_weekend_schedule,
+                       arrive_seattle_weekend_schedule))
 
     # ***Depart bainbridge weekend schedule code ends***
 
@@ -468,7 +486,8 @@ def bainbridge_island_ferry_schedule():
     del arrive_bainbridge_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_4 = dict(zip(depart_seattle_weekend_schedule, arrive_bainbridge_weekend_schedule))
+    times_4 = dict(zip(depart_seattle_weekend_schedule,
+                       arrive_bainbridge_weekend_schedule))
 
     # ***Depart Seattle weekend schedule code ends***
 
@@ -480,13 +499,15 @@ def bainbridge_island_ferry_schedule():
     # Check whether weekday or weekend and calculate Bainbridge next departures
     if current_seattle_day >= 1 and current_seattle_day <= 5:
         for departure in depart_bainbridge_weekday_schedule:
-            format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
             if current_seattle_time < format_time:
                 next_departure_1 = departure
                 break
     else:
         for departure in depart_bainbridge_weekend_schedule:
-            format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
             if current_seattle_time < format_time:
                 next_departure_1 = departure
                 break
@@ -494,18 +515,19 @@ def bainbridge_island_ferry_schedule():
     # Check whether weekday or weekend and calculate Seattle next departures
     if current_seattle_day >= 1 and current_seattle_day <= 5:
         for departure in depart_seattle_weekday_schedule:
-            format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
             if current_seattle_time < format_time:
                 next_departure_2 = departure
                 break
     else:
         for departure in depart_seattle_weekend_schedule:
-            format_time = pendulum.from_format(departure,'h:mm A').set(tz='America/Los_Angeles')
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
             if current_seattle_time < format_time:
                 next_departure_2 = departure
                 break
-    
-    
+
     return render_template('schedule.html',
                            bainbridge_schedule=bainbridge_schedule,
                            times_1=times_1.items(),
@@ -532,18 +554,19 @@ def bainbridge_island_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Anacortes Ferry schedule route
 @app.route('/wa/anacortes/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def anacortes_ferry_schedule():
-    
+
     # Set anacortes schedule variable to true
     # to indicate which template to use
     anacortes_schedule = True
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -552,7 +575,7 @@ def anacortes_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -598,11 +621,16 @@ def anacortes_ferry_schedule():
     # Create temp list for each westbound time row
     # Append temp list to schedule list
     while c < len(wb_anacortes):
-        wb_temp_list = [wb_anacortes[c], wb_lopez_island[c], wb_shaw_island[c], wb_orcas_island[c], wb_san_juan[c], wb_sidney_bc[c]]
+        wb_temp_list = [wb_anacortes[c],
+                        wb_lopez_island[c],
+                        wb_shaw_island[c],
+                        wb_orcas_island[c],
+                        wb_san_juan[c],
+                        wb_sidney_bc[c]]
+
         wb_schedule.append(wb_temp_list)
         c += 1
 
-    
     # Initiate empty eastbound schedule variables
     eb_schedule = []
     eb_temp_list = []
@@ -615,7 +643,7 @@ def anacortes_ferry_schedule():
     eb_shaw_island = ws.col_values(15)
     eb_lopez_island = ws.col_values(16)
     eb_anacortes = ws.col_values(17)
-    
+
     # Create list of eastbound table headers
     eb_table_headers.extend([eb_sidney_bc[0],
                              eb_san_juan[0],
@@ -638,7 +666,13 @@ def anacortes_ferry_schedule():
     # Create temp list for each eastbound time row
     # Append temp list to schedule list
     while c < len(eb_anacortes):
-        eb_temp_list = [eb_sidney_bc[c], eb_san_juan[c], eb_orcas_island[c], eb_shaw_island[c], eb_lopez_island[c], eb_anacortes[c]]
+        eb_temp_list = [eb_sidney_bc[c],
+                        eb_san_juan[c],
+                        eb_orcas_island[c],
+                        eb_shaw_island[c],
+                        eb_lopez_island[c],
+                        eb_anacortes[c]]
+
         eb_schedule.append(eb_temp_list)
         c += 1
 
@@ -660,26 +694,28 @@ def anacortes_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def kingston_ferry_schedule():
+
     # Set kingston schedule variable to true
     # to indicate which template to use
     kingston_schedule = True
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
-    
+
     # Get worksheet with schedules
     ws = sheet.get_worksheet(4)
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -687,8 +723,8 @@ def kingston_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('D1').value:ws.acell('E1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
@@ -706,7 +742,7 @@ def kingston_ferry_schedule():
     # ***Depart Kingston schedule code ends***
 
     # ***Depart Edmonds schedule code begins***
-    
+
     # Get the cells for each schedule
     depart_edmonds_schedule = ws.col_values(7)
     arrive_kingston_schedule = ws.col_values(8)
@@ -717,7 +753,7 @@ def kingston_ferry_schedule():
     times_2 = dict(zip(depart_edmonds_schedule, arrive_kingston_schedule))
 
     # ***Depart Edmonds schedule code ends***
-    
+
     return render_template('schedule.html',
                            kingston_schedule=kingston_schedule,
                            times_1=times_1.items(),
@@ -736,8 +772,9 @@ def kingston_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 @app.route('/wa/southworth-vashon/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def southworth_ferry_schedule():
     # Set southworth schedule variable to true
     # to indicate which template to use
@@ -745,7 +782,7 @@ def southworth_ferry_schedule():
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -754,7 +791,7 @@ def southworth_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -762,8 +799,8 @@ def southworth_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
@@ -782,7 +819,8 @@ def southworth_ferry_schedule():
     del arrive_vashon_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_1 = dict(zip(depart_southworth_weekday_schedule, arrive_vashon_weekday_schedule))
+    times_1 = dict(zip(depart_southworth_weekday_schedule,
+                       arrive_vashon_weekday_schedule))
 
     # ***Depart southworth weekday schedule code ends***
 
@@ -795,7 +833,8 @@ def southworth_ferry_schedule():
     del arrive_southworth_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_2 = dict(zip(depart_vashon_weekday_schedule, arrive_southworth_weekday_schedule))
+    times_2 = dict(zip(depart_vashon_weekday_schedule,
+                       arrive_southworth_weekday_schedule))
 
     # ***Depart vashon weekday schedule code ends***
 
@@ -808,7 +847,8 @@ def southworth_ferry_schedule():
     del arrive_vashon_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_3 = dict(zip(depart_southworth_weekend_schedule, arrive_vashon_weekend_schedule))
+    times_3 = dict(zip(depart_southworth_weekend_schedule,
+                       arrive_vashon_weekend_schedule))
 
     # ***Depart southworth weekend schedule code ends***
 
@@ -821,10 +861,11 @@ def southworth_ferry_schedule():
     del arrive_southworth_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_4 = dict(zip(depart_vashon_weekend_schedule, arrive_southworth_weekend_schedule))
+    times_4 = dict(zip(depart_vashon_weekend_schedule,
+                       arrive_southworth_weekend_schedule))
 
     # ***Depart vashon weekend schedule code ends***
-    
+
     return render_template('schedule.html',
                            southworth_schedule=southworth_schedule,
                            times_1=times_1.items(),
@@ -847,11 +888,12 @@ def southworth_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def staten_island_ferry_schedule():
-    
+
     # Set bainbridge schedule variable to true
     # to indicate which template to use
     staten_island_schedule = True
@@ -867,7 +909,7 @@ def staten_island_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -875,8 +917,8 @@ def staten_island_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
@@ -895,7 +937,8 @@ def staten_island_ferry_schedule():
     del arrive_manhattan_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_1 = dict(zip(depart_si_weekday_schedule, arrive_manhattan_weekday_schedule))
+    times_1 = dict(zip(depart_si_weekday_schedule,
+                       arrive_manhattan_weekday_schedule))
 
     # ***Depart Staten Island weekday schedule code ends***
 
@@ -908,11 +951,12 @@ def staten_island_ferry_schedule():
     del arrive_si_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_2 = dict(zip(depart_manhattan_weekday_schedule, arrive_si_weekday_schedule))
+    times_2 = dict(zip(depart_manhattan_weekday_schedule,
+                       arrive_si_weekday_schedule))
 
     # ***Depart Manhattan weekday schedule code ends***
 
-    # ***Depart Staten Island Weekend schedule code begins*** 
+    # ***Depart Staten Island Weekend schedule code begins***
     # Get each schedule and delete header cells
     depart_si_weekend_schedule = ws.col_values(10)
     arrive_manhattan_weekend_schedule = ws.col_values(11)
@@ -920,7 +964,8 @@ def staten_island_ferry_schedule():
     del arrive_manhattan_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_3 = dict(zip(depart_si_weekend_schedule, arrive_manhattan_weekend_schedule))
+    times_3 = dict(zip(depart_si_weekend_schedule,
+                       arrive_manhattan_weekend_schedule))
 
     # ***Depart Staten Island Weekday schedule code ends***
 
@@ -933,10 +978,11 @@ def staten_island_ferry_schedule():
     del arrive_si_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_4 = dict(zip(depart_manhattan_weekend_schedule, arrive_si_weekend_schedule))
+    times_4 = dict(zip(depart_manhattan_weekend_schedule,
+                       arrive_si_weekend_schedule))
 
     # ***Depart Manhattan weekend schedule code ends***
-    
+
     return render_template('schedule.html',
                            staten_island_schedule=staten_island_schedule,
                            times_1=times_1.items(),
@@ -959,9 +1005,10 @@ def staten_island_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Larkspur Ferry Schedule route
 @app.route('/ca/larkspur-sf/')
-#@cache.cached(timeout=30)
+# @cache.cached(timeout=30)
 def larkspur_ferry_schedule():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
@@ -969,7 +1016,7 @@ def larkspur_ferry_schedule():
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -978,7 +1025,7 @@ def larkspur_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -986,8 +1033,8 @@ def larkspur_ferry_schedule():
     leadcopy = ws.acell('B3').value
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value:ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value:ws.acell('H1').value}
+    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
+    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
@@ -1006,7 +1053,8 @@ def larkspur_ferry_schedule():
     del arrive_sf_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_1 = dict(zip(depart_larkspur_weekday_schedule, arrive_sf_weekday_schedule))
+    times_1 = dict(zip(depart_larkspur_weekday_schedule,
+                       arrive_sf_weekday_schedule))
 
     # ***Depart Larkspur weekday schedule code ends***
 
@@ -1019,7 +1067,8 @@ def larkspur_ferry_schedule():
     del arrive_larkspur_weekday_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_2 = dict(zip(depart_sf_weekday_schedule, arrive_larkspur_weekday_schedule))
+    times_2 = dict(zip(depart_sf_weekday_schedule,
+                       arrive_larkspur_weekday_schedule))
 
     # ***Depart SF weekday schedule code ends***
 
@@ -1032,7 +1081,8 @@ def larkspur_ferry_schedule():
     del arrive_sf_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_3 = dict(zip(depart_larkspur_weekend_schedule, arrive_sf_weekend_schedule))
+    times_3 = dict(zip(depart_larkspur_weekend_schedule,
+                       arrive_sf_weekend_schedule))
 
     # ***Depart Larkspur weekend schedule code ends***
 
@@ -1045,10 +1095,11 @@ def larkspur_ferry_schedule():
     del arrive_larkspur_weekend_schedule[0]
 
     # Convert both lists into a single dictionary
-    times_4 = dict(zip(depart_sf_weekend_schedule, arrive_larkspur_weekend_schedule))
+    times_4 = dict(zip(depart_sf_weekend_schedule,
+                       arrive_larkspur_weekend_schedule))
 
     # ***Depart SF weekend schedule code ends***
-    
+
     return render_template('schedule.html',
                            larkspur_schedule=larkspur_schedule,
                            times_1=times_1.items(),
@@ -1071,9 +1122,10 @@ def larkspur_ferry_schedule():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
 # Vallejo Ferry Schedule route
 @app.route('/ca/vallejo-sf/')
-#cache.cached(timeout=30)
+# cache.cached(timeout=30)
 def vallejo_ferry_schedule():
     # Set anacortes schedule variable to true
     # to indicate which template to use
@@ -1081,7 +1133,7 @@ def vallejo_ferry_schedule():
 
     # Create instance of navbar()
     nav = navbar()
-    
+
     # Generate breadcrumb for this route
     bc = generate_breadcrumb()
 
@@ -1090,7 +1142,7 @@ def vallejo_ferry_schedule():
 
     # Set title tag variable
     title = ws.acell('B1').value
-    
+
     # Set h1 tag variable
     h1 = ws.acell('B2').value
 
@@ -1114,9 +1166,9 @@ def vallejo_ferry_schedule():
 
     # Create list of depart vallejo weekday table headers
     dv_weekday_table_headers.extend([depart_mare_island_weekday[0],
-                             depart_vallejo_weekday[0],
-                             arrive_sf_fb_weekday[0],
-                             arrive_sf_pier_weekday[0]])
+                                     depart_vallejo_weekday[0],
+                                     arrive_sf_fb_weekday[0],
+                                     arrive_sf_pier_weekday[0]])
 
     # Remove table headers
     del depart_mare_island_weekday[0]
@@ -1150,9 +1202,9 @@ def vallejo_ferry_schedule():
 
     # Create list of depart vallejo weekend table headers
     dv_weekend_table_headers.extend([depart_mare_island_weekend[0],
-                             depart_vallejo_weekend[0],
-                             arrive_sf_fb_weekend[0],
-                             arrive_sf_pier_weekend[0]])
+                                     depart_vallejo_weekend[0],
+                                     arrive_sf_fb_weekend[0],
+                                     arrive_sf_pier_weekend[0]])
 
     # Remove table headers
     del depart_mare_island_weekend[0]
@@ -1266,6 +1318,7 @@ def vallejo_ferry_schedule():
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
+
 
 if __name__ == '__main__':
     app.debug = True
