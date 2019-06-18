@@ -1000,6 +1000,10 @@ def staten_island_ferry_schedule():
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
 
+    # Set next departure card headers
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
+
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
@@ -1072,6 +1076,8 @@ def staten_island_ferry_schedule():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
