@@ -345,16 +345,18 @@ def bremerton_ferry_schedule():
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
 
+    # ***Depart Seattle schedule code ends***
+
     # Calculate next departure times
     # Retrieve current time in Seattle
-    current_seattle_time = pendulum.now('America/Los_Angeles')
+    current_pacific_time = pendulum.now('America/Los_Angeles')
 
     # Set next Bremerton departure time
     # by comparing current time to each time in the schedule
     for departure in depart_bremerton_schedule:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
-        if current_seattle_time < format_time:
+        if current_pacific_time < format_time:
             next_departure_1 = departure
             break
 
@@ -363,11 +365,9 @@ def bremerton_ferry_schedule():
     for departure in depart_seattle_schedule:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
-        if current_seattle_time < format_time:
+        if current_pacific_time < format_time:
             next_departure_2 = departure
             break
-
-    # ***Depart Seattle schedule code ends***
 
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
@@ -493,38 +493,38 @@ def bainbridge_island_ferry_schedule():
 
     # Calculate next departures
     # Retrieve current time in Seattle
-    current_seattle_time = pendulum.now('America/Los_Angeles')
-    current_seattle_day = current_seattle_time.day_of_week
+    current_pacific_time = pendulum.now('America/Los_Angeles')
+    current_day = current_pacific_time.day_of_week
 
     # Check whether weekday or weekend and calculate Bainbridge next departures
-    if current_seattle_day >= 1 and current_seattle_day <= 5:
+    if current_day >= 1 and current_day <= 5:
         for departure in depart_bainbridge_weekday_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_1 = departure
                 break
     else:
         for departure in depart_bainbridge_weekend_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_1 = departure
                 break
 
     # Check whether weekday or weekend and calculate Seattle next departures
-    if current_seattle_day >= 1 and current_seattle_day <= 5:
+    if current_day >= 1 and current_day <= 5:
         for departure in depart_seattle_weekday_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_2 = departure
                 break
     else:
         for departure in depart_seattle_weekend_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_2 = departure
                 break
 
@@ -761,14 +761,14 @@ def kingston_ferry_schedule():
 
     # Calculate next departure times
     # Retrieve current time in Seattle
-    current_seattle_time = pendulum.now('America/Los_Angeles')
+    current_pacific_time = pendulum.now('America/Los_Angeles')
 
     # Set next Kingston departure time
     # by comparing current time to each time in the schedule
     for departure in depart_kingston_schedule:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
-        if current_seattle_time < format_time:
+        if current_pacific_time < format_time:
             next_departure_1 = departure
             break
 
@@ -777,7 +777,7 @@ def kingston_ferry_schedule():
     for departure in depart_edmonds_schedule:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
-        if current_seattle_time < format_time:
+        if current_pacific_time < format_time:
             next_departure_2 = departure
             break
 
@@ -903,38 +903,38 @@ def southworth_ferry_schedule():
 
     # Calculate next departures
     # Retrieve current time in Seattle
-    current_seattle_time = pendulum.now('America/Los_Angeles')
-    current_seattle_day = current_seattle_time.day_of_week
+    current_pacific_time = pendulum.now('America/Los_Angeles')
+    current_day = current_pacific_time.day_of_week
 
     # Check whether weekday or weekend and calculate Bainbridge next departures
-    if current_seattle_day >= 1 and current_seattle_day <= 5:
+    if current_day >= 1 and current_day <= 5:
         for departure in depart_southworth_weekday_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_1 = departure
                 break
     else:
         for departure in depart_southworth_weekend_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_1 = departure
                 break
 
     # Check whether weekday or weekend and calculate Seattle next departures
-    if current_seattle_day >= 1 and current_seattle_day <= 5:
+    if current_day >= 1 and current_day <= 5:
         for departure in depart_vashon_weekday_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_2 = departure
                 break
     else:
         for departure in depart_vashon_weekend_schedule:
             format_time = pendulum.from_format(departure, 'h:mm A')\
                                   .set(tz='America/Los_Angeles')
-            if current_seattle_time < format_time:
+            if current_pacific_time < format_time:
                 next_departure_2 = departure
                 break
 
@@ -1116,6 +1116,10 @@ def larkspur_ferry_schedule():
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
 
+    # Set next departure card headers
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
+
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
@@ -1176,12 +1180,51 @@ def larkspur_ferry_schedule():
 
     # ***Depart SF weekend schedule code ends***
 
+    # Calculate next departures
+    # Retrieve current pacific
+    current_pacific_time = pendulum.now('America/Los_Angeles')
+    current_day = current_pacific_time.day_of_week
+
+    # Check whether weekday or weekend and calculate Larkspur next departures
+    if current_day >= 1 and current_day <= 5:
+        for departure in depart_larkspur_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_1 = departure
+                break
+    else:
+        for departure in depart_larkspur_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_1 = departure
+                break
+
+    # Check whether weekday or weekend and calculate SF next departures
+    if current_day >= 1 and current_day <= 5:
+        for departure in depart_sf_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_2 = departure
+                break
+    else:
+        for departure in depart_sf_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_2 = departure
+                break
+
     return render_template('schedule.html',
                            larkspur_schedule=larkspur_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            times_3=times_3.items(),
                            times_4=times_4.items(),
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,
@@ -1189,6 +1232,8 @@ def larkspur_ferry_schedule():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
