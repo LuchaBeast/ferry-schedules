@@ -726,8 +726,13 @@ def kingston_ferry_schedule():
     table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
     table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
 
+    # Set containers headers for each schedule
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
+
+    # Set card headers for next departures
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
 
     # ***Depart Kingston schedule code begins***
 
@@ -754,15 +759,41 @@ def kingston_ferry_schedule():
 
     # ***Depart Edmonds schedule code ends***
 
+    # Calculate next departure times
+    # Retrieve current time in Seattle
+    current_seattle_time = pendulum.now('America/Los_Angeles')
+
+    # Set next Kingston departure time
+    # by comparing current time to each time in the schedule
+    for departure in depart_kingston_schedule:
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+        if current_seattle_time < format_time:
+            next_departure_1 = departure
+            break
+
+    # Set next Edmonds departure time
+    # by comparing current time to each time in the schedule
+    for departure in depart_edmonds_schedule:
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+        if current_seattle_time < format_time:
+            next_departure_2 = departure
+            break
+
     return render_template('schedule.html',
                            kingston_schedule=kingston_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            th_1=th_1,
                            th_2=th_2,
                            bc_path=bc[0],
@@ -805,6 +836,10 @@ def southworth_ferry_schedule():
     # Set H2 tags for each schedule
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
+
+    # Set card headers for next departures
+    ndh_1 = ws.acell('B7').value
+    ndh_2 = ws.acell('B8').value
 
     # Set H3 tags for each schedule
     h3_1 = ws.acell('D1').value
@@ -866,12 +901,51 @@ def southworth_ferry_schedule():
 
     # ***Depart vashon weekend schedule code ends***
 
+    # Calculate next departures
+    # Retrieve current time in Seattle
+    current_seattle_time = pendulum.now('America/Los_Angeles')
+    current_seattle_day = current_seattle_time.day_of_week
+
+    # Check whether weekday or weekend and calculate Bainbridge next departures
+    if current_seattle_day >= 1 and current_seattle_day <= 5:
+        for departure in depart_southworth_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_seattle_time < format_time:
+                next_departure_1 = departure
+                break
+    else:
+        for departure in depart_southworth_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_seattle_time < format_time:
+                next_departure_1 = departure
+                break
+
+    # Check whether weekday or weekend and calculate Seattle next departures
+    if current_seattle_day >= 1 and current_seattle_day <= 5:
+        for departure in depart_vashon_weekday_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_seattle_time < format_time:
+                next_departure_2 = departure
+                break
+    else:
+        for departure in depart_vashon_weekend_schedule:
+            format_time = pendulum.from_format(departure, 'h:mm A')\
+                                  .set(tz='America/Los_Angeles')
+            if current_seattle_time < format_time:
+                next_departure_2 = departure
+                break
+
     return render_template('schedule.html',
                            southworth_schedule=southworth_schedule,
                            times_1=times_1.items(),
                            times_2=times_2.items(),
                            times_3=times_3.items(),
                            times_4=times_4.items(),
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=table_headers_1.items(),
                            table_headers_2=table_headers_2.items(),
                            title=title,
@@ -879,6 +953,8 @@ def southworth_ferry_schedule():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
                            h3_1=h3_1,
                            h3_2=h3_2,
                            bc_path=bc[0],
