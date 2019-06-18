@@ -3,7 +3,6 @@ from flask_caching import Cache
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import string
-#from datetime import datetime
 import pendulum
 
 app = Flask(__name__)
@@ -312,7 +311,7 @@ def bremerton_ferry_schedule():
     ndh_1 = ws.acell('B7').value
     ndh_2 = ws.acell('B8').value
 
-    ### Depart Bremerton schedule code begins
+    # ***Depart Bremerton schedule code begins***
 
     # Get the cells for each schedule and delete header cell from list
     depart_bremerton_schedule = ws.col_values(4)
@@ -323,9 +322,9 @@ def bremerton_ferry_schedule():
     # Convert schedule lists into dictionary
     times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
 
-    ### Depart Bremerton schedule code ends
+    # ***Depart Bremerton schedule code ends***
 
-    ### Depart Seattle schedule code begins
+    # ***Depart Seattle schedule code begins***
     
     # Get the cells for each schedule
     depart_seattle_schedule = ws.col_values(7)
@@ -354,7 +353,7 @@ def bremerton_ferry_schedule():
             next_departure_2 = departure
             break
 
-    ### Depart Seattle schedule code ends    
+    # ***Depart Seattle schedule code ends***
     
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
@@ -421,7 +420,7 @@ def bainbridge_island_ferry_schedule():
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
 
-    ### Depart Bainbridge weekday schedule code begins
+    # ***Depart Bainbridge weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_bainbridge_weekday_schedule = ws.col_values(5)
@@ -432,9 +431,9 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_bainbridge_weekday_schedule, arrive_seattle_weekday_schedule))
 
-    ### Depart Bainbridge weekday schedule code ends
+    # ***Depart Bainbridge weekday schedule code ends***
 
-    ### Depart Seattle weekday schedule code begins
+    # ***Depart Seattle weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_seattle_weekday_schedule = ws.col_values(7)
@@ -445,9 +444,9 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_seattle_weekday_schedule, arrive_bainbridge_weekday_schedule))
 
-    ### Depart seattle weekday schedule code ends
+    # ***Depart seattle weekday schedule code ends***
 
-    ### Depart bainbridge weekend schedule code begins
+    # ***Depart bainbridge weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_bainbridge_weekend_schedule = ws.col_values(10)
@@ -458,9 +457,9 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_3 = dict(zip(depart_bainbridge_weekend_schedule, arrive_seattle_weekend_schedule))
 
-    ### Depart bainbridge weekend schedule code ends
+    # ***Depart bainbridge weekend schedule code ends***
 
-    ### Depart Seattle weekend schedule code begins
+    # ***Depart Seattle weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_seattle_weekend_schedule = ws.col_values(12)
@@ -471,7 +470,7 @@ def bainbridge_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_4 = dict(zip(depart_seattle_weekend_schedule, arrive_bainbridge_weekend_schedule))
 
-    ### Depart Seattle weekend schedule code ends
+    # ***Depart Seattle weekend schedule code ends***
 
     # Calculate next departures
     # Retrieve current time in Seattle
@@ -694,7 +693,7 @@ def kingston_ferry_schedule():
     th_1 = ws.acell('B5').value
     th_2 = ws.acell('B6').value
 
-    ### Depart Kingston schedule code begins
+    # ***Depart Kingston schedule code begins***
 
     # Get the cells for each schedule and delete header cell from list
     depart_kingston_schedule = ws.col_values(4)
@@ -704,9 +703,9 @@ def kingston_ferry_schedule():
 
     times_1 = dict(zip(depart_kingston_schedule, arrive_edmonds_schedule))
 
-    ### Depart Kingston schedule code ends
+    # ***Depart Kingston schedule code ends***
 
-    ### Depart Edmonds schedule code begins
+    # ***Depart Edmonds schedule code begins***
     
     # Get the cells for each schedule
     depart_edmonds_schedule = ws.col_values(7)
@@ -717,7 +716,7 @@ def kingston_ferry_schedule():
     # Convert schedule columns into a single dictionary
     times_2 = dict(zip(depart_edmonds_schedule, arrive_kingston_schedule))
 
-    ### Depart Edmonds schedule code ends
+    # ***Depart Edmonds schedule code ends***
     
     return render_template('schedule.html',
                            kingston_schedule=kingston_schedule,
@@ -774,7 +773,7 @@ def southworth_ferry_schedule():
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
 
-    ### Depart Southworth weekday schedule code begins
+    # ***Depart Southworth weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_southworth_weekday_schedule = ws.col_values(5)
@@ -785,9 +784,9 @@ def southworth_ferry_schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_southworth_weekday_schedule, arrive_vashon_weekday_schedule))
 
-    ### Depart southworth weekday schedule code ends
+    # ***Depart southworth weekday schedule code ends***
 
-    ### Depart vashon weekday schedule code begins
+    # ***Depart vashon weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_vashon_weekday_schedule = ws.col_values(7)
@@ -798,9 +797,9 @@ def southworth_ferry_schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_vashon_weekday_schedule, arrive_southworth_weekday_schedule))
 
-    ### Depart vashon weekday schedule code ends
+    # ***Depart vashon weekday schedule code ends***
 
-    ### Depart southworth weekend schedule code begins
+    # ***Depart southworth weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_southworth_weekend_schedule = ws.col_values(10)
@@ -811,9 +810,9 @@ def southworth_ferry_schedule():
     # Convert both lists into a single dictionary
     times_3 = dict(zip(depart_southworth_weekend_schedule, arrive_vashon_weekend_schedule))
 
-    ### Depart southworth weekend schedule code ends
+    # ***Depart southworth weekend schedule code ends***
 
-    ### Depart vashon weekend schedule code begins
+    # ***Depart vashon weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_vashon_weekend_schedule = ws.col_values(12)
@@ -824,7 +823,7 @@ def southworth_ferry_schedule():
     # Convert both lists into a single dictionary
     times_4 = dict(zip(depart_vashon_weekend_schedule, arrive_southworth_weekend_schedule))
 
-    ### Depart vashon weekend schedule code ends
+    # ***Depart vashon weekend schedule code ends***
     
     return render_template('schedule.html',
                            southworth_schedule=southworth_schedule,
@@ -887,7 +886,7 @@ def staten_island_ferry_schedule():
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
 
-    ### Depart Staten Island weekday schedule code begins
+    # ***Depart Staten Island weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_si_weekday_schedule = ws.col_values(5)
@@ -898,9 +897,9 @@ def staten_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_si_weekday_schedule, arrive_manhattan_weekday_schedule))
 
-    ### Depart Staten Island weekday schedule code ends
+    # ***Depart Staten Island weekday schedule code ends***
 
-    ### Depart Manhattan weekday schedule code
+    # ***Depart Manhattan weekday schedule code
 
     # Get each schedule and delete header cells
     depart_manhattan_weekday_schedule = ws.col_values(7)
@@ -911,9 +910,9 @@ def staten_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_manhattan_weekday_schedule, arrive_si_weekday_schedule))
 
-    ### Depart Manhattan weekday schedule code ends
+    # ***Depart Manhattan weekday schedule code ends***
 
-    ### Depart Staten Island Weekend schedule code begins 
+    # ***Depart Staten Island Weekend schedule code begins*** 
     # Get each schedule and delete header cells
     depart_si_weekend_schedule = ws.col_values(10)
     arrive_manhattan_weekend_schedule = ws.col_values(11)
@@ -923,9 +922,9 @@ def staten_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_3 = dict(zip(depart_si_weekend_schedule, arrive_manhattan_weekend_schedule))
 
-    ### Depart Staten Island Weekday schedule code ends
+    # ***Depart Staten Island Weekday schedule code ends***
 
-    ### Depart Manhattan weekend schedule code begins
+    # ***Depart Manhattan weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_manhattan_weekend_schedule = ws.col_values(12)
@@ -936,7 +935,7 @@ def staten_island_ferry_schedule():
     # Convert both lists into a single dictionary
     times_4 = dict(zip(depart_manhattan_weekend_schedule, arrive_si_weekend_schedule))
 
-    ### Depart Manhattan weekend schedule code ends
+    # ***Depart Manhattan weekend schedule code ends***
     
     return render_template('schedule.html',
                            staten_island_schedule=staten_island_schedule,
@@ -998,7 +997,7 @@ def larkspur_ferry_schedule():
     h3_1 = ws.acell('D1').value
     h3_2 = ws.acell('I1').value
 
-    ### Depart Larkspur weekday schedule code begins
+    # ***Depart Larkspur weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_larkspur_weekday_schedule = ws.col_values(5)
@@ -1009,9 +1008,9 @@ def larkspur_ferry_schedule():
     # Convert both lists into a single dictionary
     times_1 = dict(zip(depart_larkspur_weekday_schedule, arrive_sf_weekday_schedule))
 
-    ### Depart Larkspur weekday schedule code ends
+    # ***Depart Larkspur weekday schedule code ends***
 
-    ### Depart SF weekday schedule code begins
+    # ***Depart SF weekday schedule code begins***
 
     # Get each schedule and delete header cells
     depart_sf_weekday_schedule = ws.col_values(7)
@@ -1022,9 +1021,9 @@ def larkspur_ferry_schedule():
     # Convert both lists into a single dictionary
     times_2 = dict(zip(depart_sf_weekday_schedule, arrive_larkspur_weekday_schedule))
 
-    ### Depart SF weekday schedule code ends
+    # ***Depart SF weekday schedule code ends***
 
-    ### Depart Larkspur weekend schedule code begins
+    # ***Depart Larkspur weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_larkspur_weekend_schedule = ws.col_values(10)
@@ -1035,9 +1034,9 @@ def larkspur_ferry_schedule():
     # Convert both lists into a single dictionary
     times_3 = dict(zip(depart_larkspur_weekend_schedule, arrive_sf_weekend_schedule))
 
-    ### Depart Larkspur weekend schedule code ends
+    # ***Depart Larkspur weekend schedule code ends***
 
-    ### Depart SF weekend schedule code begins
+    # ***Depart SF weekend schedule code begins***
 
     # Get each schedule and delete header cells
     depart_sf_weekend_schedule = ws.col_values(12)
@@ -1048,7 +1047,7 @@ def larkspur_ferry_schedule():
     # Convert both lists into a single dictionary
     times_4 = dict(zip(depart_sf_weekend_schedule, arrive_larkspur_weekend_schedule))
 
-    ### Depart SF weekend schedule code ends
+    # ***Depart SF weekend schedule code ends***
     
     return render_template('schedule.html',
                            larkspur_schedule=larkspur_schedule,
