@@ -330,40 +330,66 @@ def bremerton_ferry_schedule():
     ws = sheet.get_worksheet(1)
 
     # Set title tag variable
-    title = cache.get('title')
+    title = cache.get('cached_title')
     if title == None:
         title = ws.acell('B1').value
-        cache.set('title', title)
+        cache.set('cached_title', title)
 
     # Set h1 tag variable
-    h1 = cache.get('h1')
+    h1 = cache.get('cached_h1')
     if h1 == None:
         h1 = ws.acell('B2').value
-        cache.set('h1', h1)
+        cache.set('cached_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = cache.get('leadcopy')
+    leadcopy = cache.get('cached_leadcopy')
     if leadcopy == None:
         leadcopy = ws.acell('B3').value
-        cache.set('leadcopy', leadcopy)
+        cache.set('cached_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    table_headers_1 = cache.get('cached_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_table_headers_2', table_headers_2)
 
     # Set container headers
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    th_1 = cache.get('cached_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_th_1', th_1)
+    
+    th_2 = cache.get('cached_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_th_2', th_2)
 
     # Set next departure card headers
-    ndh_1 = ws.acell('B7').value
-    ndh_2 = ws.acell('B8').value
+    ndh_1 = cache.get('cached_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_ndh_2', ndh_2)
 
     # ***Depart Bremerton schedule code begins***
 
     # Get the cells for each schedule and delete header cell from list
-    depart_bremerton_schedule = ws.col_values(4)
-    arrive_seattle_schedule = ws.col_values(5)
+    depart_bremerton_schedule = cache.get('cached_depart_bremerton_schedule')
+    if depart_bremerton_schedule == None:
+        depart_bremerton_schedule = ws.col_values(4)
+        cache.set('cached_depart_bremerton_schedule', depart_bremerton_schedule)
+    arrive_seattle_schedule = cache.get('cached_arrive_seattle_schedule')
+    if arrive_seattle_schedule == None:
+        arrive_seattle_schedule = ws.col_values(5)
+        cache.set('cached_arrive_seattle_schedule', arrive_seattle_schedule)
+
     del depart_bremerton_schedule[0]
     del arrive_seattle_schedule[0]
 
@@ -375,8 +401,15 @@ def bremerton_ferry_schedule():
     # ***Depart Seattle schedule code begins***
 
     # Get the cells for each schedule
-    depart_seattle_schedule = ws.col_values(7)
-    arrive_bremerton_schedule = ws.col_values(8)
+    depart_seattle_schedule = cache.get('cached_depart_seattle_schedule')
+    if depart_seattle_schedule == None:
+        depart_seattle_schedule = ws.col_values(7)
+        cache.set('cached_depart_seattle_schedule', depart_seattle_schedule)
+    arrive_bremerton_schedule = cache.get('cached_arrive_bremerton_schedule')
+    if arrive_bremerton_schedule == None:
+        arrive_bremerton_schedule = ws.col_values(8)
+        cache.set('cached_arrive_bremerton_schedule', arrive_bremerton_schedule)
+        
     del depart_seattle_schedule[0]
     del arrive_bremerton_schedule[0]
 
