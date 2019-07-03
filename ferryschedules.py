@@ -1,42 +1,42 @@
 from flask import Flask, render_template, url_for, jsonify, request
-#from flask_caching import Cache
+from flask_caching import Cache
 from oauth2client.service_account import ServiceAccountCredentials
 import string
 import gspread
 import pendulum
 #import pylibmc
-import bmemcached
+#import bmemcached
 import os
 
 app = Flask(__name__)
-#cache = Cache()
+cache = Cache()
 
-# cache_servers = os.environ.get('MEMCACHIER_SERVERS')
-# if cache_servers == None:
-#     cache.init_app(app, config={'CACHE_TYPE': 'simple'})
-# else:
-#     cache_user = os.environ.get('MEMCACHIER_USERNAME') or ''
-#     cache_pass = os.environ.get('MEMCACHIER_PASSWORD') or ''
-#     cache.init_app(app,
-#         config={'CACHE_TYPE': 'saslmemcached',
-#                 'CACHE_MEMCACHED_SERVERS': cache_servers.split(','),
-#                 'CACHE_MEMCACHED_USERNAME': cache_user,
-#                 'CACHE_MEMCACHED_PASSWORD': cache_pass,
-#                 'CACHE_OPTIONS': { 'behaviors': {
-#                     # Faster IO
-#                     'tcp_nodelay': True,
-#                     # Keep connection alive
-#                     'tcp_keepalive': True,
-#                     # Timeout for set/get requests
-#                     'connect_timeout': 2000, # ms
-#                     'send_timeout': 750 * 1000, # us
-#                     'receive_timeout': 750 * 1000, # us
-#                     '_poll_timeout': 2000, # ms
-#                     # Better failover
-#                     'ketama': True,
-#                     'remove_failed': 1,
-#                     'retry_timeout': 2,
-#                     'dead_timeout': 30}}})
+cache_servers = os.environ.get('MEMCACHIER_SERVERS')
+if cache_servers == None:
+    cache.init_app(app, config={'CACHE_TYPE': 'simple'})
+else:
+    cache_user = os.environ.get('MEMCACHIER_USERNAME') or ''
+    cache_pass = os.environ.get('MEMCACHIER_PASSWORD') or ''
+    cache.init_app(app,
+        config={'CACHE_TYPE': 'saslmemcached',
+                'CACHE_MEMCACHED_SERVERS': cache_servers.split(','),
+                'CACHE_MEMCACHED_USERNAME': cache_user,
+                'CACHE_MEMCACHED_PASSWORD': cache_pass,
+                'CACHE_OPTIONS': { 'behaviors': {
+                    # Faster IO
+                    'tcp_nodelay': True,
+                    # Keep connection alive
+                    'tcp_keepalive': True,
+                    # Timeout for set/get requests
+                    'connect_timeout': 2000, # ms
+                    'send_timeout': 750 * 1000, # us
+                    'receive_timeout': 750 * 1000, # us
+                    '_poll_timeout': 2000, # ms
+                    # Better failover
+                    'ketama': True,
+                    'remove_failed': 1,
+                    'retry_timeout': 2,
+                    'dead_timeout': 30}}})
 
 # servers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
 # user = os.environ.get('MEMCACHIER_USERNAME', '')
@@ -64,13 +64,13 @@ app = Flask(__name__)
 #                       'dead_timeout': 30,
 #                     })
 
-servers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
-user = os.environ.get('MEMCACHIER_USERNAME', '')
-passw = os.environ.get('MEMCACHIER_PASSWORD', '')
+# servers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
+# user = os.environ.get('MEMCACHIER_USERNAME', '')
+# passw = os.environ.get('MEMCACHIER_PASSWORD', '')
 
-mc = bmemcached.Client(servers, username=user, password=passw)
+# mc = bmemcached.Client(servers, username=user, password=passw)
 
-mc.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
+# mc.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
@@ -465,65 +465,65 @@ def bremerton_ferry_schedule():
     #schedule = daily_schedule(ws)
 
     # Set title tag variable
-    title = mc.get('cached_title')
+    title = cache.get('cached_title')
     if title == None:
         title = ws.acell('B1').value
-        mc.set('cached_title', title)
+        cache.set('cached_title', title)
 
     # Set h1 tag variable
-    h1 = mc.get('cached_h1')
+    h1 = cache.get('cached_h1')
     if h1 == None:
         h1 = ws.acell('B2').value
-        mc.set('cached_h1', h1)
+        cache.set('cached_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = mc.get('cached_leadcopy')
+    leadcopy = cache.get('cached_leadcopy')
     if leadcopy == None:
         leadcopy = ws.acell('B3').value
-        mc.set('cached_leadcopy', leadcopy)
+        cache.set('cached_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = mc.get('cached_table_headers_1')
+    table_headers_1 = cache.get('cached_table_headers_1')
     if table_headers_1 == None:
         table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-        mc.set('cached_table_headers_1', table_headers_1)
-    table_headers_2 = mc.get('cached_table_headers_2')
+        cache.set('cached_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_table_headers_2')
     if table_headers_2 == None:
         table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
-        mc.set('cached_table_headers_2', table_headers_2)
+        cache.set('cached_table_headers_2', table_headers_2)
 
     # Set container headers
-    th_1 = mc.get('cached_th_1')
+    th_1 = cache.get('cached_th_1')
     if th_1 == None:
         th_1 = ws.acell('B5').value
-        mc.set('cached_th_1', th_1)
+        cache.set('cached_th_1', th_1)
     
-    th_2 = mc.get('cached_th_2')
+    th_2 = cache.get('cached_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
-        mc.set('cached_th_2', th_2)
+        cache.set('cached_th_2', th_2)
 
     # Set next departure card headers
-    ndh_1 = mc.get('cached_ndh_1')
+    ndh_1 = cache.get('cached_ndh_1')
     if ndh_1 == None:
         ndh_1 = ws.acell('B7').value
-        mc.set('cached_ndh_1', ndh_1)
-    ndh_2 = mc.get('cached_ndh_2')
+        cache.set('cached_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_ndh_2')
     if ndh_2 == None:
         ndh_2 = ws.acell('B8').value
-        mc.set('cached_ndh_2', ndh_2)
+        cache.set('cached_ndh_2', ndh_2)
 
     # ***Depart Bremerton schedule code begins***
 
     # Get the cells for each schedule and delete header cell from list
-    depart_bremerton_schedule = mc.get('cached_depart_bremerton_schedule')
+    depart_bremerton_schedule = cache.get('cached_depart_bremerton_schedule')
     if depart_bremerton_schedule == None:
         depart_bremerton_schedule = ws.col_values(4)
-        mc.set('cached_depart_bremerton_schedule', depart_bremerton_schedule)
-    arrive_seattle_schedule = mc.get('cached_arrive_seattle_schedule')
+        cache.set('cached_depart_bremerton_schedule', depart_bremerton_schedule)
+    arrive_seattle_schedule = cache.get('cached_arrive_seattle_schedule')
     if arrive_seattle_schedule == None:
         arrive_seattle_schedule = ws.col_values(5)
-        mc.set('cached_arrive_seattle_schedule', arrive_seattle_schedule)
+        cache.set('cached_arrive_seattle_schedule', arrive_seattle_schedule)
 
     del depart_bremerton_schedule[0]
     del arrive_seattle_schedule[0]
@@ -536,14 +536,14 @@ def bremerton_ferry_schedule():
     # ***Depart Seattle schedule code begins***
 
     # Get the cells for each schedule
-    depart_seattle_schedule = mc.get('cached_depart_seattle_schedule')
+    depart_seattle_schedule = cache.get('cached_depart_seattle_schedule')
     if depart_seattle_schedule == None:
         depart_seattle_schedule = ws.col_values(7)
-        mc.set('cached_depart_seattle_schedule', depart_seattle_schedule)
-    arrive_bremerton_schedule = mc.get('cached_arrive_bremerton_schedule')
+        cache.set('cached_depart_seattle_schedule', depart_seattle_schedule)
+    arrive_bremerton_schedule = cache.get('cached_arrive_bremerton_schedule')
     if arrive_bremerton_schedule == None:
         arrive_bremerton_schedule = ws.col_values(8)
-        mc.set('cached_arrive_bremerton_schedule', arrive_bremerton_schedule)
+        cache.set('cached_arrive_bremerton_schedule', arrive_bremerton_schedule)
 
     del depart_seattle_schedule[0]
     del arrive_bremerton_schedule[0]
