@@ -515,10 +515,7 @@ def bainbridge_island_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = mc.get('cached_ws')
-    if ws == None:
-        ws = sheet.get_worksheet(2)
-        mc.set('cached_ws', ws)
+    ws = sheet.get_worksheet(2)
 
     # Set title tag variable
     title = ws.acell('B1').value
