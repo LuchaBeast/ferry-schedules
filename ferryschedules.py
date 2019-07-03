@@ -90,6 +90,7 @@ def has_no_empty_params(rule):
 
 def navbar():
 
+    # Refresh access token
     if creds.access_token_expired:
         client.login()
 
@@ -169,6 +170,98 @@ def generate_breadcrumb():
 
     return bc_path, bc_state_text, bc_schedule_text
 
+@cache.memoize()
+def daily_schedule(ws):
+    # Set title tag variable
+    title = cache.get('cached_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_title', title)
+
+    # Set h1 tag variable
+    h1 = cache.get('cached_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_h1', h1)
+
+    # Set leadcopy variable
+    leadcopy = cache.get('cached_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_leadcopy', leadcopy)
+
+    # Set table headers for each schedule
+    table_headers_1 = cache.get('cached_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_table_headers_2', table_headers_2)
+
+    # Set container headers
+    th_1 = cache.get('cached_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_th_1', th_1)
+    
+    th_2 = cache.get('cached_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_th_2', th_2)
+
+    # Set next departure card headers
+    ndh_1 = cache.get('cached_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_ndh_2', ndh_2)
+
+    # ***Depart Bremerton schedule code begins***
+
+    # Get the cells for each schedule and delete header cell from list
+    depart_schedule_1 = cache.get('cached_depart_schedule_1')
+    if depart_schedule_1 == None:
+        depart_schedule_1 = ws.col_values(4)
+        cache.set('cached_depart_schedule_1', depart_schedule_1)
+    arrive_schedule_1 = cache.get('cached_arrive_schedule_1')
+    if arrive_schedule_1 == None:
+        arrive_schedule_1 = ws.col_values(5)
+        cache.set('cached_arrive_schedule_1', arrive_schedule_1)
+
+    del depart_schedule_1[0]
+    del arrive_schedule_1[0]
+
+    # Convert schedule lists into dictionary
+    times_1 = dict(zip(depart_schedule_1, arrive_schedule_1))
+
+    # ***Depart Bremerton schedule code ends***
+
+    # ***Depart Seattle schedule code begins***
+
+    # Get the cells for each schedule
+    depart_schedule_2 = cache.get('cached_depart_schedule_2')
+    if depart_schedule_2 == None:
+        depart_schedule_2 = ws.col_values(7)
+        cache.set('cached_depart_schedule_2', depart_schedule_2)
+    arrive_schedule_2 = cache.get('cached_arrive_schedule_2')
+    if arrive_schedule_2 == None:
+        arrive_schedule_2 = ws.col_values(8)
+        cache.set('cached_arrive_schedule_2', arrive_schedule_2)
+
+    del depart_schedule_2[0]
+    del arrive_schedule_2[0]
+
+    # Convert schedule columns into a single dictionary
+    times_2 = dict(zip(depart_schedule_2, arrive_schedule_2))
+
+    # ***Depart Seattle schedule code ends***
+
+    return title, h1, leadcopy, table_headers_1.items(), table_headers_2.items(), th_1, th_2, ndh_1, ndh_2, times_1.items(), times_2.items(), depart_schedule_1, depart_schedule_2
 
 @app.route('/')
 def homepage():
@@ -369,94 +462,96 @@ def bremerton_ferry_schedule():
     # Get worksheet with schedules
     ws = sheet.get_worksheet(1)
 
-    # Set title tag variable
-    title = cache.get('cached_title')
-    if title == None:
-        title = ws.acell('B1').value
-        cache.set('cached_title', title)
+    schedule = daily_schedule(ws)
 
-    # Set h1 tag variable
-    h1 = cache.get('cached_h1')
-    if h1 == None:
-        h1 = ws.acell('B2').value
-        cache.set('cached_h1', h1)
+    # # Set title tag variable
+    # title = cache.get('cached_title')
+    # if title == None:
+    #     title = ws.acell('B1').value
+    #     cache.set('cached_title', title)
 
-    # Set leadcopy variable
-    leadcopy = cache.get('cached_leadcopy')
-    if leadcopy == None:
-        leadcopy = ws.acell('B3').value
-        cache.set('cached_leadcopy', leadcopy)
+    # # Set h1 tag variable
+    # h1 = cache.get('cached_h1')
+    # if h1 == None:
+    #     h1 = ws.acell('B2').value
+    #     cache.set('cached_h1', h1)
 
-    # Set table headers for each schedule
-    table_headers_1 = cache.get('cached_table_headers_1')
-    if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-        cache.set('cached_table_headers_1', table_headers_1)
-    table_headers_2 = cache.get('cached_table_headers_2')
-    if table_headers_2 == None:
-        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
-        cache.set('cached_table_headers_2', table_headers_2)
+    # # Set leadcopy variable
+    # leadcopy = cache.get('cached_leadcopy')
+    # if leadcopy == None:
+    #     leadcopy = ws.acell('B3').value
+    #     cache.set('cached_leadcopy', leadcopy)
 
-    # Set container headers
-    th_1 = cache.get('cached_th_1')
-    if th_1 == None:
-        th_1 = ws.acell('B5').value
-        cache.set('cached_th_1', th_1)
+    # # Set table headers for each schedule
+    # table_headers_1 = cache.get('cached_table_headers_1')
+    # if table_headers_1 == None:
+    #     table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+    #     cache.set('cached_table_headers_1', table_headers_1)
+    # table_headers_2 = cache.get('cached_table_headers_2')
+    # if table_headers_2 == None:
+    #     table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    #     cache.set('cached_table_headers_2', table_headers_2)
+
+    # # Set container headers
+    # th_1 = cache.get('cached_th_1')
+    # if th_1 == None:
+    #     th_1 = ws.acell('B5').value
+    #     cache.set('cached_th_1', th_1)
     
-    th_2 = cache.get('cached_th_2')
-    if th_2 == None:
-        th_2 = ws.acell('B6').value
-        cache.set('cached_th_2', th_2)
+    # th_2 = cache.get('cached_th_2')
+    # if th_2 == None:
+    #     th_2 = ws.acell('B6').value
+    #     cache.set('cached_th_2', th_2)
 
-    # Set next departure card headers
-    ndh_1 = cache.get('cached_ndh_1')
-    if ndh_1 == None:
-        ndh_1 = ws.acell('B7').value
-        cache.set('cached_ndh_1', ndh_1)
-    ndh_2 = cache.get('cached_ndh_2')
-    if ndh_2 == None:
-        ndh_2 = ws.acell('B8').value
-        cache.set('cached_ndh_2', ndh_2)
+    # # Set next departure card headers
+    # ndh_1 = cache.get('cached_ndh_1')
+    # if ndh_1 == None:
+    #     ndh_1 = ws.acell('B7').value
+    #     cache.set('cached_ndh_1', ndh_1)
+    # ndh_2 = cache.get('cached_ndh_2')
+    # if ndh_2 == None:
+    #     ndh_2 = ws.acell('B8').value
+    #     cache.set('cached_ndh_2', ndh_2)
 
-    # ***Depart Bremerton schedule code begins***
+    # # ***Depart Bremerton schedule code begins***
 
-    # Get the cells for each schedule and delete header cell from list
-    depart_bremerton_schedule = cache.get('cached_depart_bremerton_schedule')
-    if depart_bremerton_schedule == None:
-        depart_bremerton_schedule = ws.col_values(4)
-        cache.set('cached_depart_bremerton_schedule', depart_bremerton_schedule)
-    arrive_seattle_schedule = cache.get('cached_arrive_seattle_schedule')
-    if arrive_seattle_schedule == None:
-        arrive_seattle_schedule = ws.col_values(5)
-        cache.set('cached_arrive_seattle_schedule', arrive_seattle_schedule)
+    # # Get the cells for each schedule and delete header cell from list
+    # depart_bremerton_schedule = cache.get('cached_depart_bremerton_schedule')
+    # if depart_bremerton_schedule == None:
+    #     depart_bremerton_schedule = ws.col_values(4)
+    #     cache.set('cached_depart_bremerton_schedule', depart_bremerton_schedule)
+    # arrive_seattle_schedule = cache.get('cached_arrive_seattle_schedule')
+    # if arrive_seattle_schedule == None:
+    #     arrive_seattle_schedule = ws.col_values(5)
+    #     cache.set('cached_arrive_seattle_schedule', arrive_seattle_schedule)
 
-    del depart_bremerton_schedule[0]
-    del arrive_seattle_schedule[0]
+    # del depart_bremerton_schedule[0]
+    # del arrive_seattle_schedule[0]
 
-    # Convert schedule lists into dictionary
-    times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
+    # # Convert schedule lists into dictionary
+    # times_1 = dict(zip(depart_bremerton_schedule, arrive_seattle_schedule))
 
-    # ***Depart Bremerton schedule code ends***
+    # # ***Depart Bremerton schedule code ends***
 
-    # ***Depart Seattle schedule code begins***
+    # # ***Depart Seattle schedule code begins***
 
-    # Get the cells for each schedule
-    depart_seattle_schedule = cache.get('cached_depart_seattle_schedule')
-    if depart_seattle_schedule == None:
-        depart_seattle_schedule = ws.col_values(7)
-        cache.set('cached_depart_seattle_schedule', depart_seattle_schedule)
-    arrive_bremerton_schedule = cache.get('cached_arrive_bremerton_schedule')
-    if arrive_bremerton_schedule == None:
-        arrive_bremerton_schedule = ws.col_values(8)
-        cache.set('cached_arrive_bremerton_schedule', arrive_bremerton_schedule)
+    # # Get the cells for each schedule
+    # depart_seattle_schedule = cache.get('cached_depart_seattle_schedule')
+    # if depart_seattle_schedule == None:
+    #     depart_seattle_schedule = ws.col_values(7)
+    #     cache.set('cached_depart_seattle_schedule', depart_seattle_schedule)
+    # arrive_bremerton_schedule = cache.get('cached_arrive_bremerton_schedule')
+    # if arrive_bremerton_schedule == None:
+    #     arrive_bremerton_schedule = ws.col_values(8)
+    #     cache.set('cached_arrive_bremerton_schedule', arrive_bremerton_schedule)
 
-    del depart_seattle_schedule[0]
-    del arrive_bremerton_schedule[0]
+    # del depart_seattle_schedule[0]
+    # del arrive_bremerton_schedule[0]
 
-    # Convert schedule columns into a single dictionary
-    times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
+    # # Convert schedule columns into a single dictionary
+    # times_2 = dict(zip(depart_seattle_schedule, arrive_bremerton_schedule))
 
-    # ***Depart Seattle schedule code ends***
+    # # ***Depart Seattle schedule code ends***
 
     # Calculate next departure times
     # Retrieve current time in Seattle
@@ -464,7 +559,7 @@ def bremerton_ferry_schedule():
 
     # Set next Bremerton departure time
     # by comparing current time to each time in the schedule
-    for departure in depart_bremerton_schedule:
+    for departure in schedule[11]:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
         if current_pacific_time < format_time:
@@ -473,7 +568,7 @@ def bremerton_ferry_schedule():
 
     # Set next Seattle departure time
     # by comparing current time to each time in the schedule
-    for departure in depart_seattle_schedule:
+    for departure in schedule[12]:
         format_time = pendulum.from_format(departure, 'h:mm A')\
                               .set(tz='America/Los_Angeles')
         if current_pacific_time < format_time:
@@ -482,19 +577,19 @@ def bremerton_ferry_schedule():
 
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
-                           times_1=times_1.items(),
-                           times_2=times_2.items(),
+                           times_1=schedule[9],
+                           times_2=schedule[10],
                            next_departure_1=next_departure_1,
                            next_departure_2=next_departure_2,
-                           table_headers_1=table_headers_1.items(),
-                           table_headers_2=table_headers_2.items(),
-                           title=title,
-                           h1=h1,
-                           leadcopy=leadcopy,
-                           th_1=th_1,
-                           th_2=th_2,
-                           ndh_1=ndh_1,
-                           ndh_2=ndh_2,
+                           table_headers_1=schedule[3],
+                           table_headers_2=schedule[4],
+                           title=schedule[0],
+                           h1=schedule[1],
+                           leadcopy=schedule[2],
+                           th_1=schedule[5],
+                           th_2=schedule[6],
+                           ndh_1=schedule[7],
+                           ndh_2=schedule[8],
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
