@@ -74,6 +74,7 @@ else:
 
 scope = ['https://spreadsheets.google.com/feeds',
          'https://www.googleapis.com/auth/drive']
+
 creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json',
                                                          scope)
 client = gspread.authorize(creds)
@@ -88,6 +89,9 @@ def has_no_empty_params(rule):
 
 
 def navbar():
+
+    if creds.access_token_expired:
+        client.login()
 
     # Create list of url routes
     ca_links_list = []
