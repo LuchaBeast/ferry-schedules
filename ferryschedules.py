@@ -110,7 +110,7 @@ def generate_breadcrumb():
     # Split each directory in the route
     split_url = url.split('/')
 
-    # Filter out empty list items 
+    # Filter out empty list items
     # Retrieve state path from list
     path_extract = list(filter(None, split_url))[0]
 
@@ -314,7 +314,6 @@ def washington_ferry_schedules():
 
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
-# @cache.cached(timeout=30)
 def bremerton_ferry_schedule():
 
     # Set bremerton schedule variable to true
@@ -331,13 +330,22 @@ def bremerton_ferry_schedule():
     ws = sheet.get_worksheet(1)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('leadcopy', leadcopy)
 
     # Set table headers for each schedule
     table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
