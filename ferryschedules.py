@@ -947,7 +947,7 @@ def kingston_ferry_schedule():
     arrive_edmonds_schedule = cache.get('cached_arrive_edmonds_schedule')
     if arrive_edmonds_schedule == None:
         arrive_edmonds_schedule = ws.col_values(5)
-        cache.set('cached_arrive_edmonds_schedule')
+        cache.set('cached_arrive_edmonds_schedule', arrive_edmonds_schedule)
 
     del depart_kingston_schedule[0]
     del arrive_edmonds_schedule[0]
@@ -962,13 +962,13 @@ def kingston_ferry_schedule():
     depart_edmonds_schedule = cache.get('cached_depart_edmonds_schedule')
     if depart_edmonds_schedule == None:
         depart_edmonds_schedule = ws.col_values(7)
-        cache.set('cached_depart_edmonds_schedule')
+        cache.set('cached_depart_edmonds_schedule', depart_edmonds_schedule)
 
     arrive_kingston_schedule = cache.get('cached_arrive_kingston_schedule')
     if arrive_kingston_schedule == None:
         arrive_kingston_schedule = ws.col_values(8)
-        cache.set('cached_arrive_kingston_schedule')
-        
+        cache.set('cached_arrive_kingston_schedule', arrive_kingston_schedule)
+
     del depart_edmonds_schedule[0]
     del arrive_kingston_schedule[0]
 
