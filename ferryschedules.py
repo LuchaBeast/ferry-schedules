@@ -888,31 +888,67 @@ def kingston_ferry_schedule():
     ws = sheet.get_worksheet(4)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_kingston_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_kingston_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_kingston_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_kingston_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_kingston_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_kingston_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    table_headers_1 = cache.get('cached_kingston_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_kingston_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_kingston_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_kingston_table_headers_2', table_headers_2)
 
-    # Set containers headers for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    # Set container headers
+    th_1 = cache.get('cached_kingston_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_kingston_th_1', th_1)
+    
+    th_2 = cache.get('cached_kingston_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_kingston_th_2', th_2)
 
-    # Set card headers for next departures
-    ndh_1 = ws.acell('B7').value
-    ndh_2 = ws.acell('B8').value
+    # Set next departure card headers
+    ndh_1 = cache.get('cached_kingston_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_kingston_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_kingston_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_kingston_ndh_2', ndh_2)
 
     # ***Depart Kingston schedule code begins***
 
     # Get the cells for each schedule and delete header cell from list
-    depart_kingston_schedule = ws.col_values(4)
-    arrive_edmonds_schedule = ws.col_values(5)
+    depart_kingston_schedule = cache.get('cached_depart_kingston_schedule')
+    if depart_kingston_schedule == None:
+        depart_kingston_schedule = ws.col_values(4)
+        cache.set('cached_depart_kingston_schedule', depart_kingston_schedule)
+
+    arrive_edmonds_schedule = cache.get('cached_arrive_edmonds_schedule')
+    if arrive_edmonds_schedule == None:
+        arrive_edmonds_schedule = ws.col_values(5)
+        cache.set('cached_arrive_edmonds_schedule')
+
     del depart_kingston_schedule[0]
     del arrive_edmonds_schedule[0]
 
@@ -923,8 +959,16 @@ def kingston_ferry_schedule():
     # ***Depart Edmonds schedule code begins***
 
     # Get the cells for each schedule
-    depart_edmonds_schedule = ws.col_values(7)
-    arrive_kingston_schedule = ws.col_values(8)
+    depart_edmonds_schedule = cache.get('cached_depart_edmonds_schedule')
+    if depart_edmonds_schedule == None:
+        depart_edmonds_schedule = ws.col_values(7)
+        cache.set('cached_depart_edmonds_schedule')
+
+    arrive_kingston_schedule = cache.get('cached_arrive_kingston_schedule')
+    if arrive_kingston_schedule == None:
+        arrive_kingston_schedule = ws.col_values(8)
+        cache.set('cached_arrive_kingston_schedule')
+        
     del depart_edmonds_schedule[0]
     del arrive_kingston_schedule[0]
 
