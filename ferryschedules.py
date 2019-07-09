@@ -729,12 +729,12 @@ def bainbridge_island_ferry_schedule():
 
 
 # Anacortes Ferry schedule route
-@app.route('/wa/anacortes/')
+@app.route('/wa/anacortes-san-juan-islands/')
 def anacortes_ferry_schedule():
 
     # Set anacortes schedule variable to true
     # to indicate which template to use
-    anacortes_schedule = True
+    anacortes_san_juan_schedule = True
 
     # Create instance of navbar()
     nav = navbar()
@@ -849,7 +849,7 @@ def anacortes_ferry_schedule():
         c += 1
 
     return render_template('schedule.html',
-                           anacortes_schedule=anacortes_schedule,
+                           anacortes_san_juan_schedule=anacortes_san_jaun_schedule,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
