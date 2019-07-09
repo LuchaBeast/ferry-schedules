@@ -35,7 +35,7 @@ class WKS:
         self._refresh_auth()
 
     def _refresh_auth(self):
-        client = gspread.authorize(creds)
+        client = gspread.authorize(self.creds)
         self.sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
 
     def _decorate(self, method):
