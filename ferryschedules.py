@@ -29,8 +29,7 @@ cache.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
 
 class WKS:
     def __init__(self):
-        scope = ['https://spreadsheets.google.com/feeds',
-                 'https://www.googleapis.com/auth/drive']
+        scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json', scope)
         self._refresh_auth()
 
@@ -41,7 +40,7 @@ class WKS:
     def _decorate(self, method):
         def safe_method(*args, **kwargs):
             try:
-                method(*args, **kwargs)
+                return method(*args, **kwargs)
             except gspread.exceptions.HTTPError as e:
                 self._refresh_auth()
                 return getattr(self.sheet, method.__name__)(*args, **kwargs)
