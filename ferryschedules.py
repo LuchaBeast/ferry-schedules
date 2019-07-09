@@ -506,7 +506,6 @@ def bremerton_ferry_schedule():
 
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')
-# @cache.cached(timeout=30)
 def bainbridge_island_ferry_schedule():
 
     # Set bainbridge schedule variable to true
@@ -731,7 +730,6 @@ def bainbridge_island_ferry_schedule():
 
 # Anacortes Ferry schedule route
 @app.route('/wa/anacortes/')
-# @cache.cached(timeout=30)
 def anacortes_ferry_schedule():
 
     # Set anacortes schedule variable to true
@@ -871,7 +869,6 @@ def anacortes_ferry_schedule():
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
-# @cache.cached(timeout=30)
 def kingston_ferry_schedule():
 
     # Set kingston schedule variable to true
@@ -1023,7 +1020,6 @@ def kingston_ferry_schedule():
 
 
 @app.route('/wa/southworth-vashon/')
-# @cache.cached(timeout=30)
 def southworth_ferry_schedule():
     # Set southworth schedule variable to true
     # to indicate which template to use
@@ -1243,7 +1239,6 @@ def southworth_ferry_schedule():
 
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
-# @cache.cached(timeout=30)
 def staten_island_ferry_schedule():
 
     # Set bainbridge schedule variable to true
@@ -1260,35 +1255,75 @@ def staten_island_ferry_schedule():
     ws = sheet.get_worksheet(5)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_staten_island_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_staten_island_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_staten_island_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_staten_island_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_staten_island_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_staten_island_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    table_headers_1 = cache.get('cached_staten_island_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_staten_island_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_staten_island_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_staten_island_table_headers_2', table_headers_2)
 
-    # Set H2 tags for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    # Set container headers
+    th_1 = cache.get('cached_staten_island_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_staten_island_th_1', th_1)
+    
+    th_2 = cache.get('cached_staten_island_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_staten_island_th_2', th_2)
 
     # Set next departure card headers
-    ndh_1 = ws.acell('B7').value
-    ndh_2 = ws.acell('B8').value
+    ndh_1 = cache.get('cached_staten_island_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_staten_island_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_staten_island_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_staten_island_ndh_2', ndh_2)
 
     # Set H3 tags for each schedule
-    h3_1 = ws.acell('D1').value
-    h3_2 = ws.acell('I1').value
+    h3_1 = cache.get('cached_staten_island_h3_1')
+    if h3_1 == None:
+        h3_1 = ws.acell('D1').value
+        cache.set('cached_staten_island_h3_1', h3_1)
+    h3_2 = cache.get('cached_staten_island_h3_2')
+    if h3_2 == None:
+        h3_2 = ws.acell('I1').value
+        cache.set('cached_staten_island_h3_2', h3_2)
 
     # ***Depart Staten Island weekday schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_si_weekday_schedule = ws.col_values(5)
-    arrive_manhattan_weekday_schedule = ws.col_values(6)
+    depart_si_weekday_schedule = cache.get('cached_depart_si_weekday_schedule')
+    if depart_si_weekday_schedule == None:
+        depart_si_weekday_schedule = ws.col_values(5)
+        cache.set('cached_depart_si_weekday_schedule', depart_si_weekday_schedule)
+    arrive_manhattan_weekday_schedule = cache.get('cached_arrive_manhattan_weekday_schedule')
+    if arrive_manhattan_weekday_schedule == None:
+        arrive_manhattan_weekday_schedule = ws.col_values(6)
+        cache.set('arrive_manhattan_weekday_schedule', arrive_manhattan_weekday_schedule)
     del depart_si_weekday_schedule[0]
     del arrive_manhattan_weekday_schedule[0]
 
@@ -1301,8 +1336,14 @@ def staten_island_ferry_schedule():
     # ***Depart Manhattan weekday schedule code
 
     # Get each schedule and delete header cells
-    depart_manhattan_weekday_schedule = ws.col_values(7)
-    arrive_si_weekday_schedule = ws.col_values(8)
+    depart_manhattan_weekday_schedule = cache.get('cached_depart_manhattan_weekday_schedule')
+    if depart_manhattan_weekday_schedule == None:
+        depart_manhattan_weekday_schedule = ws.col_values(7)
+        cache.set('cached_depart_manhattan_weekday_schedule', depart_manhattan_weekday_schedule)
+    arrive_si_weekday_schedule = cache.get('cached_arrive_si_weekday_schedule')
+    if arrive_si_weekday_schedule == None:
+        arrive_si_weekday_schedule = ws.col_values(8)
+        cache.set('cached_arrive_si_weekday_schedule', arrive_si_weekday_schedule)
     del depart_manhattan_weekday_schedule[0]
     del arrive_si_weekday_schedule[0]
 
@@ -1314,8 +1355,14 @@ def staten_island_ferry_schedule():
 
     # ***Depart Staten Island Weekend schedule code begins***
     # Get each schedule and delete header cells
-    depart_si_weekend_schedule = ws.col_values(10)
-    arrive_manhattan_weekend_schedule = ws.col_values(11)
+    depart_si_weekend_schedule = cache.get('cached_depart_si_weekend_schedule')
+    if depart_si_weekend_schedule == None:
+        depart_si_weekend_schedule = ws.col_values(10)
+        cache.set('cached_depart_si_weekend_schedule', depart_si_weekend_schedule)
+    arrive_manhattan_weekend_schedule = cache.get('cached_arrive_manhattan_weekend_schedule')
+    if arrive_manhattan_weekend_schedule == None:
+        arrive_manhattan_weekend_schedule = ws.col_values(11)
+        cache.set('arrive_manhattan_weekend_schedule', arrive_manhattan_weekend_schedule)
     del depart_si_weekend_schedule[0]
     del arrive_manhattan_weekend_schedule[0]
 
@@ -1328,8 +1375,14 @@ def staten_island_ferry_schedule():
     # ***Depart Manhattan weekend schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_manhattan_weekend_schedule = ws.col_values(12)
-    arrive_si_weekend_schedule = ws.col_values(13)
+    depart_manhattan_weekend_schedule = cache.get('cached_depart_manhattan_weekend_schedule')
+    if depart_manhattan_weekend_schedule == None:
+        depart_manhattan_weekend_schedule = ws.col_values(12)
+        cache.set('cached_depart_manhattan_weekend_schedule', depart_manhattan_weekend_schedule)
+    arrive_si_weekend_schedule = cache.get('cached_arrive_si_weekend_schedule')
+    if arrive_si_weekend_schedule == None:
+        arrive_si_weekend_schedule = ws.col_values(13)
+        cache.set('cached_arrive_si_weekend_schedule', arrive_si_weekend_schedule)
     del depart_manhattan_weekend_schedule[0]
     del arrive_si_weekend_schedule[0]
 
@@ -1405,7 +1458,6 @@ def staten_island_ferry_schedule():
 
 # Larkspur Ferry Schedule route
 @app.route('/ca/larkspur-sf/')
-# @cache.cached(timeout=30)
 def larkspur_ferry_schedule():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
