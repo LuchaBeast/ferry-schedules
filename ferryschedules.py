@@ -1107,7 +1107,7 @@ def southworth_ferry_schedule():
     arrive_vashon_weekday_schedule = cache.get('cached_arrive_vashon_weekday_schedule')
     if arrive_vashon_weekday_schedule == None:
         arrive_vashon_weekday_schedule = ws.col_values(6)
-        cache.set('cached_arrive_vashon_weekday_schedule')
+        cache.set('cached_arrive_vashon_weekday_schedule', arrive_vashon_weekday_schedule)
     del depart_southworth_weekday_schedule[0]
     del arrive_vashon_weekday_schedule[0]
 
@@ -1127,7 +1127,7 @@ def southworth_ferry_schedule():
     arrive_southworth_weekday_schedule = cache.get('cached_arrive_southworth_weekday_schedule')
     if arrive_southworth_weekday_schedule == None:
         arrive_southworth_weekday_schedule = ws.col_values(8)
-        cache.set('cached_arrive_southworth_weekday_schedule')
+        cache.set('cached_arrive_southworth_weekday_schedule', arrive_southworth_weekday_schedule)
     del depart_vashon_weekday_schedule[0]
     del arrive_southworth_weekday_schedule[0]
 
@@ -1147,7 +1147,7 @@ def southworth_ferry_schedule():
     arrive_vashon_weekend_schedule = cache.get('cached_arrive_vashon_weekend_schedule')
     if arrive_vashon_weekend_schedule == None:
         arrive_vashon_weekend_schedule = ws.col_values(11)
-        cache.set('cached_arrive_vashon_weekend_schedule')
+        cache.set('cached_arrive_vashon_weekend_schedule', arrive_vashon_weekend_schedule)
     del depart_southworth_weekend_schedule[0]
     del arrive_vashon_weekend_schedule[0]
 
@@ -1167,7 +1167,7 @@ def southworth_ferry_schedule():
     arrive_southworth_weekend_schedule = cache.get('cached_arrive_southworth_weekend_schedule')
     if arrive_southworth_weekend_schedule == None:
         arrive_southworth_weekend_schedule = ws.col_values(13)
-        cache.set('cached_arrive_southworth_weekend_schedule')
+        cache.set('cached_arrive_southworth_weekend_schedule', arrive_southworth_weekend_schedule)
     del depart_vashon_weekend_schedule[0]
     del arrive_southworth_weekend_schedule[0]
 
