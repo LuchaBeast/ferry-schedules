@@ -1693,17 +1693,33 @@ def vallejo_ferry_schedule():
     ws = sheet.get_worksheet(8)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_vallejo_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_vallejo_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_vallejo_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_vallejo_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_vallejo_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_vallejo_leadcopy', leadcopy)
 
-    # Set H2 tags for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    # Set container headers
+    th_1 = cache.get('cached_vallejo_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_vallejo_th_1', th_1)
+    
+    th_2 = cache.get('cached_vallejo_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_vallejo_th_2', th_2)
 
     # Initiate blank lists to store vallejo weekday schedules
     dv_weekday_schedule = []
@@ -1711,10 +1727,22 @@ def vallejo_ferry_schedule():
     dv_weekday_table_headers = []
 
     # Retrieve vallejo weekday schedule times
-    depart_mare_island_weekday = ws.col_values(5)
-    depart_vallejo_weekday = ws.col_values(6)
-    arrive_sf_fb_weekday = ws.col_values(7)
-    arrive_sf_pier_weekday = ws.col_values(8)
+    depart_mare_island_weekday = cache.get('cached_depart_mare_island_weekday')
+    if depart_mare_island_weekday == None:
+        depart_mare_island_weekday = ws.col_values(5)
+        cache.set('cached_depart_mare_island_weekday', depart_mare_island_weekday)
+    depart_vallejo_weekday = cache.get('cached_depart_vallejo_weekday')
+    if depart_vallejo_weekday == None:
+        depart_vallejo_weekday = ws.col_values(6)
+        cache.set('cached_depart_vallejo_weekday', depart_vallejo_weekday)
+    arrive_sf_fb_weekday = cache.get('cached_arrive_sf_fb_weekday')
+    if arrive_sf_fb_weekday == None:
+        arrive_sf_fb_weekday = ws.col_values(7)
+        cache.set('cached_arrive_sf_fb_weekday', arrive_sf_fb_weekday)
+    arrive_sf_pier_weekday = cache.get('cached_arrive_sf_pier_weekday')
+    if arrive_sf_pier_weekday == None:
+        arrive_sf_pier_weekday = ws.col_values(8)
+        cache.set('cached_arrive_sf_pier_weekday', arrive_sf_pier_weekday)
 
     # Create list of depart vallejo weekday table headers
     dv_weekday_table_headers.extend([depart_mare_island_weekday[0],
@@ -1747,10 +1775,22 @@ def vallejo_ferry_schedule():
     dv_weekend_table_headers = []
 
     # Retrieve vallejo weekend schedule times
-    depart_mare_island_weekend = ws.col_values(10)
-    depart_vallejo_weekend = ws.col_values(11)
-    arrive_sf_fb_weekend = ws.col_values(12)
-    arrive_sf_pier_weekend = ws.col_values(13)
+    depart_mare_island_weekend = cache.get('cached_depart_mare_island_weekend')
+    if depart_mare_island_weekend == None:
+        depart_mare_island_weekend = ws.col_values(10)
+        cache.set('cached_depart_mare_island_weekend', depart_mare_island_weekend)
+    depart_vallejo_weekend = cache.get('cached_depart_vallejo_weekend')
+    if depart_vallejo_weekend == None:
+        depart_vallejo_weekend = ws.col_values(11)
+        cache.set('cached_depart_vallejo_weekend', depart_vallejo_weekend)
+    arrive_sf_fb_weekend = cache.get('cached_arrive_sf_fb_weekend')
+    if arrive_sf_fb_weekend == None:
+        arrive_sf_fb_weekend = ws.col_values(12)
+        cache.set('cached_arrive_sf_fb_weekend', arrive_sf_fb_weekend)
+    arrive_sf_pier_weekend = cache.get('cached_arrive_sf_pier_weekend')
+    if arrive_sf_pier_weekend == None:
+        arrive_sf_pier_weekend = ws.col_values(13)
+        cache.set('cached_arrive_sf_pier_weekend', arrive_sf_pier_weekend)
 
     # Create list of depart vallejo weekend table headers
     dv_weekend_table_headers.extend([depart_mare_island_weekend[0],
@@ -1783,10 +1823,22 @@ def vallejo_ferry_schedule():
     sf_weekday_table_headers = []
 
     # Retrieve sf weekday schedule times
-    depart_sf_fb_weekday = ws.col_values(15)
-    depart_sf_pier_weekday = ws.col_values(16)
-    arrive_vallejo_weekday = ws.col_values(17)
-    arrive_mare_island_weekday = ws.col_values(18)
+    depart_sf_fb_weekday = cache.get('cached_depart_sf_fb_weekday')
+    if depart_sf_fb_weekday == None:
+        depart_sf_fb_weekday = ws.col_values(15)
+        cache.set('cached_depart_sf_fb_weekday', depart_sf_fb_weekday)
+    depart_sf_pier_weekday = cache.get('cached_depart_sf_pier_weekday')
+    if depart_sf_pier_weekday == None:
+        depart_sf_pier_weekday = ws.col_values(16)
+        cache.set('cached_depart_sf_pier_weekday', depart_sf_pier_weekday)
+    arrive_vallejo_weekday = cache.get('cached_arrive_vallejo_weekday')
+    if arrive_vallejo_weekday == None:
+        arrive_vallejo_weekday = ws.col_values(17)
+        cache.set('cached_arrive_vallejo_weekday', arrive_vallejo_weekday)
+    arrive_mare_island_weekday = cache.get('cached_arrive_mare_island_weekday')
+    if arrive_mare_island_weekday == None:
+        arrive_mare_island_weekday = ws.col_values(18)
+        cache.set('cached_arrive_mare_island_weekday', arrive_mare_island_weekday)
 
     # Create list of depart sf weekday table headers
     sf_weekday_table_headers.extend([depart_sf_fb_weekday[0],
@@ -1819,10 +1871,22 @@ def vallejo_ferry_schedule():
     sf_weekend_table_headers = []
 
     # Retrieve sf weekend schedule times
-    depart_sf_fb_weekend = ws.col_values(20)
-    depart_sf_pier_weekend = ws.col_values(21)
-    arrive_vallejo_weekend = ws.col_values(22)
-    arrive_mare_island_weekend = ws.col_values(23)
+    depart_sf_fb_weekend = cache.get('cached_depart_sf_fb_weekend')
+    if depart_sf_fb_weekend == None:
+        depart_sf_fb_weekend = ws.col_values(20)
+        cache.set('cached_depart_sf_fb_weekend', depart_sf_fb_weekend)
+    depart_sf_pier_weekend = cache.get('cached_depart_sf_pier_weekend')
+    if depart_sf_pier_weekend == None:
+        depart_sf_pier_weekend = ws.col_values(21)
+        cache.set('cached_depart_sf_pier_weekend', depart_sf_pier_weekend)
+    arrive_vallejo_weekend = cache.get('cached_arrive_vallejo_weekend')
+    if arrive_vallejo_weekend == None:
+        arrive_vallejo_weekend = ws.col_values(22)
+        cache.set('cached_arrive_vallejo_weekend', arrive_vallejo_weekend)
+    arrive_mare_island_weekend = cache.get('cached_arrive_mare_island_weekend')
+    if arrive_mare_island_weekend == None:
+        arrive_mare_island_weekend = ws.col_values(23)
+        cache.set('cached_arrive_mare_island_weekend', arrive_mare_island_weekend)
 
     # Create list of depart sf weekend table headers
     sf_weekend_table_headers.extend([depart_sf_fb_weekend[0],
