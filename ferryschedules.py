@@ -9,60 +9,6 @@ import bmemcached
 import os
 
 app = Flask(__name__)
-# cache = Cache()
-
-# cache_servers = os.environ.get('MEMCACHIER_SERVERS')
-# if cache_servers == None:
-#     cache.init_app(app, config={'CACHE_TYPE': 'simple'})
-# else:
-#     cache_user = os.environ.get('MEMCACHIER_USERNAME') or ''
-#     cache_pass = os.environ.get('MEMCACHIER_PASSWORD') or ''
-#     cache.init_app(app,
-#         config={'CACHE_TYPE': 'saslmemcached',
-#                 'CACHE_MEMCACHED_SERVERS': cache_servers.split(','),
-#                 'CACHE_MEMCACHED_USERNAME': cache_user,
-#                 'CACHE_MEMCACHED_PASSWORD': cache_pass,
-#                 'CACHE_OPTIONS': { 'behaviors': {
-#                     # Faster IO
-#                     'tcp_nodelay': True,
-#                     # Keep connection alive
-#                     'tcp_keepalive': True,
-#                     # Timeout for set/get requests
-#                     'connect_timeout': 2000, # ms
-#                     'send_timeout': 750 * 1000, # us
-#                     'receive_timeout': 750 * 1000, # us
-#                     '_poll_timeout': 2000, # ms
-#                     # Better failover
-#                     'ketama': True,
-#                     'remove_failed': 1,
-#                     'retry_timeout': 2,
-#                     'dead_timeout': 30}}})
-
-# servers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
-# user = os.environ.get('MEMCACHIER_USERNAME', '')
-# passw = os.environ.get('MEMCACHIER_PASSWORD', '')
-
-# mc = pylibmc.Client(servers, binary=True,
-#                     username=user, password=passw,
-#                     behaviors={
-#                       # Faster IO
-#                       'tcp_nodelay': True,
-
-#                       # Keep connection alive
-#                       'tcp_keepalive': True,
-
-#                       # Timeout for set/get requests
-#                       'connect_timeout': 2000, # ms
-#                       'send_timeout': 750 * 1000, # us
-#                       'receive_timeout': 750 * 1000, # us
-#                       '_poll_timeout': 2000, # ms
-
-#                       # Better failover
-#                       'ketama': True,
-#                       'remove_failed': 1,
-#                       'retry_timeout': 2,
-#                       'dead_timeout': 30,
-#                     })
 
 servers = os.environ.get('MEMCACHIER_SERVERS', '').split(',')
 user = os.environ.get('MEMCACHIER_USERNAME', '')
@@ -72,15 +18,37 @@ cache = bmemcached.Client(servers, username=user, password=passw)
 
 cache.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
 
-scope = ['https://spreadsheets.google.com/feeds',
-         'https://www.googleapis.com/auth/drive']
+# scope = ['https://spreadsheets.google.com/feeds',
+#          'https://www.googleapis.com/auth/drive']
 
-creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json',
-                                                         scope)
-client = gspread.authorize(creds)
+# creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json',
+#                                                          scope)
+# client = gspread.authorize(creds)
 
-sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
+# sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
 
+class WKS:
+    def __init__(self):
+        scope = ['https://spreadsheets.google.com/feeds',
+                 'https://www.googleapis.com/auth/drive']
+        self.creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json', scope)
+        self._refresh_auth()
+
+    def _refresh_auth(self):
+        client = gspread.authorize(creds)
+        self.sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
+
+    def _decorate(self, method):
+        def safe_method(*args, **kwargs):
+            try:
+                method(*args, **kwargs)
+            except gspread.exceptions.HTTPError as e:
+                self._refresh_auth()
+                return getattr(self.wks, method.__name__)(*args, **kwargs)
+        return safe_method
+
+    def __getattr__(self, attr):
+        return self._decorate(getattr(self.wks, attr))
 
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
@@ -91,7 +59,7 @@ def has_no_empty_params(rule):
 def navbar():
 
     # Refresh access token
-    client.login()
+    
 
     # Create list of url routes
     ca_links_list = []
@@ -367,7 +335,7 @@ def bremerton_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(1)
+    ws = WKS().get_worksheet(1)
 
     # Set title tag variable
     title = cache.get('cached_bremerton_title')
