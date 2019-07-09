@@ -44,11 +44,11 @@ class WKS:
                 method(*args, **kwargs)
             except gspread.exceptions.HTTPError as e:
                 self._refresh_auth()
-                return getattr(self.wks, method.__name__)(*args, **kwargs)
+                return getattr(self.sheet, method.__name__)(*args, **kwargs)
         return safe_method
 
     def __getattr__(self, attr):
-        return self._decorate(getattr(self.wks, attr))
+        return self._decorate(getattr(self.sheet, attr))
 
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
