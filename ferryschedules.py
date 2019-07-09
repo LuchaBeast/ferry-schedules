@@ -805,11 +805,11 @@ def anacortes_ferry_schedule():
     eb_table_headers = []
 
     # Retrieve eastbound schedule times
-    eb_san_juan = ws.col_values(12)
-    eb_orcas_island = ws.col_values(13)
-    eb_shaw_island = ws.col_values(14)
-    eb_lopez_island = ws.col_values(15)
-    eb_anacortes = ws.col_values(16)
+    eb_san_juan = ws.col_values(11)
+    eb_orcas_island = ws.col_values(12)
+    eb_shaw_island = ws.col_values(13)
+    eb_lopez_island = ws.col_values(14)
+    eb_anacortes = ws.col_values(15)
 
     # Create list of eastbound table headers
     eb_table_headers.extend([eb_san_juan[0],
