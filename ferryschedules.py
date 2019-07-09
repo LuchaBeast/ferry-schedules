@@ -91,8 +91,7 @@ def has_no_empty_params(rule):
 def navbar():
 
     # Refresh access token
-    if creds.access_token_expired:
-        client.login()
+    client.login()
 
     # Create list of url routes
     ca_links_list = []
