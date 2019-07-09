@@ -335,7 +335,8 @@ def bremerton_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = WKS().get_worksheet(1)
+    wks = WKS()
+    ws = wks.get_worksheet(1)
 
     # Set title tag variable
     title = cache.get('cached_bremerton_title')
