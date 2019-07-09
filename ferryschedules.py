@@ -769,15 +769,13 @@ def anacortes_ferry_schedule():
     wb_shaw_island = ws.col_values(7)
     wb_orcas_island = ws.col_values(8)
     wb_san_juan = ws.col_values(9)
-    wb_sidney_bc = ws.col_values(10)
 
     # Create list of westbound table headers
     wb_table_headers.extend([wb_anacortes[0],
                              wb_lopez_island[0],
                              wb_shaw_island[0],
                              wb_orcas_island[0],
-                             wb_san_juan[0],
-                             wb_sidney_bc[0]])
+                             wb_san_juan[0]])
 
     # Remove table headers
     del wb_anacortes[0]
@@ -785,7 +783,6 @@ def anacortes_ferry_schedule():
     del wb_shaw_island[0]
     del wb_orcas_island[0]
     del wb_san_juan[0]
-    del wb_sidney_bc[0]
 
     # Set counter = 0
     c = 0
@@ -797,8 +794,7 @@ def anacortes_ferry_schedule():
                         wb_lopez_island[c],
                         wb_shaw_island[c],
                         wb_orcas_island[c],
-                        wb_san_juan[c],
-                        wb_sidney_bc[c]]
+                        wb_san_juan[c]]
 
         wb_schedule.append(wb_temp_list)
         c += 1
@@ -809,23 +805,20 @@ def anacortes_ferry_schedule():
     eb_table_headers = []
 
     # Retrieve eastbound schedule times
-    eb_sidney_bc = ws.col_values(12)
-    eb_san_juan = ws.col_values(13)
-    eb_orcas_island = ws.col_values(14)
-    eb_shaw_island = ws.col_values(15)
-    eb_lopez_island = ws.col_values(16)
-    eb_anacortes = ws.col_values(17)
+    eb_san_juan = ws.col_values(12)
+    eb_orcas_island = ws.col_values(13)
+    eb_shaw_island = ws.col_values(14)
+    eb_lopez_island = ws.col_values(15)
+    eb_anacortes = ws.col_values(16)
 
     # Create list of eastbound table headers
-    eb_table_headers.extend([eb_sidney_bc[0],
-                             eb_san_juan[0],
+    eb_table_headers.extend([eb_san_juan[0],
                              eb_orcas_island[0],
                              eb_shaw_island[0],
                              eb_lopez_island[0],
                              eb_anacortes[0]])
 
     # Remove eastbound table headers from each list
-    del eb_sidney_bc[0]
     del eb_san_juan[0]
     del eb_orcas_island[0]
     del eb_shaw_island[0]
@@ -838,8 +831,7 @@ def anacortes_ferry_schedule():
     # Create temp list for each eastbound time row
     # Append temp list to schedule list
     while c < len(eb_anacortes):
-        eb_temp_list = [eb_sidney_bc[c],
-                        eb_san_juan[c],
+        eb_temp_list = [eb_san_juan[c],
                         eb_orcas_island[c],
                         eb_shaw_island[c],
                         eb_lopez_island[c],
@@ -849,7 +841,7 @@ def anacortes_ferry_schedule():
         c += 1
 
     return render_template('schedule.html',
-                           anacortes_san_juan_schedule=anacortes_san_jaun_schedule,
+                           anacortes_san_juan_schedule=anacortes_san_juan_schedule,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
