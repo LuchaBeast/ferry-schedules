@@ -746,17 +746,33 @@ def anacortes_ferry_schedule():
     ws = sheet.get_worksheet(3)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_anacortes_san_juan_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_anacortes_san_juan_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_anacortes_san_juan_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_anacortes_san_juan_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_anacortes_san_juan_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_anacortes_san_juan_leadcopy', leadcopy)
 
     # Set H2 tags for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    th_1 = cache.get('cached_anacortes_san_juan_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_anacortes_san_juan_th_1', th_1)
+    
+    th_2 = cache.get('cached_anacortes_san_juan_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_anacortes_san_juan_th_2', th_2)
 
     # Initiate blank lists to store westbound schedules
     wb_schedule = []
@@ -764,11 +780,26 @@ def anacortes_ferry_schedule():
     wb_table_headers = []
 
     # Retrieve westbound schedule times
-    wb_anacortes = ws.col_values(5)
-    wb_lopez_island = ws.col_values(6)
-    wb_shaw_island = ws.col_values(7)
-    wb_orcas_island = ws.col_values(8)
-    wb_san_juan = ws.col_values(9)
+    wb_anacortes = cache.get('cached_wb_anacortes')
+    if wb_anacortes == None:
+        wb_anacortes = ws.col_values(5)
+        cache.set('cached_wb_anacortes', wb_anacortes)
+    wb_lopez_island = cache.get('cached_wb_lopez_island')
+    if wb_lopez_island == None:
+        wb_lopez_island = ws.col_values(6)
+        cache.set('cached_wb_lopez_island', wb_lopez_island)
+    wb_shaw_island = cache.get('cached_wb_shaw_island')
+    if wb_shaw_island == None:
+        wb_shaw_island = ws.col_values(7)
+        cache.set('cached_wb_shaw_island', wb_shaw_island)
+    wb_orcas_island = cache.get('cached_wb_orcas_island')
+    if wb_orcas_island == None:
+        wb_orcas_island = ws.col_values(8)
+        cache.set('cached_wb_orcas_island', wb_orcas_island)
+    wb_san_juan = cache.get('cached_wb_san_juan')
+    if wb_san_juan == None:
+        wb_san_juan = ws.col_values(9)
+        cache.set('cached_wb_san_juan', wb_san_juan)
 
     # Create list of westbound table headers
     wb_table_headers.extend([wb_anacortes[0],
@@ -805,11 +836,26 @@ def anacortes_ferry_schedule():
     eb_table_headers = []
 
     # Retrieve eastbound schedule times
-    eb_san_juan = ws.col_values(11)
-    eb_orcas_island = ws.col_values(12)
-    eb_shaw_island = ws.col_values(13)
-    eb_lopez_island = ws.col_values(14)
-    eb_anacortes = ws.col_values(15)
+    eb_san_juan = cache.get('cached_eb_san_juan')
+    if eb_san_juan == None:
+        eb_san_juan = ws.col_values(11)
+        cache.set('cached_eb_san_juan', eb_san_juan)
+    eb_orcas_island = cache.get('cached_eb_orcas_island')
+    if eb_orcas_island == None:
+        eb_orcas_island = ws.col_values(12)
+        cache.set('cached_eb_orcas_island', eb_orcas_island)
+    eb_shaw_island = cache.get('cached_eb_shaw_island')
+    if eb_shaw_island == None:
+        eb_shaw_island = ws.col_values(13)
+        cache.set('cached_eb_shaw_island', eb_shaw_island)
+    eb_lopez_island = cache.get('cached_eb_lopez_island')
+    if eb_lopez_island == None:
+        eb_lopez_island = ws.col_values(14)
+        cache.set('cached_eb_lopez_island', eb_lopez_island)
+    eb_anacortes = cache.get('cached_eb_anacortes')
+    if eb_anacortes == None:
+        eb_anacortes = ws.col_values(15)
+        cache.set('cached_eb_anacortes', eb_anacortes)
 
     # Create list of eastbound table headers
     eb_table_headers.extend([eb_san_juan[0],
