@@ -486,7 +486,8 @@ def bainbridge_island_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(2)
+    wks = WKS()
+    ws = wks.get_worksheet(2)
 
     # Set title tag variable
     title = cache.get('cached_bainbridge_title')
@@ -710,7 +711,8 @@ def anacortes_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get Anacortes schedule worksheet
-    ws = sheet.get_worksheet(3)
+    wks = WKS()
+    ws = wks.get_worksheet(3)
 
     # Set title tag variable
     title = cache.get('cached_anacortes_san_juan_title')
@@ -887,7 +889,8 @@ def kingston_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(4)
+    wks = WKS()
+    ws = wks.get_worksheet(4)
 
     # Set title tag variable
     title = cache.get('cached_kingston_title')
@@ -1037,7 +1040,8 @@ def southworth_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(7)
+    wks = WKS()
+    ws = wks.get_worksheet(7)
 
     # Set title tag variable
     title = cache.get('cached_southworth_title')
@@ -1257,7 +1261,8 @@ def staten_island_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(5)
+    wks = WKS()
+    ws = wks.get_worksheet(5)
 
     # Set title tag variable
     title = cache.get('cached_staten_island_title')
@@ -1475,7 +1480,8 @@ def larkspur_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get worksheet with schedules
-    ws = sheet.get_worksheet(6)
+    wks = WKS()
+    ws = wks.get_worksheet(6)
 
     # Set title tag variable
     title = cache.get('cached_larkspur_title')
@@ -1682,7 +1688,6 @@ def larkspur_ferry_schedule():
 
 # Vallejo Ferry Schedule route
 @app.route('/ca/vallejo-sf/')
-# cache.cached(timeout=30)
 def vallejo_ferry_schedule():
     # Set anacortes schedule variable to true
     # to indicate which template to use
@@ -1695,7 +1700,8 @@ def vallejo_ferry_schedule():
     bc = generate_breadcrumb()
 
     # Get Anacortes schedule worksheet
-    ws = sheet.get_worksheet(8)
+    wks = WKS()
+    ws = wks.get_worksheet(8)
 
     # Set title tag variable
     title = cache.get('cached_vallejo_title')
