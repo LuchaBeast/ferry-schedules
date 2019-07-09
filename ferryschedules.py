@@ -1473,35 +1473,75 @@ def larkspur_ferry_schedule():
     ws = sheet.get_worksheet(6)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_larkspur_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_larkspur_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_larkspur_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_larkspur_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_larkspur_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_larkspur_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    table_headers_1 = cache.get('cached_larkspur_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_larkspur_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_larkspur_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_larkspur_table_headers_2', table_headers_2)
 
-    # Set H2 tags for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    # Set container headers
+    th_1 = cache.get('cached_larkspur_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_larkspur_th_1', th_1)
+    
+    th_2 = cache.get('cached_larkspur_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_larkspur_th_2', th_2)
 
     # Set next departure card headers
-    ndh_1 = ws.acell('B7').value
-    ndh_2 = ws.acell('B8').value
+    ndh_1 = cache.get('cached_larkspur_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_larkspur_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_larkspur_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_larkspur_ndh_2', ndh_2)
 
     # Set H3 tags for each schedule
-    h3_1 = ws.acell('D1').value
-    h3_2 = ws.acell('I1').value
+    h3_1 = cache.get('cached_larkspur_h3_1')
+    if h3_1 == None:
+        h3_1 = ws.acell('D1').value
+        cache.set('cached_larkspur_h3_1', h3_1)
+    h3_2 = cache.get('cached_larkspur_h3_2')
+    if h3_2 == None:
+        h3_2 = ws.acell('I1').value
+        cache.set('cached_larkspur_h3_2', h3_2)
 
     # ***Depart Larkspur weekday schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_larkspur_weekday_schedule = ws.col_values(5)
-    arrive_sf_weekday_schedule = ws.col_values(6)
+    depart_larkspur_weekday_schedule = cache.get('cached_larkspur_weekday_schedule')
+    if depart_larkspur_weekday_schedule == None:
+        depart_larkspur_weekday_schedule = ws.col_values(5)
+        cache.set('cached_larkspur_weekday_schedule', depart_larkspur_weekday_schedule)
+    arrive_sf_weekday_schedule = cache.get('cached_arrive_sf_weekday_schedule')
+    if arrive_sf_weekday_schedule == None:
+        arrive_sf_weekday_schedule = ws.col_values(6)
+        cache.set('cached_arrive_sf_weekday_schedule', arrive_sf_weekday_schedule)
     del depart_larkspur_weekday_schedule[0]
     del arrive_sf_weekday_schedule[0]
 
@@ -1514,8 +1554,14 @@ def larkspur_ferry_schedule():
     # ***Depart SF weekday schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_sf_weekday_schedule = ws.col_values(7)
-    arrive_larkspur_weekday_schedule = ws.col_values(8)
+    depart_sf_weekday_schedule = cache.get('cached_depart_sf_weekday_schedule')
+    if depart_sf_weekday_schedule == None:
+        depart_sf_weekday_schedule = ws.col_values(7)
+        cache.set('cached_depart_sf_weekday_schedule', depart_sf_weekday_schedule)
+    arrive_larkspur_weekday_schedule = cache.get('cached_arrive_larkspur_weekday_schedule')
+    if arrive_larkspur_weekday_schedule == None:
+        arrive_larkspur_weekday_schedule = ws.col_values(8)
+        cache.set('cached_arrive_larkspur_weekday_schedule', arrive_larkspur_weekday_schedule)
     del depart_sf_weekday_schedule[0]
     del arrive_larkspur_weekday_schedule[0]
 
@@ -1528,8 +1574,14 @@ def larkspur_ferry_schedule():
     # ***Depart Larkspur weekend schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_larkspur_weekend_schedule = ws.col_values(10)
-    arrive_sf_weekend_schedule = ws.col_values(11)
+    depart_larkspur_weekend_schedule = cache.get('cached_larkspur_weekend_schedule')
+    if depart_larkspur_weekend_schedule == None:
+        depart_larkspur_weekend_schedule = ws.col_values(10)
+        cache.set('cached_larkspur_weekend_schedule', depart_larkspur_weekend_schedule)
+    arrive_sf_weekend_schedule = cache.get('cached_arrive_sf_weekend_schedule')
+    if arrive_sf_weekend_schedule == None:
+        arrive_sf_weekend_schedule = ws.col_values(11)
+        cache.set('cached_arrive_sf_weekend_schedule', arrive_sf_weekend_schedule)
     del depart_larkspur_weekend_schedule[0]
     del arrive_sf_weekend_schedule[0]
 
@@ -1542,8 +1594,14 @@ def larkspur_ferry_schedule():
     # ***Depart SF weekend schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_sf_weekend_schedule = ws.col_values(12)
-    arrive_larkspur_weekend_schedule = ws.col_values(13)
+    depart_sf_weekend_schedule = cache.get('cached_depart_sf_weekend_schedule')
+    if depart_sf_weekend_schedule == None:
+        depart_sf_weekend_schedule = ws.col_values(12)
+        cache.set('cached_depart_sf_weekend_schedule', depart_sf_weekend_schedule)
+    arrive_larkspur_weekend_schedule = cache.get('cached_arrive_larkspur_weekend_schedule')
+    if arrive_larkspur_weekend_schedule == None:
+        arrive_larkspur_weekend_schedule = ws.col_values(13)
+        cache.set('cached_arrive_larkspur_weekend_schedule', arrive_larkspur_weekend_schedule)
     del depart_sf_weekend_schedule[0]
     del arrive_larkspur_weekend_schedule[0]
 
