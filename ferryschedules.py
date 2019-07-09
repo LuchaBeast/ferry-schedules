@@ -542,7 +542,7 @@ def bainbridge_island_ferry_schedule():
     # Set table headers for each schedule
     table_headers_1 = cache.get('cached_bainbridge_table_headers_1')
     if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
         cache.set('cached_bainbridge_table_headers_1', table_headers_1)
     table_headers_2 = cache.get('cached_bainbridge_table_headers_2')
     if table_headers_2 == None:
@@ -1055,7 +1055,7 @@ def southworth_ferry_schedule():
     # Set table headers for each schedule
     table_headers_1 = cache.get('cached_southworth_table_headers_1')
     if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
         cache.set('cached_southworth_table_headers_1', table_headers_1)
     table_headers_2 = cache.get('cached_southworth_table_headers_2')
     if table_headers_2 == None:
@@ -1275,7 +1275,7 @@ def staten_island_ferry_schedule():
     # Set table headers for each schedule
     table_headers_1 = cache.get('cached_staten_island_table_headers_1')
     if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
         cache.set('cached_staten_island_table_headers_1', table_headers_1)
     table_headers_2 = cache.get('cached_staten_island_table_headers_2')
     if table_headers_2 == None:
@@ -1493,7 +1493,7 @@ def larkspur_ferry_schedule():
     # Set table headers for each schedule
     table_headers_1 = cache.get('cached_larkspur_table_headers_1')
     if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
         cache.set('cached_larkspur_table_headers_1', table_headers_1)
     table_headers_2 = cache.get('cached_larkspur_table_headers_2')
     if table_headers_2 == None:
