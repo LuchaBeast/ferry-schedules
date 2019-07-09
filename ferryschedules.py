@@ -1039,35 +1039,75 @@ def southworth_ferry_schedule():
     ws = sheet.get_worksheet(7)
 
     # Set title tag variable
-    title = ws.acell('B1').value
+    title = cache.get('cached_southworth_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_southworth_title', title)
 
     # Set h1 tag variable
-    h1 = ws.acell('B2').value
+    h1 = cache.get('cached_southworth_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_southworth_h1', h1)
 
     # Set leadcopy variable
-    leadcopy = ws.acell('B3').value
+    leadcopy = cache.get('cached_southworth_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_southworth_leadcopy', leadcopy)
 
     # Set table headers for each schedule
-    table_headers_1 = {ws.acell('E1').value: ws.acell('F1').value}
-    table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    table_headers_1 = cache.get('cached_southworth_table_headers_1')
+    if table_headers_1 == None:
+        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+        cache.set('cached_southworth_table_headers_1', table_headers_1)
+    table_headers_2 = cache.get('cached_southworth_table_headers_2')
+    if table_headers_2 == None:
+        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+        cache.set('cached_southworth_table_headers_2', table_headers_2)
 
-    # Set H2 tags for each schedule
-    th_1 = ws.acell('B5').value
-    th_2 = ws.acell('B6').value
+    # Set container headers
+    th_1 = cache.get('cached_southworth_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_southworth_th_1', th_1)
+    
+    th_2 = cache.get('cached_southworth_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_southworth_th_2', th_2)
 
-    # Set card headers for next departures
-    ndh_1 = ws.acell('B7').value
-    ndh_2 = ws.acell('B8').value
+    # Set next departure card headers
+    ndh_1 = cache.get('cached_southworth_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_southworth_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_southworth_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_southworth_ndh_2', ndh_2)
 
     # Set H3 tags for each schedule
-    h3_1 = ws.acell('D1').value
-    h3_2 = ws.acell('I1').value
+    h3_1 = cache.get('cached_southworth_h3_1')
+    if h3_1 == None:
+        h3_1 = ws.acell('D1').value
+        cache.set('cached_southworth_h3_1', h3_1)
+    h3_2 = cache.get('cached_southworth_h3_2')
+    if h3_2 == None:
+        h3_2 = ws.acell('I1').value
+        cache.set('cached_southworth_h3_2', h3_2)
 
     # ***Depart Southworth weekday schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_southworth_weekday_schedule = ws.col_values(5)
-    arrive_vashon_weekday_schedule = ws.col_values(6)
+    depart_southworth_weekday_schedule = cache.get('cached_depart_southworth_weekday_schedule')
+    if depart_southworth_weekday_schedule == None:
+        depart_southworth_weekday_schedule = ws.col_values(5)
+        cache.set('cached_depart_southworth_weekday_schedule', depart_southworth_weekday_schedule)
+    arrive_vashon_weekday_schedule = cache.get('cached_arrive_vashon_weekday_schedule')
+    if arrive_vashon_weekday_schedule == None:
+        arrive_vashon_weekday_schedule = ws.col_values(6)
+        cache.set('cached_arrive_vashon_weekday_schedule')
     del depart_southworth_weekday_schedule[0]
     del arrive_vashon_weekday_schedule[0]
 
@@ -1080,8 +1120,14 @@ def southworth_ferry_schedule():
     # ***Depart vashon weekday schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_vashon_weekday_schedule = ws.col_values(7)
-    arrive_southworth_weekday_schedule = ws.col_values(8)
+    depart_vashon_weekday_schedule = cache.get('cached_depart_vashon_weekday_schedule')
+    if depart_vashon_weekday_schedule == None:
+        depart_vashon_weekday_schedule = ws.col_values(7)
+        cache.set('cached_depart_vashon_weekday_schedule', depart_vashon_weekday_schedule)
+    arrive_southworth_weekday_schedule = cache.get('cached_arrive_southworth_weekday_schedule')
+    if arrive_southworth_weekday_schedule == None:
+        arrive_southworth_weekday_schedule = ws.col_values(8)
+        cache.set('cached_arrive_southworth_weekday_schedule')
     del depart_vashon_weekday_schedule[0]
     del arrive_southworth_weekday_schedule[0]
 
@@ -1094,8 +1140,14 @@ def southworth_ferry_schedule():
     # ***Depart southworth weekend schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_southworth_weekend_schedule = ws.col_values(10)
-    arrive_vashon_weekend_schedule = ws.col_values(11)
+    depart_southworth_weekend_schedule = cache.get('cached_depart_southworth_weekend_schedule')
+    if depart_southworth_weekend_schedule == None:
+        depart_southworth_weekend_schedule = ws.col_values(10)
+        cache.set('cached_depart_southworth_weekend_schedule', depart_southworth_weekend_schedule)
+    arrive_vashon_weekend_schedule = cache.get('cached_arrive_vashon_weekend_schedule')
+    if arrive_vashon_weekend_schedule == None:
+        arrive_vashon_weekend_schedule = ws.col_values(11)
+        cache.set('cached_arrive_vashon_weekend_schedule')
     del depart_southworth_weekend_schedule[0]
     del arrive_vashon_weekend_schedule[0]
 
@@ -1108,8 +1160,14 @@ def southworth_ferry_schedule():
     # ***Depart vashon weekend schedule code begins***
 
     # Get each schedule and delete header cells
-    depart_vashon_weekend_schedule = ws.col_values(12)
-    arrive_southworth_weekend_schedule = ws.col_values(13)
+    depart_vashon_weekend_schedule = cache.get('cached_depart_vashon_weekend_schedule')
+    if depart_vashon_weekend_schedule == None:
+        depart_vashon_weekend_schedule = ws.col_values(12)
+        cache.set('cached_depart_vashon_weekend_schedule', depart_vashon_weekend_schedule)
+    arrive_southworth_weekend_schedule = cache.get('cached_arrive_southworth_weekend_schedule')
+    if arrive_southworth_weekend_schedule == None:
+        arrive_southworth_weekend_schedule = ws.col_values(13)
+        cache.set('cached_arrive_southworth_weekend_schedule')
     del depart_vashon_weekend_schedule[0]
     del arrive_southworth_weekend_schedule[0]
 
