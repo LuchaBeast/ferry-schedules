@@ -205,66 +205,66 @@ def homepage():
 
     homepage = True
 
-    # Create an instance of WKS and retrieve route worksheet
-    wks = WKS()
-    ws = wks.get_worksheet(0)
+    # # Create an instance of WKS and retrieve route worksheet
+    # wks = WKS()
+    # ws = wks.get_worksheet(0)
 
-    # Initiate empty link lists
-    ca_links_list = []
-    ny_links_list = []
-    wa_links_list = []
+    # # Initiate empty link lists
+    # ca_links_list = []
+    # ny_links_list = []
+    # wa_links_list = []
     
-    # Retrieve routes and anchors from sheet
-    # Cache values
-    ca_routes = cache.get('cached_ca_routes')
-    if ca_routes == None:
-        ca_routes = ws.col_values(2)
-        cache.set('cached_ca_routes', ca_routes)
-    ca_anchors = cache.get('cached_ca_anchors')
-    if ca_anchors == None:
-        ca_anchors = ws.col_values(3)
-        cache.set('cached_ca_anchors', ca_anchors)
+    # # Retrieve routes and anchors from sheet
+    # # Cache values
+    # ca_routes = cache.get('cached_ca_routes')
+    # if ca_routes == None:
+    #     ca_routes = ws.col_values(2)
+    #     cache.set('cached_ca_routes', ca_routes)
+    # ca_anchors = cache.get('cached_ca_anchors')
+    # if ca_anchors == None:
+    #     ca_anchors = ws.col_values(3)
+    #     cache.set('cached_ca_anchors', ca_anchors)
 
-    ny_routes = cache.get('cached_ny_routes')
-    if ny_routes == None:
-        ny_routes = ws.col_values(2)
-        cache.set('cached_ny_routes', ny_routes)
-    ny_anchors = cache.get('cached_ny_anchors')
-    if ny_anchors == None:
-        ny_anchors = ws.col_values(3)
-        cache.set('cached_ny_anchors', ny_anchors)
+    # ny_routes = cache.get('cached_ny_routes')
+    # if ny_routes == None:
+    #     ny_routes = ws.col_values(2)
+    #     cache.set('cached_ny_routes', ny_routes)
+    # ny_anchors = cache.get('cached_ny_anchors')
+    # if ny_anchors == None:
+    #     ny_anchors = ws.col_values(3)
+    #     cache.set('cached_ny_anchors', ny_anchors)
 
-    wa_routes = cache.get('cached_wa_routes')
-    if wa_routes == None:
-        wa_routes = ws.col_values(2)
-        cache.set('cached_wa_routes', wa_routes)
-    wa_anchors = cache.get('cached_wa_anchors')
-    if wa_anchors == None:
-        wa_anchors = ws.col_values(3)
-        cache.set('cached_wa_anchors', wa_anchors)
+    # wa_routes = cache.get('cached_wa_routes')
+    # if wa_routes == None:
+    #     wa_routes = ws.col_values(2)
+    #     cache.set('cached_wa_routes', wa_routes)
+    # wa_anchors = cache.get('cached_wa_anchors')
+    # if wa_anchors == None:
+    #     wa_anchors = ws.col_values(3)
+    #     cache.set('cached_wa_anchors', wa_anchors)
 
-    # Counter
-    c=0
+    # # Counter
+    # c=0
 
-    # Create list of routes and anchors for each state
-    for route in ca_routes:
-        ca_links_list.append((route, ca_anchors[c]))
-        c += 1
+    # # Create list of routes and anchors for each state
+    # for route in ca_routes:
+    #     ca_links_list.append((route, ca_anchors[c]))
+    #     c += 1
     
-    c=0
-    for route in ny_routes:
-        ny_links_list.append((route, ny_anchors[c]))
-        c += 1
+    # c=0
+    # for route in ny_routes:
+    #     ny_links_list.append((route, ny_anchors[c]))
+    #     c += 1
 
-    c=0
-    for route in wa_routes:
-        wa_links_list.append((route, wa_anchors[c]))
-        c += 1
+    # c=0
+    # for route in wa_routes:
+    #     wa_links_list.append((route, wa_anchors[c]))
+    #     c += 1
 
     # Convert lists to dictionaries 
-    ca_links = dict(ca_links_list)
-    ny_links = dict(ny_links_list)
-    wa_links = dict(wa_links_list)
+    ca_links = dict(nav[2])
+    ny_links = dict(nav[0])
+    wa_links = dict(nav[1])
 
     # # Create list of url routes
     # ca_links_list = []
