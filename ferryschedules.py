@@ -60,10 +60,33 @@ def navbar():
     wks = WKS()
     ws = wks.get_worksheet(0)
 
-    ca_nav_links = {ws.col_values(2): ws.col_values(3)}
-    ny_nav_links = {ws.col_values(5): ws.col_values(6)}
-    wa_nav_links = {ws.col_values(8): ws.col_values(9)}
+    ca_links_list = []
+    ny_links_list = []
+    wa_links_list = []
     
+    ca_routes = ws.col_values(2)
+    ca_anchors = ws.col_values(3)
+
+    ny_routes = ws.col_values(5)
+    ny_anchors = ws.col_values(6)
+
+    wa_routes = ws.col_values(8)
+    wa_anchors = ws.col_values(9)
+
+    for route in ca_routes:
+        ca_links_list.append(route, ca_anchors[route])
+    
+    for route in ny_routes:
+        ny_links_list.append(route, ny_anchors[route])
+
+    for route in wa_routes:
+        wa_links_list.append(route, wa_anchors[route])
+
+    ca_nav_links = dict(ca_links_list)
+    ny_nav_links = dict(ny_links_list)
+    wa_nav_links = dict(wa_links_list)
+
+
 
     # Create list of url routes
     # ca_links_list = []
