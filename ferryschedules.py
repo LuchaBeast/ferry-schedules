@@ -262,54 +262,54 @@ def homepage():
     #     c += 1
 
     # Convert lists to dictionaries 
-    ca_links = dict(nav[2])
-    ny_links = dict(nav[0])
-    wa_links = dict(nav[1])
+    # ca_links = dict(nav[2])
+    # ny_links = dict(nav[0])
+    # wa_links = dict(nav[1])
 
-    # # Create list of url routes
-    # ca_links_list = []
-    # wa_links_list = []
-    # ny_links_list = []
-    # for rule in app.url_map.iter_rules():
-    #     if "GET" in rule.methods and has_no_empty_params(rule):
-    #         if str(rule).find('/wa/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             wa_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ny/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ny_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ca/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ca_links_list.append((url, rule.endpoint))
+    # Create list of url routes
+    ca_links_list = []
+    wa_links_list = []
+    ny_links_list = []
+    for rule in app.url_map.iter_rules():
+        if "GET" in rule.methods and has_no_empty_params(rule):
+            if str(rule).find('/wa/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                wa_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ny/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ny_links_list.append((url, rule.endpoint))
+            elif str(rule).find('/ca/') is 0:
+                url = url_for(rule.endpoint, **(rule.defaults or {}))
+                ca_links_list.append((url, rule.endpoint))
 
-    # # Sort lists
-    # ca_links_list.sort()
-    # wa_links_list.sort()
-    # ny_links_list.sort()
+    # Sort lists
+    ca_links_list.sort()
+    wa_links_list.sort()
+    ny_links_list.sort()
 
-    # # Convert lists to dictionaries
-    # ca_links = dict(ca_links_list)
-    # wa_links = dict(wa_links_list)
-    # ny_links = dict(ny_links_list)
+    # Convert lists to dictionaries
+    ca_links = dict(ca_links_list)
+    wa_links = dict(wa_links_list)
+    ny_links = dict(ny_links_list)
 
-    # # Modify the endpoints into pretty names
-    # for k, v in ca_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ca_links.update(update_name)
+    # Modify the endpoints into pretty names
+    for k, v in ca_links.items():
+        update_name = {k: v.title().replace('_', ' ')}
+        ca_links.update(update_name)
 
-    # for k, v in wa_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     wa_links.update(update_name)
+    for k, v in wa_links.items():
+        update_name = {k: v.title().replace('_', ' ')}
+        wa_links.update(update_name)
 
-    # for k, v in ny_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ny_links.update(update_name)
+    for k, v in ny_links.items():
+        update_name = {k: v.title().replace('_', ' ')}
+        ny_links.update(update_name)
 
-    # # Delete state directory pages from dict
-    # # We do not want them listed on the page
-    # del ca_links['/ca/']
-    # del ny_links['/ny/']
-    # del wa_links['/wa/']
+    # Delete state directory pages from dict
+    # We do not want them listed on the page
+    del ca_links['/ca/']
+    del ny_links['/ny/']
+    del wa_links['/wa/']
 
     return render_template('index.html',
                            homepage=homepage,
