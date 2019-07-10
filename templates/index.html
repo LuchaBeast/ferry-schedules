@@ -9,7 +9,7 @@
 <h5>Browse schedules by state</h5>
 <div class="container container-link-group">
     <h4 class="mt-3 pt-3">California</h4>
-    {% for row in ca_links|batch(3,'') %}
+    {% for row in ca_nav_links|batch(3,'') %}
     <div class="row d-flex justify-content-center">
         <div class="card-deck m-3">
         {% for href in row %}
@@ -28,7 +28,7 @@
     </div>
     {% endfor %}
     <h4 class="mt-3 pt-3">New York</h4>
-    {% for row in ny_links|batch(3,'') %}
+    {% for row in ny_nav_links|batch(3,'') %}
     <div class="row d-flex justify-content-center">
         <div class="card-deck m-3">
         {% for href in row %}
@@ -47,7 +47,7 @@
     </div>
     {% endfor %}
     <h4>Washington</h4>
-    {% for row in wa_links|batch(3,'') %}
+    {% for row in wa_nav_links|batch(3,'') %}
     <div class="row d-flex justify-content-center">
         <div class="card-deck m-3">
         {% for href in row %}
