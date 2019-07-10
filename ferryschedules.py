@@ -57,54 +57,59 @@ def has_no_empty_params(rule):
 
 def navbar():
 
-    # Refresh access token
+    wks = WKS()
+    ws = wks.get_worksheet(0)
+
+    ca_nav_links = {ws.col_values(2): ws.col_values(3)}
+    ny_nav_links = {ws.col_values(5): ws.col_values(6)}
+    wa_nav_links = {ws.col_values(8): ws.col_values(9)}
     
 
     # Create list of url routes
-    ca_links_list = []
-    wa_links_list = []
-    ny_links_list = []
+    # ca_links_list = []
+    # wa_links_list = []
+    # ny_links_list = []
 
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            if str(rule).find('/wa/') is 0:
-                url = url_for(rule.endpoint, **(rule.defaults or {}))
-                wa_links_list.append((url, rule.endpoint))
-            elif str(rule).find('/ny/') is 0:
-                url = url_for(rule.endpoint, **(rule.defaults or {}))
-                ny_links_list.append((url, rule.endpoint))
-            elif str(rule).find('/ca/') is 0:
-                url = url_for(rule.endpoint, **(rule.defaults or {}))
-                ca_links_list.append((url, rule.endpoint))
+    # for rule in app.url_map.iter_rules():
+    #     if "GET" in rule.methods and has_no_empty_params(rule):
+    #         if str(rule).find('/wa/') is 0:
+    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
+    #             wa_links_list.append((url, rule.endpoint))
+    #         elif str(rule).find('/ny/') is 0:
+    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
+    #             ny_links_list.append((url, rule.endpoint))
+    #         elif str(rule).find('/ca/') is 0:
+    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
+    #             ca_links_list.append((url, rule.endpoint))
 
-    # Sort list and then delete homepage from list
-    ca_links_list.sort()
-    wa_links_list.sort()
-    ny_links_list.sort()
+    # # Sort list and then delete homepage from list
+    # ca_links_list.sort()
+    # wa_links_list.sort()
+    # ny_links_list.sort()
 
-    # Convert list to dictionary
-    ca_nav_links = dict(ca_links_list)
-    wa_nav_links = dict(wa_links_list)
-    ny_nav_links = dict(ny_links_list)
+    # # Convert list to dictionary
+    # ca_nav_links = dict(ca_links_list)
+    # wa_nav_links = dict(wa_links_list)
+    # ny_nav_links = dict(ny_links_list)
 
-    # Modify the endpoints into pretty names
-    for k, v in ca_nav_links.items():
-        update_name = {k: v.title().replace('_', ' ')}
-        ca_nav_links.update(update_name)
+    # # Modify the endpoints into pretty names
+    # for k, v in ca_nav_links.items():
+    #     update_name = {k: v.title().replace('_', ' ')}
+    #     ca_nav_links.update(update_name)
 
-    for k, v in wa_nav_links.items():
-        update_name = {k: v.title().replace('_', ' ')}
-        wa_nav_links.update(update_name)
+    # for k, v in wa_nav_links.items():
+    #     update_name = {k: v.title().replace('_', ' ')}
+    #     wa_nav_links.update(update_name)
 
-    for k, v in ny_nav_links.items():
-        update_name = {k: v.title().replace('_', ' ')}
-        ny_nav_links.update(update_name)
+    # for k, v in ny_nav_links.items():
+    #     update_name = {k: v.title().replace('_', ' ')}
+    #     ny_nav_links.update(update_name)
 
-    # Delete state directory pages
-    # We do not want them listed in the nav
-    del ca_nav_links['/ca/']
-    del ny_nav_links['/ny/']
-    del wa_nav_links['/wa/']
+    # # Delete state directory pages
+    # # We do not want them listed in the nav
+    # del ca_nav_links['/ca/']
+    # del ny_nav_links['/ny/']
+    # del wa_nav_links['/wa/']
 
     return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
 
