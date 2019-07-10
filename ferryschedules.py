@@ -76,17 +76,17 @@ def navbar():
     c=0
 
     for route in ca_routes:
-        ca_links_list.append(route, ca_anchors[c])
+        ca_links_list.append((route, ca_anchors[c]))
         c += 1
     
     c=0
     for route in ny_routes:
-        ny_links_list.append(route, ny_anchors[c])
+        ny_links_list.append((route, ny_anchors[c]))
         c += 1
 
     c=0
     for route in wa_routes:
-        wa_links_list.append(route, wa_anchors[c])
+        wa_links_list.append((route, wa_anchors[c]))
         c += 1
 
     ca_nav_links = dict(ca_links_list)
