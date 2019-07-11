@@ -131,15 +131,21 @@ def generate_breadcrumb():
     # Get the endpoint name
     endpoint = request.endpoint
 
-    if endpoint.startswith('southworth') or endpoint.startswith('bremerton'):
-        # Replace underscores with spaces in endpoint name
-        # Then convert to title case
+    # Replace underscores with spaces and forward slash
+    # Convert to title case
+    if endpoint.startswith('bremerton')\
+    or endpoint.startswith('kingston')\
+    or endpoint.startswith('southworth')\
+    or endpoint.startswith('larkspur')\
+    or endpoint.startswith('vallejo'):
         bc_schedule_text = endpoint.title().replace('_', '/')
-    elif endpoint.startswith('bainbridge'):
+    elif endpoint.startswith('bainbridge')\
+    or endpoint.startswith('staten'):
         bc_schedule_text = endpoint.title().replace('_', ' ', 1)
         bc_schedule_text = bc_schedule_text.replace('_', '/')
-    else:
-        bc_schedule_text = endpoint.title().replace('_', ' ')
+    elif endpoint.startswith('anacortes'):
+        bc_schedule_text = endpoint.title().replace('_', '/', 1)
+        bc_schedule_text = bc_schedule_text.replace('_', ' ')
 
     return bc_path, bc_state_text, bc_schedule_text
 
