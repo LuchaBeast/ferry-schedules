@@ -135,6 +135,9 @@ def generate_breadcrumb():
         # Replace underscores with spaces in endpoint name
         # Then convert to title case
         bc_schedule_text = endpoint.title().replace('_', '/')
+    elif endpoint.startswith('bainbridge'):
+        bc_schedule_text = endpoint.title().replace('_', ' ', 1)
+        bc_schedule_text = bc_schedule_text.replace(' ', '/')
     else:
         bc_schedule_text = endpoint.title().replace('_', ' ')
 
