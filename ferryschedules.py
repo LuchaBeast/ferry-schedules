@@ -1,10 +1,8 @@
 from flask import Flask, render_template, url_for, jsonify, request
-#from flask_caching import Cache
 from oauth2client.service_account import ServiceAccountCredentials
 import string
 import gspread
 import pendulum
-#import pylibmc
 import bmemcached
 import os
 
@@ -135,6 +133,7 @@ def generate_breadcrumb():
 
     # Replace underscores with spaces in endpoint name
     # Then convert to title case
+    bc_schedule_text = endpoint.replace('_', '/', 1)
     bc_schedule_text = endpoint.title().replace('_', ' ')
 
     return bc_path, bc_state_text, bc_schedule_text
@@ -984,7 +983,7 @@ def kingston_ferry_schedule():
 
 
 @app.route('/wa/southworth-vashon/')
-def southworth_ferry_schedule():
+def southworth_vashon_ferry_schedule():
     # Set southworth schedule variable to true
     # to indicate which template to use
     southworth_schedule = True
