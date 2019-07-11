@@ -136,6 +136,8 @@ def generate_breadcrumb():
         # Then convert to title case
         bc_schedule_text = endpoint.replace('_', '/', 1)
         bc_schedule_text = bc_schedule_text.title().replace('_', ' ')
+    else:
+        bc_schedule_text = endpoint.title().replace('_', ' ')
 
     return bc_path, bc_state_text, bc_schedule_text
 
