@@ -135,15 +135,15 @@ def generate_breadcrumb():
     # Convert to title case
     if endpoint.startswith('bremerton')\
     or endpoint.startswith('kingston')\
-    or endpoint.startswith('southworth')\
-    or endpoint.startswith('larkspur')\
-    or endpoint.startswith('vallejo'):
+    or endpoint.startswith('southworth'):
         bc_schedule_text = endpoint.title().replace('_', '/')
     elif endpoint.startswith('bainbridge')\
     or endpoint.startswith('staten'):
         bc_schedule_text = endpoint.title().replace('_', ' ', 1)
         bc_schedule_text = bc_schedule_text.replace('_', '/')
-    elif endpoint.startswith('anacortes'):
+    elif endpoint.startswith('anacortes')\
+    or endpoint.startswith('larkspur')\
+    or endpoint.startswith('vallejo'):
         bc_schedule_text = endpoint.title().replace('_', '/', 1)
         bc_schedule_text = bc_schedule_text.replace('_', ' ')
 
