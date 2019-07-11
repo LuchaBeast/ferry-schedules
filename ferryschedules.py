@@ -131,11 +131,10 @@ def generate_breadcrumb():
     # Get the endpoint name
     endpoint = request.endpoint
 
-    if str(endpoint).startswith('southworth'):
+    if endpoint.startswith('southworth') or endpoint.startswith('bremerton'):
         # Replace underscores with spaces in endpoint name
         # Then convert to title case
-        bc_schedule_text = endpoint.replace('_', '/', 1)
-        bc_schedule_text = bc_schedule_text.title().replace('_', ' ')
+        bc_schedule_text = endpoint.title().replace('_', '/')
     else:
         bc_schedule_text = endpoint.title().replace('_', ' ')
 
@@ -279,7 +278,7 @@ def washington_ferry_schedules():
 
 # Bremerton Ferry Schedule route
 @app.route('/wa/bremerton-seattle/')
-def bremerton_ferry_schedule():
+def bremerton_seattle():
 
     # Set bremerton schedule variable to true
     # to indicate which template to use
@@ -431,7 +430,7 @@ def bremerton_ferry_schedule():
 
 # Bainbridge Ferry Schedule route
 @app.route('/wa/bainbridge-island-seattle/')
-def bainbridge_island_ferry_schedule():
+def bainbridge_island_seattle():
 
     # Set bainbridge schedule variable to true
     # to indicate which template to use
@@ -656,7 +655,7 @@ def bainbridge_island_ferry_schedule():
 
 # Anacortes Ferry schedule route
 @app.route('/wa/anacortes-san-juan-islands/')
-def anacortes_ferry_schedule():
+def anacortes_san_juan_islands():
 
     # Set anacortes schedule variable to true
     # to indicate which template to use
@@ -834,7 +833,7 @@ def anacortes_ferry_schedule():
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
-def kingston_ferry_schedule():
+def kingston_edmonds():
 
     # Set kingston schedule variable to true
     # to indicate which template to use
@@ -986,7 +985,7 @@ def kingston_ferry_schedule():
 
 
 @app.route('/wa/southworth-vashon/')
-def southworth_vashon_ferry_schedule():
+def southworth_vashon():
     # Set southworth schedule variable to true
     # to indicate which template to use
     southworth_schedule = True
@@ -1206,7 +1205,7 @@ def southworth_vashon_ferry_schedule():
 
 # Staten Island Ferry Schedule route
 @app.route('/ny/staten-island/')
-def staten_island_ferry_schedule():
+def staten_island_manhattan():
 
     # Set bainbridge schedule variable to true
     # to indicate which template to use
@@ -1426,7 +1425,7 @@ def staten_island_ferry_schedule():
 
 # Larkspur Ferry Schedule route
 @app.route('/ca/larkspur-sf/')
-def larkspur_ferry_schedule():
+def larkspur_san_francisco():
     # Set bainbridge schedule variable to true
     # to indicate which template to use
     larkspur_schedule = True
@@ -1646,7 +1645,7 @@ def larkspur_ferry_schedule():
 
 # Vallejo Ferry Schedule route
 @app.route('/ca/vallejo-sf/')
-def vallejo_ferry_schedule():
+def vallejo_san_francisco():
     # Set anacortes schedule variable to true
     # to indicate which template to use
     vallejo_schedule = True
