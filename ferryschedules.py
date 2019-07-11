@@ -18,15 +18,6 @@ cache = bmemcached.Client(servers, username=user, password=passw)
 
 cache.enable_retry_delay(True)  # Enabled by default. Sets retry delay to 5s.
 
-# scope = ['https://spreadsheets.google.com/feeds',
-#          'https://www.googleapis.com/auth/drive']
-
-# creds = ServiceAccountCredentials.from_json_keyfile_name('/home/ferryschedules/ferry-schedules/client_secret.json',
-#                                                          scope)
-# client = gspread.authorize(creds)
-
-# sheet = client.open_by_key('1sh4UaaL4ZVAIz4ffvYTeTo8se83rxGFaGbN4C2wjfAI')
-
 class WKS:
     def __init__(self):
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -118,54 +109,6 @@ def navbar():
     ny_nav_links = dict(ny_links_list)
     wa_nav_links = dict(wa_links_list)
 
-
-
-    # Create list of url routes
-    # ca_links_list = []
-    # wa_links_list = []
-    # ny_links_list = []
-
-    # for rule in app.url_map.iter_rules():
-    #     if "GET" in rule.methods and has_no_empty_params(rule):
-    #         if str(rule).find('/wa/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             wa_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ny/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ny_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ca/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ca_links_list.append((url, rule.endpoint))
-
-    # # Sort list and then delete homepage from list
-    # ca_links_list.sort()
-    # wa_links_list.sort()
-    # ny_links_list.sort()
-
-    # # Convert list to dictionary
-    # ca_nav_links = dict(ca_links_list)
-    # wa_nav_links = dict(wa_links_list)
-    # ny_nav_links = dict(ny_links_list)
-
-    # # Modify the endpoints into pretty names
-    # for k, v in ca_nav_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ca_nav_links.update(update_name)
-
-    # for k, v in wa_nav_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     wa_nav_links.update(update_name)
-
-    # for k, v in ny_nav_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ny_nav_links.update(update_name)
-
-    # # Delete state directory pages
-    # # We do not want them listed in the nav
-    # del ca_nav_links['/ca/']
-    # del ny_nav_links['/ny/']
-    # del wa_nav_links['/wa/']
-
     return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
 
 
@@ -205,120 +148,11 @@ def homepage():
 
     homepage = True
 
-    # # Create an instance of WKS and retrieve route worksheet
-    # wks = WKS()
-    # ws = wks.get_worksheet(0)
-
-    # # Initiate empty link lists
-    # ca_links_list = []
-    # ny_links_list = []
-    # wa_links_list = []
-    
-    # # Retrieve routes and anchors from sheet
-    # # Cache values
-    # ca_routes = cache.get('cached_ca_routes')
-    # if ca_routes == None:
-    #     ca_routes = ws.col_values(2)
-    #     cache.set('cached_ca_routes', ca_routes)
-    # ca_anchors = cache.get('cached_ca_anchors')
-    # if ca_anchors == None:
-    #     ca_anchors = ws.col_values(3)
-    #     cache.set('cached_ca_anchors', ca_anchors)
-
-    # ny_routes = cache.get('cached_ny_routes')
-    # if ny_routes == None:
-    #     ny_routes = ws.col_values(2)
-    #     cache.set('cached_ny_routes', ny_routes)
-    # ny_anchors = cache.get('cached_ny_anchors')
-    # if ny_anchors == None:
-    #     ny_anchors = ws.col_values(3)
-    #     cache.set('cached_ny_anchors', ny_anchors)
-
-    # wa_routes = cache.get('cached_wa_routes')
-    # if wa_routes == None:
-    #     wa_routes = ws.col_values(2)
-    #     cache.set('cached_wa_routes', wa_routes)
-    # wa_anchors = cache.get('cached_wa_anchors')
-    # if wa_anchors == None:
-    #     wa_anchors = ws.col_values(3)
-    #     cache.set('cached_wa_anchors', wa_anchors)
-
-    # # Counter
-    # c=0
-
-    # # Create list of routes and anchors for each state
-    # for route in ca_routes:
-    #     ca_links_list.append((route, ca_anchors[c]))
-    #     c += 1
-    
-    # c=0
-    # for route in ny_routes:
-    #     ny_links_list.append((route, ny_anchors[c]))
-    #     c += 1
-
-    # c=0
-    # for route in wa_routes:
-    #     wa_links_list.append((route, wa_anchors[c]))
-    #     c += 1
-
-    # Convert lists to dictionaries 
-    # ca_links = dict(nav[2])
-    # ny_links = dict(nav[0])
-    # wa_links = dict(nav[1])
-
-    # # Create list of url routes
-    # ca_links_list = []
-    # wa_links_list = []
-    # ny_links_list = []
-    # for rule in app.url_map.iter_rules():
-    #     if "GET" in rule.methods and has_no_empty_params(rule):
-    #         if str(rule).find('/wa/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             wa_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ny/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ny_links_list.append((url, rule.endpoint))
-    #         elif str(rule).find('/ca/') is 0:
-    #             url = url_for(rule.endpoint, **(rule.defaults or {}))
-    #             ca_links_list.append((url, rule.endpoint))
-
-    # # Sort lists
-    # ca_links_list.sort()
-    # wa_links_list.sort()
-    # ny_links_list.sort()
-
-    # # Convert lists to dictionaries
-    # ca_links = dict(ca_links_list)
-    # wa_links = dict(wa_links_list)
-    # ny_links = dict(ny_links_list)
-
-    # # Modify the endpoints into pretty names
-    # for k, v in ca_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ca_links.update(update_name)
-
-    # for k, v in wa_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     wa_links.update(update_name)
-
-    # for k, v in ny_links.items():
-    #     update_name = {k: v.title().replace('_', ' ')}
-    #     ny_links.update(update_name)
-
-    # # Delete state directory pages from dict
-    # # We do not want them listed on the page
-    # del ca_links['/ca/']
-    # del ny_links['/ny/']
-    # del wa_links['/wa/']
-
     return render_template('index.html',
                            homepage=homepage,
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
-                        #    ca_links=ca_links.items(),
-                        #    ny_links=ny_links.items(),
-                        #    wa_links=wa_links.items())
 
 
 # California directory page
