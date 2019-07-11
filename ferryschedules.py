@@ -137,7 +137,7 @@ def generate_breadcrumb():
         bc_schedule_text = endpoint.title().replace('_', '/')
     elif endpoint.startswith('bainbridge'):
         bc_schedule_text = endpoint.title().replace('_', ' ', 1)
-        bc_schedule_text = bc_schedule_text.replace(' ', '/')
+        bc_schedule_text = bc_schedule_text.replace('_', '/')
     else:
         bc_schedule_text = endpoint.title().replace('_', ' ')
 
