@@ -239,7 +239,7 @@ def new_york_ferry_schedules():
     new_york = True
 
     # Create instance of generate_breadcrumb()
-    bc = generate_breadcrumb()
+    bc = generate_state_page_breadcrumb()
 
     # Create empty list to store New York links
     ny_schedule_list = []
@@ -279,7 +279,7 @@ def washington_ferry_schedules():
     washington = True
 
     # Create instance of generate_breadcrumb()
-    bc = generate_breadcrumb()
+    bc = generate_state_page_breadcrumb()
 
     # Create empty list to store Washington links
     wa_schedule_list = []
