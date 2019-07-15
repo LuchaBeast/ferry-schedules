@@ -85,22 +85,27 @@ def navbar():
         cache.set('cached_wa_anchors', wa_anchors)
 
     # Counter
-    c=0
+    c = 0
 
     # Create list of routes and anchors for each state
     for route in ca_routes:
         ca_links_list.append((route, ca_anchors[c]))
         c += 1
+    ca_links_list.sort()
     
-    c=0
+    # Reset counter
+    c = 0
     for route in ny_routes:
         ny_links_list.append((route, ny_anchors[c]))
         c += 1
+    ny_links_list.sort()
 
-    c=0
+    # Reset counter
+    c = 0
     for route in wa_routes:
         wa_links_list.append((route, wa_anchors[c]))
         c += 1
+    wa_links_list.sort()
 
     # Convert lists to dictionaries 
     ca_nav_links = dict(ca_links_list)
@@ -839,6 +844,166 @@ def anacortes_san_juan_islands():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
+
+# Anacortes/Sidney B.C. Ferry schedule route
+@app.route('/wa/anacortes-sidney-bc')
+def anacortes_sidney_bc():
+    anacortes_sidney_bc_schedule = True
+
+    # Create instance of navbar()
+    nav = navbar()
+
+    # Generate breadcrumb for this route
+    bc = generate_breadcrumb()
+
+    # Get Anacortes schedule worksheet
+    wks = WKS()
+    ws = wks.get_worksheet(9)
+
+    # Set title tag variable
+    title = cache.get('cached_anacortes_sidney_bc_title')
+    if title == None:
+        title = ws.acell('B1').value
+        cache.set('cached_anacortes_sidney_bc_title', title)
+
+    # Set h1 tag variable
+    h1 = cache.get('cached_anacortes_sidney_bc_h1')
+    if h1 == None:
+        h1 = ws.acell('B2').value
+        cache.set('cached_anacortes_sidney_bc_h1', h1)
+
+    # Set leadcopy variable
+    leadcopy = cache.get('cached_anacortes_sidney_bc_leadcopy')
+    if leadcopy == None:
+        leadcopy = ws.acell('B3').value
+        cache.set('cached_anacortes_sidney_bc_leadcopy', leadcopy)
+
+    # Set container headers
+    th_1 = cache.get('cached_anacortes_sidney_bc_th_1')
+    if th_1 == None:
+        th_1 = ws.acell('B5').value
+        cache.set('cached_anacortes_sidney_bc_th_1', th_1)
+    
+    th_2 = cache.get('cached_anacortes_sidney_bc_th_2')
+    if th_2 == None:
+        th_2 = ws.acell('B6').value
+        cache.set('cached_anacortes_sidney_bc_th_2', th_2)
+
+     # Initiate blank lists to store westbound schedules
+    wb_schedule = []
+    wb_temp_list = []
+    wb_table_headers = []
+
+    # Retrieve westbound schedule times
+    wb_anacortes_2 = cache.get('cached_wb_anacortes_2')
+    if wb_anacortes_2 == None:
+        wb_anacortes_2 = ws.col_values(5)
+        cache.set('cached_wb_anacortes_2', wb_anacortes_2)
+    wb_orcas_island_2 = cache.get('cached_wb_orcas_island_2')
+    if wb_orcas_island_2 == None:
+        wb_orcas_island_2 = ws.col_values(6)
+        cache.set('cached_wb_orcas_island_2', wb_orcas_island_2)
+    wb_friday_harbor_2 = cache.get('cached_wb_friday_harbor_2')
+    if wb_friday_harbor_2 == None:
+        wb_friday_harbor_2 = ws.col_values(7)
+        cache.set('cached_wb_friday_harbor_2', wb_friday_harbor_2)
+    wb_sidney_bc_2 = cache.get('cached_wb_sidney_bc_2')
+    if wb_sidney_bc_2 == None:
+        wb_sidney_bc_2 = ws.col_values(8)
+        cache.set('cached_wb_sidney_bc_2', wb_sidney_bc_2)
+
+    # Create list of westbound table headers
+    wb_table_headers.extend([wb_anacortes_2[0],
+                             wb_orcas_island_2[0],
+                             wb_friday_harbor_2[0],
+                             wb_sidney_bc_2[0]])
+
+    # Remove table headers
+    del wb_anacortes_2[0]
+    del wb_orcas_island_2[0]
+    del wb_friday_harbor_2[0]
+    del wb_sidney_bc_2[0]
+
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each westbound time row
+    # Append temp list to schedule list
+    while c < len(wb_anacortes_2):
+        wb_temp_list = [wb_anacortes_2[c],
+                        wb_orcas_island_2[c],
+                        wb_friday_harbor_2[c],
+                        wb_sidney_bc_2[c]]
+
+        wb_schedule.append(wb_temp_list)
+        c += 1
+
+    # Initiate empty eastbound schedule variables
+    eb_schedule = []
+    eb_temp_list = []
+    eb_table_headers = []
+
+    # Retrieve eastbound schedule times
+    eb_sidney_bc_2 = cache.get('cached_eb_sidney_bc_2')
+    if eb_sidney_bc_2 == None:
+        eb_sidney_bc_2 = ws.col_values(10)
+        cache.set('cached_eb_sidney_bc_2', eb_sidney_bc_2)
+    eb_friday_harbor_2 = cache.get('cached_eb_friday_harbor_2')
+    if eb_friday_harbor_2 == None:
+        eb_friday_harbor_2 = ws.col_values(11)
+        cache.set('cached_eb_friday_harbor_2', eb_friday_harbor_2)
+    eb_orcas_island_2 = cache.get('cached_eb_orcas_island_2')
+    if eb_orcas_island_2 == None:
+        eb_orcas_island_2 = ws.col_values(12)
+        cache.set('cached_eb_orcas_island_2', eb_orcas_island_2)
+    eb_anacortes_2 = cache.get('cached_eb_anacortes_2')
+    if eb_anacortes_2 == None:
+        eb_anacortes_2 = ws.col_values(13)
+        cache.set('cached_eb_anacortes_2', eb_anacortes_2)
+
+    # Create list of eastbound table headers
+    eb_table_headers.extend([eb_sidney_bc_2[0],
+                             eb_friday_harbor_2[0],
+                             eb_orcas_island_2[0],
+                             eb_anacortes_2[0]])
+
+    # Remove eastbound table headers from each list
+    del eb_sidney_bc_2[0]
+    del eb_friday_harbor_2[0]
+    del eb_orcas_island_2[0]
+    del eb_anacortes_2[0]
+
+    # Set counter variable
+    c = 0
+
+    # Create temp list for each eastbound time row
+    # Append temp list to schedule list
+    while c < len(eb_anacortes_2):
+        eb_temp_list = [eb_sidney_bc_2[c],
+                        eb_friday_harbor_2[c],
+                        eb_orcas_island_2[c],
+                        eb_anacortes_2[c]]
+
+        eb_schedule.append(eb_temp_list)
+        c += 1
+
+    return render_template('schedule.html',
+                           anacortes_sidney_bc_schedule=anacortes_sidney_bc_schedule,
+                           title=title,
+                           h1=h1,
+                           leadcopy=leadcopy,
+                           th_1=th_1,
+                           th_2=th_2,
+                           wb_table_headers=wb_table_headers,
+                           eb_table_headers=eb_table_headers,
+                           wb_schedule=wb_schedule,
+                           eb_schedule=eb_schedule,
+                           bc_path=bc[0],
+                           bc_state_text=bc[1],
+                           bc_schedule_text=bc[2],
+                           ny_nav_links=nav[0],
+                           wa_nav_links=nav[1],
+                           ca_nav_links=nav[2])
 
 # Kingston Ferry schedule route
 @app.route('/wa/kingston-edmonds/')
