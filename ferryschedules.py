@@ -846,7 +846,7 @@ def anacortes_san_juan_islands():
 
 
 # Anacortes/Sidney B.C. Ferry schedule route
-@app.route('/wa/anacortes-sidney-bc')
+@app.route('/wa/anacortes-sidney-bc/')
 def anacortes_sidney_bc():
     anacortes_sidney_bc_schedule = True
 
