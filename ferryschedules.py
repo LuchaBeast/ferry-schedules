@@ -154,6 +154,25 @@ def generate_breadcrumb():
 
     return bc_path, bc_state_text, bc_schedule_text
 
+def generate_state_page_breadcrumb():
+    # Get path of the route
+    url = request.path
+
+    # Split each directory in the route
+    split_url = url.split('/')
+
+    # Filter out empty list items
+    # Retrieve state path from list
+    path_extract = list(filter(None, split_url))[0]
+
+    # Rebuild path for state page
+    bc_path = "/" + path_extract + "/"
+
+    # Create the anchor text for the State part of the breadcrumb
+    bc_state_text = path_extract.upper()
+
+    return bc_path, bc_state_text
+
 
 @app.route('/')
 def homepage():
@@ -180,7 +199,7 @@ def california_ferry_schedules():
     california = True
 
     # Create instance of generate_breadcrumb()
-    bc = generate_breadcrumb()
+    bc = generate_state_page_breadcrumb()
 
     # Create empty list to store California links
     ca_schedule_list = []
