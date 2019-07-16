@@ -1068,6 +1068,7 @@ def kingston_edmonds():
     # Set kingston schedule variable to true
     # to indicate which template to use
     kingston_schedule = True
+    next_departures=True
 
     # Create instance of navbar()
     nav = navbar()
@@ -1097,16 +1098,6 @@ def kingston_edmonds():
         leadcopy = ws.acell('B3').value
         cache.set('cached_kingston_leadcopy', leadcopy)
 
-    # Set table headers for each schedule
-    table_headers_1 = cache.get('cached_kingston_table_headers_1')
-    if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-        cache.set('cached_kingston_table_headers_1', table_headers_1)
-    table_headers_2 = cache.get('cached_kingston_table_headers_2')
-    if table_headers_2 == None:
-        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
-        cache.set('cached_kingston_table_headers_2', table_headers_2)
-
     # Set container headers
     th_1 = cache.get('cached_kingston_th_1')
     if th_1 == None:
@@ -1129,6 +1120,9 @@ def kingston_edmonds():
         cache.set('cached_kingston_ndh_2', ndh_2)
 
     # ***Depart Kingston schedule code begins***
+    king_schedule = []
+    king_temp_list = []
+    king_table_headers = []
 
     # Get the cells for each schedule and delete header cell from list
     depart_kingston_schedule = cache.get('cached_depart_kingston_schedule')
@@ -1141,15 +1135,31 @@ def kingston_edmonds():
         arrive_edmonds_schedule = ws.col_values(5)
         cache.set('cached_arrive_edmonds_schedule', arrive_edmonds_schedule)
 
+    king_table_headers.extend([depart_kingston_schedule[0],
+                               arrive_edmonds_schedule[0]])
+
     del depart_kingston_schedule[0]
     del arrive_edmonds_schedule[0]
 
-    times_1 = dict(zip(depart_kingston_schedule, arrive_edmonds_schedule))
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each Bremerton time row
+    # Append temp list to schedule list
+    while c < len(depart_kingston_schedule):
+        king_temp_list = [depart_kingston_schedule[c],
+                          arrive_edmonds_schedule[c]]
+        king_schedule.append(king_temp_list)
+        c += 1
 
     # ***Depart Kingston schedule code ends***
 
     # ***Depart Edmonds schedule code begins***
 
+    edm_schedule = []
+    edm_temp_list = []
+    edm_table_headers = []
+    
     # Get the cells for each schedule
     depart_edmonds_schedule = cache.get('cached_depart_edmonds_schedule')
     if depart_edmonds_schedule == None:
@@ -1161,11 +1171,22 @@ def kingston_edmonds():
         arrive_kingston_schedule = ws.col_values(8)
         cache.set('cached_arrive_kingston_schedule', arrive_kingston_schedule)
 
+    edm_table_headers.extend([depart_edmonds_schedule[0],
+                              arrive_kingston_schedule[0]])
+
     del depart_edmonds_schedule[0]
     del arrive_kingston_schedule[0]
 
-    # Convert schedule columns into a single dictionary
-    times_2 = dict(zip(depart_edmonds_schedule, arrive_kingston_schedule))
+    # Set count variable
+    c = 0
+
+    # Create temp list for each seattle time row
+    # Append temp list to schedule list
+    while c < len(depart_edmonds_schedule):
+        edm_temp_list = [depart_edmonds_schedule[c],
+                         arrive_kingston_schedule[c]]
+        edm_schedule.append(edm_temp_list)
+        c += 1
 
     # ***Depart Edmonds schedule code ends***
 
@@ -1193,19 +1214,20 @@ def kingston_edmonds():
 
     return render_template('schedule.html',
                            kingston_schedule=kingston_schedule,
-                           times_1=times_1.items(),
-                           times_2=times_2.items(),
-                           next_departure_1=next_departure_1,
-                           next_departure_2=next_departure_2,
-                           table_headers_1=table_headers_1.items(),
-                           table_headers_2=table_headers_2.items(),
+                           next_departures=next_departures,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
-                           ndh_1=ndh_1,
-                           ndh_2=ndh_2,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
+                           table_headers_1=king_table_headers,
+                           table_headers_2=edm_table_headers,
+                           schedule_1=king_schedule,
+                           schedule_2=edm_schedule,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
