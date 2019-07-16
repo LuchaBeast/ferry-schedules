@@ -704,6 +704,7 @@ def anacortes_san_juan_islands():
     # Set anacortes schedule variable to true
     # to indicate which template to use
     anacortes_san_juan_schedule = True
+    next_departures = True
 
     # Create instance of navbar()
     nav = navbar()
@@ -890,6 +891,7 @@ def anacortes_san_juan_islands():
 
     return render_template('schedule.html',
                            anacortes_san_juan_schedule=anacortes_san_juan_schedule,
+                           next_departures=next_departures,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
