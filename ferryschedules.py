@@ -451,12 +451,6 @@ def bremerton_seattle():
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
                            next_departures=next_departures,
-                           schedule_1=brem_schedule,
-                           schedule_2=seattle_schedule,
-                           next_departure_1=next_departure_1,
-                           next_departure_2=next_departure_2,
-                           table_headers_1=brem_table_headers,
-                           table_headers_2=seattle_table_headers,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
@@ -464,6 +458,12 @@ def bremerton_seattle():
                            th_2=th_2,
                            ndh_1=ndh_1,
                            ndh_2=ndh_2,
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
+                           table_headers_1=brem_table_headers,
+                           table_headers_2=seattle_table_headers,
+                           schedule_1=brem_schedule,
+                           schedule_2=seattle_schedule,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
@@ -744,6 +744,16 @@ def anacortes_san_juan_islands():
         th_2 = ws.acell('B6').value
         cache.set('cached_anacortes_san_juan_th_2', th_2)
 
+    # Set next departure card headers
+    ndh_1 = cache.get('cached_ancortes_san_juan_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_ancortes_san_juan_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_ancortes_san_juan_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_ancortes_san_juan_ndh_2', ndh_2)
+
     # Initiate blank lists to store westbound schedules
     wb_schedule = []
     wb_temp_list = []
@@ -856,6 +866,28 @@ def anacortes_san_juan_islands():
         eb_schedule.append(eb_temp_list)
         c += 1
 
+    # Calculate next departure times
+    # Retrieve current time in Seattle
+    current_pacific_time = pendulum.now('America/Los_Angeles')
+
+    # Set next Bremerton departure time
+    # by comparing current time to each time in the schedule
+    for departure in wb_anacortes:
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+        if current_pacific_time < format_time:
+            next_departure_1 = departure
+            break
+
+    # Set next Seattle departure time
+    # by comparing current time to each time in the schedule
+    for departure in eb_san_juan:
+        format_time = pendulum.from_format(departure, 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+        if current_pacific_time < format_time:
+            next_departure_2 = departure
+            break
+
     return render_template('schedule.html',
                            anacortes_san_juan_schedule=anacortes_san_juan_schedule,
                            title=title,
@@ -863,6 +895,10 @@ def anacortes_san_juan_islands():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=wb_table_headers,
                            table_headers_2=eb_table_headers,
                            schedule_1=wb_schedule,
