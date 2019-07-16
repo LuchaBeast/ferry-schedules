@@ -8,25 +8,19 @@
 {% block content %}
 <h5>Browse ferry schedules in New York</h5>
 <div class="container container-link-group">
-    {% for row in ny_schedules|batch(3,'') %}
-    <div class="row d-flex justify-content-center">
-        <div class="card-deck m-3">
-        {% for href in row %}
-            {% if href %}
-                <div class="card" style="width: 18rem; height: 10rem;">
-                    <div class="card-body">
-                        <h3 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h5>
-                        {# <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p> #}
-                        {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
-                    </div>
-                </div>
-            {% else %}
-                <div class="card blank-card" style="width: 18rem"></div>
-            {% endif %}
+    <dl class="row">
+        {% for row in ny_nav_links|batch(3,'') %}
+            {% for href in row %}
+                <dt class="col-sm-3">
+                    <a href="{{ href.0 }}">{{ href.1 }}</a>
+                </dt>
+                <dd class="col-sm-9">
+
+                </dd>
             {% endfor %}
-        </div>
-    </div>
-    {% endfor %}
+
+        {% endfor %}
+    </dl>
 </div>
 {% endblock %}
 

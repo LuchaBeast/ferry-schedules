@@ -54,7 +54,7 @@ def navbar():
     ca_links_list = []
     ny_links_list = []
     wa_links_list = []
-    
+
     # Retrieve routes and anchors from sheet
     # Cache values
     ca_routes = cache.get('cached_ca_routes')
@@ -92,7 +92,7 @@ def navbar():
         ca_links_list.append((route, ca_anchors[c]))
         c += 1
     ca_links_list.sort()
-    
+
     # Reset counter
     c = 0
     for route in ny_routes:
@@ -107,7 +107,7 @@ def navbar():
         c += 1
     wa_links_list.sort()
 
-    # Convert lists to dictionaries 
+    # Convert lists to dictionaries
     ca_nav_links = dict(ca_links_list)
     ny_nav_links = dict(ny_links_list)
     wa_nav_links = dict(wa_links_list)
@@ -201,28 +201,8 @@ def california_ferry_schedules():
     # Create instance of generate_breadcrumb()
     bc = generate_state_page_breadcrumb()
 
-    # Create empty list to store California links
-    ca_schedule_list = []
-
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            if str(rule).find('/ca/') is 0:
-                ca_url = url_for(rule.endpoint, **(rule.defaults or {}))
-                ca_schedule_list.append((ca_url, rule.endpoint))
-
-    ca_schedule_list.sort()
-
-    ca_schedules = dict(ca_schedule_list)
-
-    for key, value in ca_schedules.items():
-        update_name = {key: value.title().replace('_', ' ')}
-        ca_schedules.update(update_name)
-
-    del ca_schedules['/ca/']
-
     return render_template('ca.html',
                            california=california,
-                           ca_schedules=ca_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2],
@@ -241,28 +221,8 @@ def new_york_ferry_schedules():
     # Create instance of generate_breadcrumb()
     bc = generate_state_page_breadcrumb()
 
-    # Create empty list to store New York links
-    ny_schedule_list = []
-
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            if str(rule).find('/ny/') is 0:
-                ny_url = url_for(rule.endpoint, **(rule.defaults or {}))
-                ny_schedule_list.append((ny_url, rule.endpoint))
-
-    ny_schedule_list.sort()
-
-    ny_schedules = dict(ny_schedule_list)
-
-    for key, value in ny_schedules.items():
-        update_name = {key: value.title().replace('_', ' ')}
-        ny_schedules.update(update_name)
-
-    del ny_schedules['/ny/']
-
     return render_template('ny.html',
                            new_york=new_york,
-                           ny_schedules=ny_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2],
@@ -281,28 +241,8 @@ def washington_ferry_schedules():
     # Create instance of generate_breadcrumb()
     bc = generate_state_page_breadcrumb()
 
-    # Create empty list to store Washington links
-    wa_schedule_list = []
-
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and has_no_empty_params(rule):
-            if str(rule).find('/wa/') is 0:
-                wa_url = url_for(rule.endpoint, **(rule.defaults or {}))
-                wa_schedule_list.append((wa_url, rule.endpoint))
-
-    wa_schedule_list.sort()
-
-    wa_schedules = dict(wa_schedule_list)
-
-    for key, value in wa_schedules.items():
-        update_name = {key: value.title().replace('_', ' ')}
-        wa_schedules.update(update_name)
-
-    del wa_schedules['/wa/']
-
     return render_template('wa.html',
                            washington=washington,
-                           wa_schedules=wa_schedules.items(),
                            ny_nav_links=nav[0],
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2],
@@ -360,7 +300,7 @@ def bremerton_seattle():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_bremerton_th_1', th_1)
-    
+
     th_2 = cache.get('cached_bremerton_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -512,7 +452,7 @@ def bainbridge_island_seattle():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_bainbridge_th_1', th_1)
-    
+
     th_2 = cache.get('cached_bainbridge_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -545,7 +485,7 @@ def bainbridge_island_seattle():
     if depart_bainbridge_weekday_schedule == None:
         depart_bainbridge_weekday_schedule = ws.col_values(5)
         cache.set('cached_depart_bainbridge_weekday_schedule', depart_bainbridge_weekday_schedule)
-    
+
     arrive_seattle_weekday_schedule = cache.get('cached_arrive_seattle_weekday_schedule')
     if arrive_seattle_weekday_schedule == None:
         arrive_seattle_weekday_schedule = ws.col_values(6)
@@ -566,7 +506,7 @@ def bainbridge_island_seattle():
     if depart_seattle_weekday_schedule == None:
         depart_seattle_weekday_schedule = ws.col_values(7)
         cache.set('cached_depart_seattle_weekday_schedule', depart_seattle_weekday_schedule)
-    
+
     arrive_bainbridge_weekday_schedule = cache.get('cached_arrive_bainbridge_weekday_schedule')
     if arrive_bainbridge_weekday_schedule == None:
         arrive_bainbridge_weekday_schedule = ws.col_values(8)
@@ -587,7 +527,7 @@ def bainbridge_island_seattle():
     if depart_bainbridge_weekend_schedule == None:
         depart_bainbridge_weekend_schedule = ws.col_values(10)
         cache.set('cached_depart_bainbridge_weekend_schedule', depart_bainbridge_weekend_schedule)
-    
+
     arrive_seattle_weekend_schedule = cache.get('cached_arrive_seattle_weekend_schedule')
     if arrive_seattle_weekend_schedule == None:
         arrive_seattle_weekend_schedule = ws.col_values(11)
@@ -608,7 +548,7 @@ def bainbridge_island_seattle():
     if depart_seattle_weekend_schedule == None:
         depart_seattle_weekend_schedule = ws.col_values(12)
         cache.set('cached_depart_seattle_weekend_schedule', depart_seattle_weekend_schedule)
-    
+
     arrive_bainbridge_weekend_schedule = cache.get('cached_arrive_bainbridge_weekend_schedule')
     if arrive_bainbridge_weekend_schedule == None:
         arrive_bainbridge_weekend_schedule = ws.col_values(13)
@@ -727,7 +667,7 @@ def anacortes_san_juan_islands():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_anacortes_san_juan_th_1', th_1)
-    
+
     th_2 = cache.get('cached_anacortes_san_juan_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -902,7 +842,7 @@ def anacortes_sidney_bc():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_anacortes_sidney_bc_th_1', th_1)
-    
+
     th_2 = cache.get('cached_anacortes_sidney_bc_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -1075,7 +1015,7 @@ def kingston_edmonds():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_kingston_th_1', th_1)
-    
+
     th_2 = cache.get('cached_kingston_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -1226,7 +1166,7 @@ def southworth_vashon():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_southworth_th_1', th_1)
-    
+
     th_2 = cache.get('cached_southworth_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -1447,7 +1387,7 @@ def staten_island_manhattan():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_staten_island_th_1', th_1)
-    
+
     th_2 = cache.get('cached_staten_island_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -1666,7 +1606,7 @@ def larkspur_san_francisco():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_larkspur_th_1', th_1)
-    
+
     th_2 = cache.get('cached_larkspur_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
@@ -1876,7 +1816,7 @@ def vallejo_san_francisco():
     if th_1 == None:
         th_1 = ws.acell('B5').value
         cache.set('cached_vallejo_th_1', th_1)
-    
+
     th_2 = cache.get('cached_vallejo_th_2')
     if th_2 == None:
         th_2 = ws.acell('B6').value
