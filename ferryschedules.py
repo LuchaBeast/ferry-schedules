@@ -315,16 +315,6 @@ def bremerton_seattle():
         leadcopy = ws.acell('B3').value
         cache.set('cached_bremerton_leadcopy', leadcopy)
 
-    # # Set table headers for each schedule
-    # table_headers_1 = cache.get('cached_bremerton_table_headers_1')
-    # if table_headers_1 == None:
-    #     table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-    #     cache.set('cached_bremerton_table_headers_1', table_headers_1)
-    # table_headers_2 = cache.get('cached_bremerton_table_headers_2')
-    # if table_headers_2 == None:
-    #     table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
-    #     cache.set('cached_bremerton_table_headers_2', table_headers_2)
-
     # Set container headers
     th_1 = cache.get('cached_bremerton_th_1')
     if th_1 == None:
@@ -351,7 +341,7 @@ def bremerton_seattle():
     brem_schedule = []
     brem_temp_list = []
     brem_table_headers = []
-    
+
     # Get the cells for each schedule and delete header cell from list
     departure_schedule_1 = cache.get('cached_departure_schedule_1')
     if departure_schedule_1 == None:
@@ -365,7 +355,7 @@ def bremerton_seattle():
     # Create list with bremerton table headers
     brem_table_headers.extend([departure_schedule_1[0],
                                arrive_schedule_1[0]])
-    
+
     # Remove tables headers from schedules
     del departure_schedule_1[0]
     del arrive_schedule_1[0]
@@ -380,9 +370,6 @@ def bremerton_seattle():
                           arrive_schedule_1[c]]
         brem_schedule.append(brem_temp_list)
         c += 1
-
-    # # Convert schedule lists into dictionary
-    # times_1 = dict(zip(departure_schedule_1, arrive_schedule_1))
 
     # ***Depart Bremerton schedule code ends***
 
@@ -409,9 +396,6 @@ def bremerton_seattle():
     # Remove table headers from schedules
     del departure_schedule_2[0]
     del arrive_schedule_2[0]
-
-    # # Convert schedule columns into a single dictionary
-    # times_2 = dict(zip(departure_schedule_2, arrive_schedule_2))
 
     # Set count variable
     c = 0
@@ -871,23 +855,27 @@ def anacortes_san_juan_islands():
     # Retrieve current time in Seattle
     current_pacific_time = pendulum.now('America/Los_Angeles')
 
-    # Set next Bremerton departure time
+    # Set next Anacortes departure time
     # by comparing current time to each time in the schedule
     for departure in wb_anacortes:
-        format_time = pendulum.from_format(departure, 'h:mm A')\
-                              .set(tz='America/Los_Angeles')
-        if current_pacific_time < format_time:
-            next_departure_1 = departure
-            break
+        if departure == '-----':
+            continue
+        else:
+            format_time = pendulum.from_format(departure, 'h:mm A').set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_1 = departure
+                break
 
-    # Set next Seattle departure time
+    # Set next San Juan Island departure time
     # by comparing current time to each time in the schedule
     for departure in eb_san_juan:
-        format_time = pendulum.from_format(departure, 'h:mm A')\
-                              .set(tz='America/Los_Angeles')
-        if current_pacific_time < format_time:
-            next_departure_2 = departure
-            break
+        if departure == '-----':
+            continue
+        else:
+            format_time = pendulum.from_format(departure, 'h:mm A').set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_2 = departure
+                break
 
     return render_template('schedule.html',
                            anacortes_san_juan_schedule=anacortes_san_juan_schedule,
