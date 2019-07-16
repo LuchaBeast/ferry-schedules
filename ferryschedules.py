@@ -285,6 +285,7 @@ def bremerton_seattle():
     # Set bremerton schedule variable to true
     # to indicate which template to use
     bremerton_schedule = True
+    next_departures = True
 
     # Create instance of navbar()
     nav = navbar()
@@ -314,15 +315,15 @@ def bremerton_seattle():
         leadcopy = ws.acell('B3').value
         cache.set('cached_bremerton_leadcopy', leadcopy)
 
-    # Set table headers for each schedule
-    table_headers_1 = cache.get('cached_bremerton_table_headers_1')
-    if table_headers_1 == None:
-        table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
-        cache.set('cached_bremerton_table_headers_1', table_headers_1)
-    table_headers_2 = cache.get('cached_bremerton_table_headers_2')
-    if table_headers_2 == None:
-        table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
-        cache.set('cached_bremerton_table_headers_2', table_headers_2)
+    # # Set table headers for each schedule
+    # table_headers_1 = cache.get('cached_bremerton_table_headers_1')
+    # if table_headers_1 == None:
+    #     table_headers_1 = {ws.acell('D1').value: ws.acell('E1').value}
+    #     cache.set('cached_bremerton_table_headers_1', table_headers_1)
+    # table_headers_2 = cache.get('cached_bremerton_table_headers_2')
+    # if table_headers_2 == None:
+    #     table_headers_2 = {ws.acell('G1').value: ws.acell('H1').value}
+    #     cache.set('cached_bremerton_table_headers_2', table_headers_2)
 
     # Set container headers
     th_1 = cache.get('cached_bremerton_th_1')
@@ -347,6 +348,10 @@ def bremerton_seattle():
 
     # ***Depart Bremerton schedule code begins***
 
+    brem_schedule = []
+    brem_temp_list = []
+    brem_table_headers = []
+    
     # Get the cells for each schedule and delete header cell from list
     departure_schedule_1 = cache.get('cached_departure_schedule_1')
     if departure_schedule_1 == None:
@@ -357,15 +362,35 @@ def bremerton_seattle():
         arrive_schedule_1 = ws.col_values(5)
         cache.set('cached_arrive_schedule_1', arrive_schedule_1)
 
+    # Create list with bremerton table headers
+    brem_table_headers.extend([departure_schedule_1[0],
+                               arrive_schedule_1[0]])
+    
+    # Remove tables headers from schedules
     del departure_schedule_1[0]
     del arrive_schedule_1[0]
 
-    # Convert schedule lists into dictionary
-    times_1 = dict(zip(departure_schedule_1, arrive_schedule_1))
+    # Set counter = 0
+    c = 0
+
+    # Create temp list for each Bremerton time row
+    # Append temp list to schedule list
+    while c < len(departure_schedule_1):
+        brem_temp_list = [departure_schedule_1[c],
+                          arrive_schedule_1[c]]
+        brem_schedule.append(brem_temp_list)
+        c += 1
+
+    # # Convert schedule lists into dictionary
+    # times_1 = dict(zip(departure_schedule_1, arrive_schedule_1))
 
     # ***Depart Bremerton schedule code ends***
 
     # ***Depart Seattle schedule code begins***
+
+    seattle_schedule = []
+    seattle_temp_list = []
+    seattle_table_headers = []
 
     # Get the cells for each schedule
     departure_schedule_2 = cache.get('cached_departure_schedule_2')
@@ -377,11 +402,27 @@ def bremerton_seattle():
         arrive_schedule_2 = ws.col_values(8)
         cache.set('cached_arrive_schedule_2', arrive_schedule_2)
 
+    # Create list of Seattle table headers
+    seattle_table_headers.extend([departure_schedule_2[0],
+                                  arrive_schedule_2[0]])
+
+    # Remove table headers from schedules
     del departure_schedule_2[0]
     del arrive_schedule_2[0]
 
-    # Convert schedule columns into a single dictionary
-    times_2 = dict(zip(departure_schedule_2, arrive_schedule_2))
+    # # Convert schedule columns into a single dictionary
+    # times_2 = dict(zip(departure_schedule_2, arrive_schedule_2))
+
+    # Set count variable
+    c = 0
+
+    # Create temp list for each seattle time row
+    # Append temp list to schedule list
+    while c < len(departure_schedule_2):
+        seattle_temp_list = [departure_schedule_2[c],
+                             arrive_schedule_2[c]]
+        seattle_schedule.append(seattle_temp_list)
+        c += 1
 
     # ***Depart Seattle schedule code ends***
 
@@ -409,12 +450,13 @@ def bremerton_seattle():
 
     return render_template('schedule.html',
                            bremerton_schedule=bremerton_schedule,
-                           times_1=times_1.items(),
-                           times_2=times_2.items(),
+                           next_departures=next_departures,
+                           schedule_1=brem_schedule,
+                           schedule_2=seattle_schedule,
                            next_departure_1=next_departure_1,
                            next_departure_2=next_departure_2,
-                           table_headers_1=table_headers_1.items(),
-                           table_headers_2=table_headers_2.items(),
+                           table_headers_1=brem_table_headers,
+                           table_headers_2=seattle_table_headers,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
@@ -821,10 +863,10 @@ def anacortes_san_juan_islands():
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
-                           wb_table_headers=wb_table_headers,
-                           eb_table_headers=eb_table_headers,
-                           wb_schedule=wb_schedule,
-                           eb_schedule=eb_schedule,
+                           table_headers_1=wb_table_headers,
+                           table_headers_2=eb_table_headers,
+                           schedule_1=wb_schedule,
+                           schedule_2=eb_schedule,
                            bc_path=bc[0],
                            bc_state_text=bc[1],
                            bc_schedule_text=bc[2],
