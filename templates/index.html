@@ -7,63 +7,45 @@
 
 {% block content %}
 <h5>Browse schedules by state</h5>
-<div class="container container-link-group">
+<div class="container mx-0 px-0 mt-3">
     <h4 class="mt-3 pt-3">California</h4>
-    {% for row in ca_nav_links|batch(3,'') %}
-    <div class="row d-flex justify-content-center">
-        <div class="card-deck m-3">
-        {% for href in row %}
-            {% if href %}
-                <div class="card" style="width: 18rem; height: 10rem;">
-                    <div class="card-body">
-                        <h4 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h4>
-                        {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
-                    </div>
-                </div>
-            {% else %}
-                <div class="card blank-card" style="width: 18rem;"></div>
-            {% endif %}
+    <dl class="row">
+        {% for row in ca_nav_links|batch(3,'') %}
+            {% for href in row %}
+                <dt class="col-sm-3">
+                    <a href="{{ href.0 }}">{{ href.1 }}</a>
+                </dt>
+                <dd class="col-sm-9">
+                    {{ href.2 }}
+                </dd>
             {% endfor %}
-        </div>
-    </div>
-    {% endfor %}
-    <h4 class="mt-3 pt-3">New York</h4>
-    {% for row in ny_nav_links|batch(3,'') %}
-    <div class="row d-flex justify-content-center">
-        <div class="card-deck m-3">
-        {% for href in row %}
-            {% if href %}
-                <div class="card" style="width: 18rem; height: 10rem;">
-                    <div class="card-body">
-                        <h4 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h4>
-                        {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
-                    </div>
-                </div>
-            {% else %}
-                <div class="card blank-card" style="width: 18rem;"></div>
-            {% endif %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endfor %}
-    <h4>Washington</h4>
-    {% for row in wa_nav_links|batch(3,'') %}
-    <div class="row d-flex justify-content-center">
-        <div class="card-deck m-3">
-        {% for href in row %}
-        {% if href %}
-            <div class="card" style="width: 18rem; height: 10rem;">
-                <div class="card-body">
-                    <h4 class="card-title"><a href="{{ href.0 }}">{{ href.1 }}</a></h4>
-                    {# <a href="{{ href.0 }}" class="btn btn-primary">View Schedule</a> #}
-                </div>
-            </div>
-        {% else %}
-            <div class="card blank-card" style="width: 18rem;"></div>
-        {% endif %}
         {% endfor %}
-        </div>
-    </div>
-    {% endfor %}
+    </dl>
+    <h4 class="mt-3">New York</h4>
+    <dl class="row">
+        {% for row in ny_nav_links|batch(3,'') %}
+            {% for href in row %}
+                <dt class="col-sm-3">
+                    <a href="{{ href.0 }}">{{ href.1 }}</a>
+                </dt>
+                <dd class="col-sm-9">
+                    {{ href.2 }}
+                </dd>
+            {% endfor %}
+        {% endfor %}
+    </dl>
+    <h4 class="mt-3">Washington</h4>
+    <dl class="row">
+        {% for row in wa_nav_links|batch(3,'') %}
+            {% for href in row %}
+                <dt class="col-sm-3">
+                    <a href="{{ href.0 }}">{{ href.1 }}</a>
+                </dt>
+                <dd class="col-sm-9">
+                    {{ href.2 }}
+                </dd>
+            {% endfor %}
+        {% endfor %}
+    </dl>
 </div>
 {% endblock %}

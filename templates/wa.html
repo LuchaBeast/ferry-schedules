@@ -7,7 +7,7 @@
 
 {% block content %}
 <h5>Browse ferry schedules in Washington</h5>
-<div class="container container-link-group">
+<div class="container mx-0 px-0 mt-3">
     <dl class="row">
         {% for row in wa_nav_links|batch(3,'') %}
             {% for href in row %}
@@ -15,7 +15,7 @@
                     <a href="{{ href.0 }}">{{ href.1 }}</a>
                 </dt>
                 <dd class="col-sm-9">
-
+                    {{ href.2 }}
                 </dd>
             {% endfor %}
 

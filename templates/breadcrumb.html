@@ -1,12 +1,12 @@
 {% if new_york or washington or california %}
-<nav class="mt-n5 px-5" aria-label="breadcrumb">
+<nav class="mt-n5 px-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Ferry Schedules</a></li>
         <li class="breadcrumb-item active">{{ bc_state_text }}</li>
     </ol>
 </nav>
 {% else %}
-<nav class="mt-n5 px-5" aria-label="breadcrumb">
+<nav class="mt-n5 px-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Ferry Schedules</a></li>
         <li class="breadcrumb-item"><a href="{{ bc_path }}">{{ bc_state_text }}</a></li>

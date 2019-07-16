@@ -55,6 +55,11 @@ def navbar():
     ny_links_list = []
     wa_links_list = []
 
+    # Initiate empty description lists
+    # ca_desc_list = []
+    # ny_desc_list = []
+    # wa_desc_list = []
+
     # Retrieve routes and anchors from sheet
     # Cache values
     ca_routes = cache.get('cached_ca_routes')
@@ -65,54 +70,78 @@ def navbar():
     if ca_anchors == None:
         ca_anchors = ws.col_values(3)
         cache.set('cached_ca_anchors', ca_anchors)
+    ca_desc = cache.get('cached_ca_desc')
+    if ca_desc == None:
+        ca_desc = ws.col_values(4)
+        cache.set('cached_ca_desc', ca_desc)
 
     ny_routes = cache.get('cached_ny_routes')
     if ny_routes == None:
-        ny_routes = ws.col_values(5)
+        ny_routes = ws.col_values(6)
         cache.set('cached_ny_routes', ny_routes)
     ny_anchors = cache.get('cached_ny_anchors')
     if ny_anchors == None:
-        ny_anchors = ws.col_values(6)
+        ny_anchors = ws.col_values(7)
         cache.set('cached_ny_anchors', ny_anchors)
+    ny_desc = cache.get('cached_ny_desc')
+    if ny_desc == None:
+        ny_desc = ws.col_values(8)
+        cache.set('cached_ny_desc', ny_desc)
 
     wa_routes = cache.get('cached_wa_routes')
     if wa_routes == None:
-        wa_routes = ws.col_values(8)
+        wa_routes = ws.col_values(10)
         cache.set('cached_wa_routes', wa_routes)
     wa_anchors = cache.get('cached_wa_anchors')
     if wa_anchors == None:
-        wa_anchors = ws.col_values(9)
+        wa_anchors = ws.col_values(11)
         cache.set('cached_wa_anchors', wa_anchors)
+    wa_desc = cache.get('cached_wa_desc')
+    if wa_desc == None:
+        wa_desc = ws.col_values(12)
+        cache.set('cached_wa_desc', wa_desc)
 
     # Counter
     c = 0
 
     # Create list of routes and anchors for each state
     for route in ca_routes:
-        ca_links_list.append((route, ca_anchors[c]))
+        ca_links_list.append((route, ca_anchors[c], ca_desc[c]))
+        # ca_desc_list.append((route, ca_desc[c]))
         c += 1
     ca_links_list.sort()
 
     # Reset counter
     c = 0
     for route in ny_routes:
-        ny_links_list.append((route, ny_anchors[c]))
+        ny_links_list.append((route, ny_anchors[c], ny_desc[c]))
+        # ny_desc_list.append((route, ny_desc[c]))
         c += 1
     ny_links_list.sort()
 
     # Reset counter
     c = 0
     for route in wa_routes:
-        wa_links_list.append((route, wa_anchors[c]))
+        wa_links_list.append((route, wa_anchors[c], wa_desc[c]))
+        # wa_desc_list.append((route, wa_desc[c]))
         c += 1
     wa_links_list.sort()
 
     # Convert lists to dictionaries
-    ca_nav_links = dict(ca_links_list)
-    ny_nav_links = dict(ny_links_list)
-    wa_nav_links = dict(wa_links_list)
+    # ca_nav_links = dict(ca_links_list)
+    # ny_nav_links = dict(ny_links_list)
+    # wa_nav_links = dict(wa_links_list)
 
-    return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
+    ca_nav_links = ca_links_list
+    ny_nav_links = ny_links_list
+    wa_nav_links = wa_links_list
+
+    # ca_descriptions = dict(ca_desc_list)
+    # ny_descriptions = dict(ny_desc_list)
+    # wa_descriptions = dict(wa_desc_list)
+
+    # return ny_nav_links.items(), wa_nav_links.items(), ca_nav_links.items()
+    return ny_nav_links, wa_nav_links, ca_nav_links
 
 
 def generate_breadcrumb():
