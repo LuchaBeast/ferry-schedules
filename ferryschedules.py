@@ -730,14 +730,14 @@ def anacortes_san_juan_islands():
         cache.set('cached_anacortes_san_juan_th_2', th_2)
 
     # Set next departure card headers
-    ndh_1 = cache.get('cached_ancortes_san_juan_ndh_1')
+    ndh_1 = cache.get('cached_anacortes_san_juan_ndh_1')
     if ndh_1 == None:
         ndh_1 = ws.acell('B7').value
-        cache.set('cached_ancortes_san_juan_ndh_1', ndh_1)
-    ndh_2 = cache.get('cached_ancortes_san_juan_ndh_2')
+        cache.set('cached_anacortes_san_juan_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_anacortes_san_juan_ndh_2')
     if ndh_2 == None:
         ndh_2 = ws.acell('B8').value
-        cache.set('cached_ancortes_san_juan_ndh_2', ndh_2)
+        cache.set('cached_anacortes_san_juan_ndh_2', ndh_2)
 
     # Initiate blank lists to store westbound schedules
     wb_schedule = []
@@ -905,6 +905,7 @@ def anacortes_san_juan_islands():
 @app.route('/wa/anacortes-sidney-bc/')
 def anacortes_sidney_bc():
     anacortes_sidney_bc_schedule = True
+    next_departures = True
 
     # Create instance of navbar()
     nav = navbar()
@@ -944,6 +945,16 @@ def anacortes_sidney_bc():
     if th_2 == None:
         th_2 = ws.acell('B6').value
         cache.set('cached_anacortes_sidney_bc_th_2', th_2)
+
+    # Set next departure card headers
+    ndh_1 = cache.get('cached_anacortes_sidney_bc_ndh_1')
+    if ndh_1 == None:
+        ndh_1 = ws.acell('B7').value
+        cache.set('cached_anacortes_sidney_bc_ndh_1', ndh_1)
+    ndh_2 = cache.get('cached_anacortes_sidney_bc_ndh_2')
+    if ndh_2 == None:
+        ndh_2 = ws.acell('B8').value
+        cache.set('cached_anacortes_sidney_bc_ndh_2', ndh_2)
 
      # Initiate blank lists to store westbound schedules
     wb_schedule = []
@@ -1043,13 +1054,44 @@ def anacortes_sidney_bc():
         eb_schedule.append(eb_temp_list)
         c += 1
 
+    # Calculate next departure times
+    # Retrieve current time in Seattle
+    current_pacific_time = pendulum.now('America/Los_Angeles')
+
+    # Set next Anacortes departure time
+    # by comparing current time to each time in the schedule
+    for departure in wb_anacortes_2:
+        if departure == '-----':
+            continue
+        else:
+            format_time = pendulum.from_format(departure, 'h:mm A').set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_1 = departure
+                break
+
+    # Set next San Juan Island departure time
+    # by comparing current time to each time in the schedule
+    for departure in eb_sidney_bc_2:
+        if departure == '-----':
+            continue
+        else:
+            format_time = pendulum.from_format(departure, 'h:mm A').set(tz='America/Los_Angeles')
+            if current_pacific_time < format_time:
+                next_departure_2 = departure
+                break
+
     return render_template('schedule.html',
                            anacortes_sidney_bc_schedule=anacortes_sidney_bc_schedule,
+                           next_departures=next_departures,
                            title=title,
                            h1=h1,
                            leadcopy=leadcopy,
                            th_1=th_1,
                            th_2=th_2,
+                           ndh_1=ndh_1,
+                           ndh_2=ndh_2,
+                           next_departure_1=next_departure_1,
+                           next_departure_2=next_departure_2,
                            table_headers_1=wb_table_headers,
                            table_headers_2=eb_table_headers,
                            schedule_1=wb_schedule,
@@ -1159,7 +1201,7 @@ def kingston_edmonds():
     edm_schedule = []
     edm_temp_list = []
     edm_table_headers = []
-    
+
     # Get the cells for each schedule
     depart_edmonds_schedule = cache.get('cached_depart_edmonds_schedule')
     if depart_edmonds_schedule == None:
