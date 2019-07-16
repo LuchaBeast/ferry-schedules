@@ -6,8 +6,7 @@
 {% block leadcopy %}A comprehensive, up-to-date directory of New York Ferry Schedules.{% endblock %}
 
 {% block content %}
-<h5>Browse ferry schedules in New York</h5>
-<div class="container mx-0 px-0 mt-3">
+<h5 class="mb-3">Browse ferry schedules in New York</h5>
     <dl class="row">
         {% for row in ny_nav_links|batch(3,'') %}
             {% for href in row %}
@@ -21,6 +20,5 @@
 
         {% endfor %}
     </dl>
-</div>
 {% endblock %}
 
