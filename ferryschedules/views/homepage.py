@@ -1,4 +1,4 @@
-from app import app
+from ferryschedules import app
 
 @app.route('/')
 def homepage():
