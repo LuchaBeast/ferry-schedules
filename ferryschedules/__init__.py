@@ -1,8 +1,8 @@
 from flask import Flask
-from ferryschedules.models.worksheet import Worksheet
+from ferryschedules.models.worksheet import Gsheet
 
 app = Flask(__name__)
-worksheet = Worksheet()
+gsheet = Gsheet()
 
 from ferryschedules.views import homepage
 from ferryschedules.views import state_pages

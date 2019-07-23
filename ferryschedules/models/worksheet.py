@@ -4,7 +4,7 @@ import gspread
 
 parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
-class Worksheet:
+class Gsheet:
     def __init__(self):
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
         self.creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(parentDirectory, 'fssite', 'client_secret.json'), scope)
