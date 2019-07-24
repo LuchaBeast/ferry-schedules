@@ -4,6 +4,6 @@ from ferryschedules.models.schedule import Schedule
 @app.route('/wa/bremerton-seattle/')
 def retrieve_schedule():
     schedule = Schedule(1)
-    meta_data = schedule.retrieve_meta_data()
-    print(meta_data)
+    departure_schedule = schedule.retrieve_departure_schedule(4)
+    print(departure_schedule)
     return 'This is a daily schedule'
