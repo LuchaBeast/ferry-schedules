@@ -28,19 +28,27 @@ class Schedule:
         return self.md
 
     # Retrieve departure schedule using column numbers as args
-    def retrieve_departure_schedule(self, start_column):
-        
-        self.departure_schedule = []
+    def retrieve_schedules(self, start_column):
+        self.schedule = []
+        temp_schedule = []
 
         column = start_column
 
+        # Aggregate each schedule column into a list of lists
         while self.worksheet.col_values(column) != []:
-            self.departure_schedule.append(self.worksheet.col_values(column))
+            temp_schedule.append(self.worksheet.col_values(column))
             column += 1
 
-        return self.departure_schedule
+        departure_schedule = temp_schedule[:len(temp_schedule)//2]
+        return_schedule = temp_schedule[len(temp_schedule)//2:]
+
+        departure_schedule = list(map(list, zip(*departure_schedule)))
+        return_schedule = list(map(list, zip(*return_schedule)))
+
+        self.schedule.extend([departure_schedule, return_schedule])
+
+        return self.schedule
         
 
-    # Retrieve return schedule using column numbers as args
-    def retrieve_return_schedule(self, *args):
-        return args
+    # # Retrieve return schedule using column numbers as args
+    # def retrieve_return_schedule(self, *args):
