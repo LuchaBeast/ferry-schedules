@@ -1,5 +1,4 @@
 from ferryschedules import gsheet
-# import gspread
 
 class Schedule:
     def __init__(self, worksheet_number):
@@ -28,25 +27,46 @@ class Schedule:
         return self.md
 
     # Retrieve all schedule columns from the worksheet
-    def retrieve_schedules(self, start_column):
+    # start_column is the corresponding column in the google sheet where the timetable starts
+    # schedule_type should be either "D" for Daily or "WWH" for Weekday Weekend Holiday
+    def retrieve_schedules(self, start_column, schedule_type):
         self.schedule = []
         temp_schedule = []
 
         column = start_column
+        st = schedule_type
 
         # Aggregate each schedule column into a list of lists
         while self.worksheet.col_values(column) != []:
             temp_schedule.append(self.worksheet.col_values(column))
             column += 1
 
-        # Get departure and return schedules by taking first and second half of temp_schedule list 
-        departure_schedule = temp_schedule[:len(temp_schedule)//2]
-        return_schedule = temp_schedule[len(temp_schedule)//2:]
+        # Get each schedule block by taking first and second half of temp_schedule list 
+        schedule_1 = temp_schedule[:len(temp_schedule)//2]
+        schedule_2 = temp_schedule[len(temp_schedule)//2:]
 
-        # Tranpose each list into a timetable
-        departure_schedule = list(map(list, zip(*departure_schedule)))
-        return_schedule = list(map(list, zip(*return_schedule)))
+        # If it is a Daily schedule, then no further splitting of the lists is necessary
+        if st == "D":
+            # Tranpose each list into a timetable
+            schedule_1 = list(map(list, zip(*schedule_1)))
+            schedule_2 = list(map(list, zip(*schedule_2)))
+            self.schedule.extend([schedule_1, schedule_2])
+        
+        # If it is a Weekday/Weekend/Holiday Schedule, we must split the lists further into appropriate schedules
+        elif st == "WWH":
+            weekday_schedule_1 = schedule_1[:len(schedule_1)//2]
+            weekday_schedule_2 = schedule_1[len(schedule_1)//2:]
 
-        self.schedule.extend([departure_schedule, return_schedule])
+            weekend_holiday_schedule_1 = schedule_2[:len(schedule_2)//2]
+            weekend_holiday_schedule_2 = schedule_2[len(schedule_2)//2:]
+
+            #Transpose each list into a timetable
+            weekday_schedule_1 = list(map(list, zip(*weekday_schedule_1)))
+            weekday_schedule_2 = list(map(list, zip(*weekday_schedule_2)))
+            weekend_holiday_schedule_1 = list(map(list, zip(*weekend_holiday_schedule_1)))
+            weekend_holiday_schedule_2 = list(map(list, zip(*weekend_holiday_schedule_2)))
+
+            self.schedule.extend([weekday_schedule_1, weekday_schedule_2, weekend_holiday_schedule_1, weekend_holiday_schedule_2])
+            
 
         return self.schedule

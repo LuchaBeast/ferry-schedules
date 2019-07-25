@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block h1 %}{{ h1 }}{% endblock %}
+{% block leadcopy %}{{ leadcopy }}{% endblock %}
+
+{% block content %}
 {% if next_departures %}
 <h2>Next Departures</h2>
     <div class="row py-3">
@@ -82,4 +90,4 @@
             </table>
         </div>
     </div>
-
+{% endblock %}
