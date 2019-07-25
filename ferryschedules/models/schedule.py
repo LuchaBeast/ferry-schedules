@@ -27,7 +27,7 @@ class Schedule:
                          }
         return self.md
 
-    # Retrieve departure schedule using column numbers as args
+    # Retrieve all schedule columns from the worksheet
     def retrieve_schedules(self, start_column):
         self.schedule = []
         temp_schedule = []
@@ -39,16 +39,14 @@ class Schedule:
             temp_schedule.append(self.worksheet.col_values(column))
             column += 1
 
+        # Get departure and return schedules by taking first and second half of temp_schedule list 
         departure_schedule = temp_schedule[:len(temp_schedule)//2]
         return_schedule = temp_schedule[len(temp_schedule)//2:]
 
+        # Tranpose each list into a timetable
         departure_schedule = list(map(list, zip(*departure_schedule)))
         return_schedule = list(map(list, zip(*return_schedule)))
 
         self.schedule.extend([departure_schedule, return_schedule])
 
         return self.schedule
-        
-
-    # # Retrieve return schedule using column numbers as args
-    # def retrieve_return_schedule(self, *args):

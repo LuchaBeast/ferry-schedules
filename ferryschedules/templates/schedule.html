@@ -6,23 +6,7 @@
 {% block leadcopy %}{{ leadcopy }}{% endblock %}
 
 {% block content %}
-    {% if bremerton_schedule %}
+    {% if daily_schedule %}
         {% include "daily_schedule.html" %}
-    {% elif bainbridge_schedule %}
-        {% include "weekday_weekend_holiday_schedule.html" %}
-    {% elif anacortes_san_juan_schedule %}
-        {% include "daily_schedule.html" %}
-    {% elif anacortes_sidney_bc_schedule %}
-        {% include "daily_schedule.html" %}
-    {% elif kingston_schedule %}
-        {% include "daily_schedule.html" %}
-    {% elif staten_island_schedule %}
-        {% include "weekday_weekend_holiday_schedule.html" %}
-    {% elif larkspur_schedule %}
-        {% include "weekday_weekend_holiday_schedule.html" %}
-    {% elif southworth_schedule %}
-        {% include "weekday_weekend_holiday_schedule.html" %}
-    {% elif vallejo_schedule %}
-        {% include "vallejo_schedule.html" %}
     {% endif %}
 {% endblock %}
