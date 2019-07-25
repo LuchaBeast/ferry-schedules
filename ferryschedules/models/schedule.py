@@ -68,5 +68,4 @@ class Schedule:
 
             self.schedule.extend([weekday_schedule_1, weekday_schedule_2, weekend_holiday_schedule_1, weekend_holiday_schedule_2])
             
-
         return self.schedule

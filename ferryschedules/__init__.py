@@ -6,4 +6,4 @@ gsheet = Gsheet()
 
 from ferryschedules.views import homepage
 from ferryschedules.views import state_pages
-from ferryschedules.views import daily_schedules
+from ferryschedules.views import schedule_pages
