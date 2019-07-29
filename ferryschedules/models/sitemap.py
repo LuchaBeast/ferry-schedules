@@ -11,7 +11,8 @@ class Sitemap:
     def __init__(self):
         self.worksheet = gsheet.get_worksheet(self.SITEMAP_WORKSHEET_NUMBER)
 
-    def retrieve_all_links(self):
+
+    def retrieve_all_links(self, ca=False, ny=False, wa=False):
         self.link_lists = []
 
         # Create list of lists containing all link values from the worksheet
@@ -21,6 +22,25 @@ class Sitemap:
         self.link_lists.append(self.worksheet.col_values(self.SHORT_DESCRIPTION_COLUMN))
 
         # Transpose link list to pair up each link's info into its own list
-        self.link_lists = list(map(list, zip(*self.link_lists)))       
+        self.link_lists = list(map(list, zip(*self.link_lists)))
 
-        return self.link_lists
+        if ca:
+            self.ca_links = []
+            for link in self.link_lists:
+                if link[0] == '/ca/':
+                    self.ca_links.append(link)
+            return self.ca_links
+        elif ny:
+            self.ny_links = []
+            for link in self.link_lists:
+                if link[0] == '/ny/':
+                    self.ny_links.append(link)
+            return self.ny_links
+        elif wa:
+            self.wa_links = []
+            for link in self.link_lists:
+                if link[0] == '/wa/':
+                    self.wa_links.append(link)
+            return self.wa_links
+        else:
+            return self.link_lists
