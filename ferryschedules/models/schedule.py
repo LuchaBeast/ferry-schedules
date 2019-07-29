@@ -29,12 +29,11 @@ class Schedule:
     # Retrieve all schedule columns from the worksheet
     # start_column is the corresponding column in the google sheet where the timetable starts
     # schedule_type should be either "D" for Daily or "WWH" for Weekday Weekend Holiday
-    def retrieve_schedules(self, start_column, schedule_type):
+    def retrieve_schedules(self, start_column, D=False, WWH=False):
         self.schedule = []
         temp_schedule = []
 
         column = start_column
-        st = schedule_type
 
         # Aggregate each schedule column into a list of lists
         while self.worksheet.col_values(column) != []:
@@ -46,14 +45,14 @@ class Schedule:
         schedule_2 = temp_schedule[len(temp_schedule)//2:]
 
         # If it is a Daily schedule, then no further splitting of the lists is necessary
-        if st == "D":
+        if D:
             # Tranpose each list into a timetable
             schedule_1 = list(map(list, zip(*schedule_1)))
             schedule_2 = list(map(list, zip(*schedule_2)))
             self.schedule.extend([schedule_1, schedule_2])
         
         # If it is a Weekday/Weekend/Holiday Schedule, we must split the lists further into appropriate schedules
-        elif st == "WWH":
+        elif WWH:
             weekday_schedule_1 = schedule_1[:len(schedule_1)//2]
             weekday_schedule_2 = schedule_1[len(schedule_1)//2:]
 

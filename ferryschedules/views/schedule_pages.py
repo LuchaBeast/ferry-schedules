@@ -8,7 +8,7 @@ def bremerton_seattle():
     next_departures = False
     schedule = Schedule(1)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "D")
+    timetables = schedule.retrieve_schedules(5, D=True)
     return render_template('daily_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -25,7 +25,7 @@ def bainbridge_island_seattle():
     next_departures = False
     schedule = Schedule(2)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "WWH")
+    timetables = schedule.retrieve_schedules(5, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -44,7 +44,7 @@ def anacortes_san_juan_islands():
     next_departures = False
     schedule = Schedule(3)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "D")
+    timetables = schedule.retrieve_schedules(5, D=True)
     return render_template('daily_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -61,7 +61,7 @@ def kingston_edmonds():
     next_departures = False
     schedule = Schedule(4)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "D")
+    timetables = schedule.retrieve_schedules(5, D=True)
     return render_template('daily_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -78,7 +78,7 @@ def staten_island():
     next_departures = False
     schedule = Schedule(5)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "WWH")
+    timetables = schedule.retrieve_schedules(5, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -97,7 +97,7 @@ def larkspur_sf():
     next_departures = False
     schedule = Schedule(6)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "WWH")
+    timetables = schedule.retrieve_schedules(5, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -116,7 +116,7 @@ def southworth_vashon():
     next_departures = False
     schedule = Schedule(7)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "WWH")
+    timetables = schedule.retrieve_schedules(5, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -135,7 +135,7 @@ def vallejo_sf():
     next_departures = False
     schedule = Schedule(8)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "WWH")
+    timetables = schedule.retrieve_schedules(5, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
@@ -154,7 +154,7 @@ def anacortes_sidney_bc():
     next_departures = False
     schedule = Schedule(9)
     meta_data = schedule.retrieve_meta_data()
-    timetables = schedule.retrieve_schedules(5, "D")
+    timetables = schedule.retrieve_schedules(5, D=True)
     return render_template('daily_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
