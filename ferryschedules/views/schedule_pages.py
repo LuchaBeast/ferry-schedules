@@ -1,7 +1,9 @@
 from ferryschedules import app
 from ferryschedules.models.schedule import Schedule
+from ferryschedules.views import navbar
 from flask import render_template
 
+LINKS = navbar.retrieve_links()
 
 @app.route('/wa/bremerton-seattle/')
 def bremerton_seattle():

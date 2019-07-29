@@ -1,4 +1,3 @@
-from ferryschedules import app
 from ferryschedules.models.sitemap import Sitemap
 
 def retrieve_links():
