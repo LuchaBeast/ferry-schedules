@@ -3,49 +3,44 @@
 {% block title %}Ferry Schedules{% endblock %}
 
 {% block h1 %}Ferry Schedules{% endblock %}
-{% block leadcopy %}A comprehensive, up-to-date directory of all Ferry Schedules in the United States.{% endblock %}
+{% block leadcopy %}A comprehensive, up-to-date directory of popular Ferry Schedules in the United States.{% endblock %}
 
 {% block content %}
 <h5>Browse schedules by state</h5>
 <div class="container mx-0 px-0 mt-3">
     <h4 class="mt-3 pt-3">California</h4>
     <dl class="row">
-        {% for row in ca_nav_links|batch(3,'') %}
-            {% for href in row %}
-                <dt class="col-sm-3">
-                    <a href="{{ href.0 }}">{{ href.1 }}</a>
-                </dt>
-                <dd class="col-sm-9">
-                    {{ href.2 }}
-                </dd>
-            {% endfor %}
+        {% for link in ca_links %}
+            <dt class="col-sm-3">
+                <a href="{{ link.1 }}">{{ link.2 }}</a>
+            </dt>
+            <dd class="col-sm-9">
+                {{ link.3 }}
+            </dd>
         {% endfor %}
     </dl>
     <h4 class="mt-3">New York</h4>
     <dl class="row">
-        {% for row in ny_nav_links|batch(3,'') %}
-            {% for href in row %}
-                <dt class="col-sm-3">
-                    <a href="{{ href.0 }}">{{ href.1 }}</a>
-                </dt>
-                <dd class="col-sm-9">
-                    {{ href.2 }}
-                </dd>
-            {% endfor %}
+        {% for link in ny_links %}
+            <dt class="col-sm-3">
+                <a href="{{ link.1 }}">{{ link.2 }}</a>
+            </dt>
+            <dd class="col-sm-9">
+                {{ link.3 }}
+            </dd>
         {% endfor %}
     </dl>
     <h4 class="mt-3">Washington</h4>
     <dl class="row">
-        {% for row in wa_nav_links|batch(3,'') %}
-            {% for href in row %}
-                <dt class="col-sm-3">
-                    <a href="{{ href.0 }}">{{ href.1 }}</a>
-                </dt>
-                <dd class="col-sm-9">
-                    {{ href.2 }}
-                </dd>
-            {% endfor %}
+        {% for link in wa_links %}
+            <dt class="col-sm-3">
+                <a href="{{ link.1 }}">{{ link.2 }}</a>
+            </dt>
+            <dd class="col-sm-9">
+                {{ link.3 }}
+            </dd>
         {% endfor %}
     </dl>
 </div>
+
 {% endblock %}
