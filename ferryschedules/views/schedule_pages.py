@@ -3,11 +3,10 @@ from ferryschedules.models.schedule import Schedule
 from ferryschedules.views import navbar
 from flask import render_template
 
-LINKS = navbar.retrieve_links()
-
 @app.route('/wa/bremerton-seattle/')
 def bremerton_seattle():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(1)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -19,12 +18,16 @@ def bremerton_seattle():
                             h2_1=meta_data['H2 1'],
                             h2_2=meta_data['H2 2'],
                             schedule_1=timetables[0],
-                            schedule_2=timetables[1])
+                            schedule_2=timetables[1],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/wa/bainbridge-island-seattle/')
 def bainbridge_island_seattle():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(2)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -38,12 +41,16 @@ def bainbridge_island_seattle():
                             weekday_schedule_1=timetables[0],
                             weekday_schedule_2=timetables[1],
                             weekend_schedule_1=timetables[2],
-                            weekend_schedule_2=timetables[3])
+                            weekend_schedule_2=timetables[3],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/wa/anacortes-san-juan-islands/')
 def anacortes_san_juan_islands():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(3)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -55,12 +62,16 @@ def anacortes_san_juan_islands():
                             h2_1=meta_data['H2 1'],
                             h2_2=meta_data['H2 2'],
                             schedule_1=timetables[0],
-                            schedule_2=timetables[1])
+                            schedule_2=timetables[1],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/wa/kingston-edmonds/')
 def kingston_edmonds():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(4)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -72,12 +83,16 @@ def kingston_edmonds():
                             h2_1=meta_data['H2 1'],
                             h2_2=meta_data['H2 2'],
                             schedule_1=timetables[0],
-                            schedule_2=timetables[1])
+                            schedule_2=timetables[1],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/ny/staten-island/')
 def staten_island():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(5)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -91,12 +106,16 @@ def staten_island():
                             weekday_schedule_1=timetables[0],
                             weekday_schedule_2=timetables[1],
                             weekend_schedule_1=timetables[2],
-                            weekend_schedule_2=timetables[3])
+                            weekend_schedule_2=timetables[3],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/ca/larkspur-sf/')
 def larkspur_sf():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(6)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -110,12 +129,16 @@ def larkspur_sf():
                             weekday_schedule_1=timetables[0],
                             weekday_schedule_2=timetables[1],
                             weekend_schedule_1=timetables[2],
-                            weekend_schedule_2=timetables[3])
+                            weekend_schedule_2=timetables[3],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/wa/southworth-vashon/')
 def southworth_vashon():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(7)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -129,12 +152,16 @@ def southworth_vashon():
                             weekday_schedule_1=timetables[0],
                             weekday_schedule_2=timetables[1],
                             weekend_schedule_1=timetables[2],
-                            weekend_schedule_2=timetables[3])
+                            weekend_schedule_2=timetables[3],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/ca/vallejo-sf/')
 def vallejo_sf():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(8)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -148,12 +175,16 @@ def vallejo_sf():
                             weekday_schedule_1=timetables[0],
                             weekday_schedule_2=timetables[1],
                             weekend_schedule_1=timetables[2],
-                            weekend_schedule_2=timetables[3])
+                            weekend_schedule_2=timetables[3],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
 
 
 @app.route('/wa/anacortes-sidney-bc/')
 def anacortes_sidney_bc():
     next_departures = False
+    links = navbar.retrieve_links()
     schedule = Schedule(9)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -165,4 +196,7 @@ def anacortes_sidney_bc():
                             h2_1=meta_data['H2 1'],
                             h2_2=meta_data['H2 2'],
                             schedule_1=timetables[0],
-                            schedule_2=timetables[1])
+                            schedule_2=timetables[1],
+                            ca_links=links['California'],
+                            ny_links=links['New York'],
+                            wa_links=links['Washington'])
