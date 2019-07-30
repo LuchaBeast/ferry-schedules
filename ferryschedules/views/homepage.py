@@ -12,4 +12,4 @@ def homepage():
     return render_template('index.html',
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])   
+                            wa_links=links['Washington'])
