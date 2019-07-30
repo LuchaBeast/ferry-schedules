@@ -7,9 +7,9 @@ def retrieve_links():
     ny_links = sitemap.retrieve_all_links(newyork=True)
     wa_links = sitemap.retrieve_all_links(washington=True)
 
-    ca_links.sort(key = lambda ca_links: ca_links[2])
-    ny_links.sort(key = lambda ny_links: ny_links[2])
-    wa_links.sort(key = lambda wa_links: wa_links[2])
+    ca_links.sort(key = lambda ca_links: ca_links[3])
+    ny_links.sort(key = lambda ny_links: ny_links[3])
+    wa_links.sort(key = lambda wa_links: wa_links[3])
 
     links = dict({'California': ca_links,
                   'New York': ny_links,

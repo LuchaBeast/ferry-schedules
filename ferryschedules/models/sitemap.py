@@ -2,11 +2,12 @@ from ferryschedules import gsheet
 
 class Sitemap:
     SITEMAP_WORKSHEET_NUMBER = 0
-    ROOT_COLUMN = 1
-    SLUG_COLUMN = 2
-    ANCHOR_TEXT_COLUMN = 3
-    SHORT_DESCRIPTION_COLUMN=4
-    BREADCRUMB_TEXT=5
+    SCHEDULE_ID = 1
+    ROOT_COLUMN = 2
+    SLUG_COLUMN = 3
+    ANCHOR_TEXT_COLUMN = 4
+    SHORT_DESCRIPTION_COLUMN=5
+    BREADCRUMB_TEXT=6
 
     # Retrieve sitemap worksheet from google sheet
     def __init__(self):
@@ -17,6 +18,7 @@ class Sitemap:
         self.link_lists = []
 
         # Create list of lists containing all link values from the worksheet
+        self.link_lists.append(self.worksheet.col_values(self.SCHEDULE_ID))
         self.link_lists.append(self.worksheet.col_values(self.ROOT_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.SLUG_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.ANCHOR_TEXT_COLUMN))
@@ -26,22 +28,23 @@ class Sitemap:
         # Transpose link list to pair up each link's info into its own list
         self.link_lists = list(map(list, zip(*self.link_lists)))
 
+
         if california:
             self.ca_links = []
             for link in self.link_lists:
-                if link[0] == '/ca/':
+                if link[1] == '/ca/':
                     self.ca_links.append(link)
             return self.ca_links
         elif newyork:
             self.ny_links = []
             for link in self.link_lists:
-                if link[0] == '/ny/':
+                if link[1] == '/ny/':
                     self.ny_links.append(link)
             return self.ny_links
         elif washington:
             self.wa_links = []
             for link in self.link_lists:
-                if link[0] == '/wa/':
+                if link[1] == '/wa/':
                     self.wa_links.append(link)
             return self.wa_links
         else:
