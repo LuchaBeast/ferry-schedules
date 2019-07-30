@@ -112,7 +112,7 @@ def staten_island():
                             wa_links=links['Washington'])
 
 
-@app.route('/ca/larkspur-sf/')
+@app.route('/ca/larkspur-san-francisco/')
 def larkspur_sf():
     next_departures = False
     links = navbar.retrieve_links()
@@ -158,7 +158,7 @@ def southworth_vashon():
                             wa_links=links['Washington'])
 
 
-@app.route('/ca/vallejo-sf/')
+@app.route('/ca/vallejo-san-francisco/')
 def vallejo_sf():
     next_departures = False
     links = navbar.retrieve_links()

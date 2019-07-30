@@ -1,8 +1,8 @@
-{% if new_york or washington or california %}
+{% if state_page %}
 <nav class="mt-n5" aria-label="breadcrumb">
     <ol class="breadcrumb px-0">
         <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Ferry Schedules</a></li>
-        <li class="breadcrumb-item active">{{ bc_state_text }}</li>
+        <li class="breadcrumb-item active">{{ breadcrumb_state_text }}</li>
     </ol>
 </nav>
 {% else %}
