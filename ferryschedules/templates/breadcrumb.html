@@ -9,8 +9,8 @@
 <nav class="mt-n5" aria-label="breadcrumb">
     <ol class="breadcrumb px-0">
         <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Ferry Schedules</a></li>
-        <li class="breadcrumb-item"><a href="{{ bc_path }}">{{ bc_state_text }}</a></li>
-        <li class="breadcrumb-item active">{{ bc_schedule_text }}</li>
+        <li class="breadcrumb-item"><a href="{{ breadcrumb_path }}">{{ breadcrumb_state_text }}</a></li>
+        <li class="breadcrumb-item active">{{ breadcrumb_schedule_text }}</li>
     </ol>
 </nav>
 {% endif %}

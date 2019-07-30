@@ -6,6 +6,7 @@ class Sitemap:
     SLUG_COLUMN = 2
     ANCHOR_TEXT_COLUMN = 3
     SHORT_DESCRIPTION_COLUMN=4
+    BREADCRUMB_TEXT=5
 
     # Retrieve sitemap worksheet from google sheet
     def __init__(self):
@@ -20,6 +21,7 @@ class Sitemap:
         self.link_lists.append(self.worksheet.col_values(self.SLUG_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.ANCHOR_TEXT_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.SHORT_DESCRIPTION_COLUMN))
+        self.link_lists.append(self.worksheet.col_values(self.BREADCRUMB_TEXT))
 
         # Transpose link list to pair up each link's info into its own list
         self.link_lists = list(map(list, zip(*self.link_lists)))

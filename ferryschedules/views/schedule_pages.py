@@ -1,12 +1,14 @@
 from ferryschedules import app
 from ferryschedules.models.schedule import Schedule
 from ferryschedules.views import navbar
+from ferryschedules.views import breadcrumb
 from flask import render_template
 
 @app.route('/wa/bremerton-seattle/')
 def bremerton_seattle():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(1)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -21,13 +23,17 @@ def bremerton_seattle():
                             schedule_2=timetables[1],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/wa/bainbridge-island-seattle/')
 def bainbridge_island_seattle():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(2)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -44,13 +50,17 @@ def bainbridge_island_seattle():
                             weekend_schedule_2=timetables[3],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/wa/anacortes-san-juan-islands/')
 def anacortes_san_juan_islands():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(3)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -65,13 +75,17 @@ def anacortes_san_juan_islands():
                             schedule_2=timetables[1],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/wa/kingston-edmonds/')
 def kingston_edmonds():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(4)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -86,13 +100,17 @@ def kingston_edmonds():
                             schedule_2=timetables[1],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/ny/staten-island/')
 def staten_island():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(5)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -109,13 +127,17 @@ def staten_island():
                             weekend_schedule_2=timetables[3],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/ca/larkspur-san-francisco/')
 def larkspur_sf():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(6)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -132,13 +154,17 @@ def larkspur_sf():
                             weekend_schedule_2=timetables[3],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/wa/southworth-vashon/')
 def southworth_vashon():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(7)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -155,13 +181,17 @@ def southworth_vashon():
                             weekend_schedule_2=timetables[3],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/ca/vallejo-san-francisco/')
 def vallejo_sf():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(8)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
@@ -178,13 +208,17 @@ def vallejo_sf():
                             weekend_schedule_2=timetables[3],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
 
 
 @app.route('/wa/anacortes-sidney-bc/')
 def anacortes_sidney_bc():
     next_departures = False
     links = navbar.retrieve_links()
+    bc = breadcrumb.create_breadcrumb()
     schedule = Schedule(9)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, D=True)
@@ -199,4 +233,7 @@ def anacortes_sidney_bc():
                             schedule_2=timetables[1],
                             ca_links=links['California'],
                             ny_links=links['New York'],
-                            wa_links=links['Washington'])
+                            wa_links=links['Washington'],
+                            breadcrumb_path=bc['State Path'],
+                            breadcrumb_state_text=bc['State Breadcrumb Text'],
+                            breadcrumb_schedule_text=bc['Schedule Breadcrumb Text'])
