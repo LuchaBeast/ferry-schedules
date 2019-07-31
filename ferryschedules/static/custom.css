@@ -56,9 +56,9 @@
     border: none !important;
 }
 
-/* table {
-    table-layout: fixed;
-} */
+table {
+    overflow-x: auto;
+}
 
 thead tr th {
     background-color: #0B3C5D !important;
