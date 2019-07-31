@@ -18,7 +18,7 @@ class Gsheet:
         def safe_method(*args, **kwargs):
             try:
                 return method(*args, **kwargs)
-            except gspread.exceptions.HTTPError as e:
+            except gspread.exceptions.APIError:
                 self._refresh_auth()
                 return getattr(self.sheet, method.__name__)(*args, **kwargs)
         return safe_method
