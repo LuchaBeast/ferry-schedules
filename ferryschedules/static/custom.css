@@ -40,7 +40,7 @@
     color: #FFFFFF;
 }
 
-table {
+.hscroll {
     overflow-x: auto;
 }
 
