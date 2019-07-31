@@ -62,7 +62,9 @@ thead tr th {
     background-color: #0B3C5D !important;
 }
 
-th {
+th, td {
+    align-items: flex-start;
+    text-align: left;
     white-space: nowrap;
 }
 
