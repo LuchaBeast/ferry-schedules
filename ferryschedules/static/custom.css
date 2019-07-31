@@ -56,18 +56,18 @@
     border: none !important;
 }
 
-table {
+/* table {
     table-layout: fixed;
-}
+} */
 
 thead tr th {
     background-color: #0B3C5D !important;
 }
 
 th, td {
-    align-items: flex-start;
-    text-align: left;
-    white-space: nowrap;
+    align-items: flex-start !important;
+    text-align: left !important;
+    white-space: nowrap !important;
 }
 
 .breadcrumb {
