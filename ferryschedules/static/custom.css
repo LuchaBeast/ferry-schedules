@@ -48,11 +48,11 @@ thead tr th {
     background-color: #0B3C5D !important;
 }
 
-th, td {
-    /* align-items: flex-start !important; */
+/* th, td {
+    align-items: flex-start !important;
     text-align: left !important;
     white-space: nowrap !important;
-}
+} */
 
 .breadcrumb {
     background-color: #FFFFFF;
