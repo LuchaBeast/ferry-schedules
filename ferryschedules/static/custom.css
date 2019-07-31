@@ -56,7 +56,9 @@
     border: none !important;
 }
 
-
+table {
+    table-layout: fixed;
+}
 
 thead tr th {
     background-color: #0B3C5D !important;
