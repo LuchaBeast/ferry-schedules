@@ -7,11 +7,7 @@ parentDirectory = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 class Gsheet:
     def __init__(self):
         scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-<<<<<<< HEAD
         self.creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(parentDirectory, 'ferryschedules', 'ferry-schedules', 'client_secret.json'), scope)
-=======
-        self.creds = ServiceAccountCredentials.from_json_keyfile_name(os.path.join(parentDirectory, 'ferryschedules', 'ferry-schedules' 'client_secret.json'), scope)
->>>>>>> 4d5df5563310ed3ddcbc986c8d50fef647aab33e
         self._refresh_auth()
 
     def _refresh_auth(self):
