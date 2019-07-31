@@ -40,22 +40,6 @@
     color: #FFFFFF;
 }
 
-/* .card .btn {
-    background-color: #0B3C5D;
-    border-radius: 0 !important;
-    border-style: none;
-} */
-
-/* .btn-primary {
-    color: #D9B310;
-} */
-
-.blank-card {
-    background-color: #FFFFFF;
-    box-shadow: none !important;
-    border: none !important;
-}
-
 table {
     overflow-x: auto;
 }
@@ -65,7 +49,7 @@ thead tr th {
 }
 
 th, td {
-    align-items: flex-start !important;
+    /* align-items: flex-start !important; */
     text-align: left !important;
     white-space: nowrap !important;
 }
