@@ -62,6 +62,10 @@ thead tr th {
     background-color: #0B3C5D !important;
 }
 
+th {
+    white-space: nowrap;
+}
+
 .breadcrumb {
     background-color: #FFFFFF;
 }
