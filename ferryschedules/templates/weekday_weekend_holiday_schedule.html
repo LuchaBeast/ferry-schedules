@@ -7,7 +7,7 @@
 
 {% block content %}
 {% if next_departures %}
-<h5>Next Departures</h5>
+<h2>Next Departures</h2>
     <div class="row py-3">
         <div class="col-sm">
             <div class="card departure-card">
@@ -39,7 +39,7 @@
         <div class="col-sm">
             <h3>Weekday</h3>
             <div class="hscroll">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm table-responsive-sm">
                     <thead class="thead-dark">
                         <tr>
                             {% for table_header in weekday_schedule_1|first %}
@@ -67,7 +67,7 @@
         <div class="col-sm">
             <h3>Weekend & Holiday</h3>
             <div class="hscroll">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm table-responsive-sm">
                     <thead class="thead-dark">
                         <tr>
                             {% for table_header in weekend_schedule_1|first %}
@@ -99,7 +99,7 @@
             
             <h3>Weekday</h3>
             <div class="hscroll">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm table-responsive-sm">
                     <thead class="thead-dark">
                         <tr>
                             {% for table_header in weekday_schedule_2|first %}
@@ -127,7 +127,7 @@
         <div class="col-sm">
             <h3>Weekend & Holiday</h3>
             <div class="hscroll">
-                <table class="table table-striped table-sm">
+                <table class="table table-striped table-sm table-responsive-sm">
                     <thead class="thead-dark">
                         <tr>
                             {% for table_header in weekend_schedule_2|first %}
