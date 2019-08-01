@@ -12,5 +12,7 @@ Google Sheet API calls are slow, so consuming this data without caching it is no
 
 The front-end is just basic Bootstrap, with a hint of additional CSS that I've added to make things look presentable.
 
-I've deployed the app via pythonanywhere and it can be viewed at allferryschedules.com. However, due to the lack of caching, please do not click around too fast because it will quickly reach its Google API limits and starting timing out.
+I've deployed the app via pythonanywhere and it can be viewed at **allferryschedules.com**. However, due to the lack of caching, please do not click around too fast because it will quickly reach its Google API limits and starting timing out.
 
+Here is the version 1 branch, if you'd like to compare the difference in code between the current master branch and version.
+https://github.com/LuchaBeast/ferry-schedules/tree/version1
