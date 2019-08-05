@@ -4,7 +4,7 @@ from ferryschedules import cache
 class Schedule:
     def __init__(self, worksheet_number):
         self.worksheet = gsheet.get_worksheet(worksheet_number)
-        self.cache_key = 'cached_meta_data_for_schedule_' + worksheet_number
+        self.cache_key = 'cached_meta_data_for_schedule_' + str(worksheet_number)
 
     # Retrieve cell values from sheet for all meta data, headers and tags
     def retrieve_meta_data(self):
