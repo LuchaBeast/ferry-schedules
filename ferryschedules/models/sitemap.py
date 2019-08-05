@@ -22,7 +22,7 @@ class Sitemap:
         self.schedule_id_column = cache.get('cached_schedule_id_column')
         if self.schedule_id_column == None:
             self.schedule_id_column = self.worksheet.col_values(self.SCHEDULE_ID)
-            cache.set('cached_schedule_id_column', schedule_id_column)
+            cache.set('cached_schedule_id_column', self.schedule_id_column)
         self.link_lists.append(self.schedule_id_column)
 
 
