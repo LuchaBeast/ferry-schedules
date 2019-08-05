@@ -57,6 +57,7 @@ class Sitemap:
 
         self.link_lists = cache.get('cached_link_lists')
         if self.link_lists == None:
+            self.link_lists = []
             self.link_lists.append(self.worksheet.col_values(self.SCHEDULE_ID_COLUMN))
             self.link_lists.append(self.worksheet.col_values(self.ROOT_COLUMN))
             self.link_lists.append(self.worksheet.col_values(self.SLUG_COLUMN))
