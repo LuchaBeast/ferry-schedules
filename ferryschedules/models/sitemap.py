@@ -1,4 +1,5 @@
 from ferryschedules import gsheet
+from ferryschedules import cache
 
 class Sitemap:
     SITEMAP_WORKSHEET_NUMBER = 0
@@ -18,7 +19,13 @@ class Sitemap:
         self.link_lists = []
 
         # Create list of lists containing all link values from the worksheet
-        self.link_lists.append(self.worksheet.col_values(self.SCHEDULE_ID))
+        self.schedule_id_column = cache.get('cached_schedule_id_column')
+        if self.schedule_id_column == None:
+            self.schedule_id_column = self.worksheet.col_values(self.SCHEDULE_ID)
+            cache.set('cached_schedule_id_column')
+        self.link_lists.append(self.schedule_id_column)
+
+
         self.link_lists.append(self.worksheet.col_values(self.ROOT_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.SLUG_COLUMN))
         self.link_lists.append(self.worksheet.col_values(self.ANCHOR_TEXT_COLUMN))
