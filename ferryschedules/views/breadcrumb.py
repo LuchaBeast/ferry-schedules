@@ -29,5 +29,7 @@ def create_breadcrumb(State=False):
             if url == link[2]:
                 breadcrumb_schedule_text = link[5]
         
-        bc_dict = dict({'State Path': breadcrumb_state_path, 'State Breadcrumb Text': breadcrumb_state_text, 'Schedule Breadcrumb Text': breadcrumb_schedule_text})
+        bc_dict = dict({'State Path': breadcrumb_state_path,
+                        'State Breadcrumb Text': breadcrumb_state_text,
+                        'Schedule Breadcrumb Text': breadcrumb_schedule_text})
         return bc_dict
