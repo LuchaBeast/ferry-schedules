@@ -1,5 +1,7 @@
 from ferryschedules import gsheet
 from ferryschedules import cache
+import pendulum
+import string
 
 class Schedule:
     def __init__(self, worksheet_number):
@@ -77,3 +79,30 @@ class Schedule:
                 cache.set(self.cache_schedule_key, self.schedule)
             
         return self.schedule
+
+
+    def calculate_next_departures(self, url, D=False, WWH=False):
+        # if str(url).startswith('/ca/') or str(url).startswith('/wa/'):
+        #     current_time = pendulum.now('America/Los_Angeles')
+        # elif str(url).startswith('/ny/'):
+        #     current_time = pendulum.now('America/New_York')
+
+        if D and str(url).startswith('/ca/') or str(url).startswith('/wa/'):
+            current_time = pendulum.now('America/Los_Angeles')
+            for departure in self.schedule[0]:
+                format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+                if current_time < format_time:
+                    next_departure_1 = departure[0]
+                    break
+            for departure in self.schedule[1]:
+                format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                              .set(tz='America/Los_Angeles')
+                if current_time < format_time:
+                    next_departure_2 = departure[0]
+                    break
+
+            self.next_departures = dict({'Next Departure 1': next_departure_1, 'Next Departure 2': next_departure_2})
+            print(self.next_departures)
+            
+        return self.next_departures
