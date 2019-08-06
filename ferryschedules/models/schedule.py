@@ -104,7 +104,7 @@ class Schedule:
                 
             for departure in self.schedule[1]:
                 try:
-                    format_time = pendulum.from_format(departure, 'h:mm A')\
+                    format_time = pendulum.from_format(departure[0], 'h:mm A')\
                                 .set(tz='America/Los_Angeles')
                     if current_time < format_time:
                         next_departure_2 = departure[0]
