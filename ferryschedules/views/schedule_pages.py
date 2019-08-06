@@ -13,7 +13,7 @@ def daily_schedule_pages():
     url = request.path
     next_departures = False
     links = navbar.retrieve_links()
-    bc = breadcrumb.create_breadcrumb()
+    bc = breadcrumb.create_breadcrumb(url)
     for value in links.values():
         for v in value:
             if v[2] == url:
@@ -48,7 +48,7 @@ def weekday_weekend_holiday_schedule_pages():
     url = request.path
     next_departures = False
     links = navbar.retrieve_links()
-    bc = breadcrumb.create_breadcrumb()
+    bc = breadcrumb.create_breadcrumb(url)
     for value in links.values():
         for v in value:
             if v[2] == url:

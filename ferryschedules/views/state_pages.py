@@ -2,7 +2,7 @@ from ferryschedules import app
 from ferryschedules.models.sitemap import Sitemap
 from ferryschedules.views import navbar
 from ferryschedules.views import breadcrumb
-from flask import render_template
+from flask import render_template, request
 
 @app.route('/ca/')
 def ca_state_page():
@@ -11,7 +11,8 @@ def ca_state_page():
     # Retrieve all schedule links for homepage and navbar
     links = navbar.retrieve_links()
 
-    bc_state_text = breadcrumb.create_breadcrumb(State=True)
+    url = request.path
+    bc_state_text = breadcrumb.create_breadcrumb(url, State=True)
     # bc_state_text = bc.breadcrumb_state_text
 
     return render_template('ca.html',
@@ -29,7 +30,8 @@ def ny_state_page():
     # Retrieve all schedule links for homepage and navbar
     links = navbar.retrieve_links()
 
-    bc_state_text = breadcrumb.create_breadcrumb(State=True)
+    url = request.path
+    bc_state_text = breadcrumb.create_breadcrumb(url, State=True)
     # bc_state_text = bc.breadcrumb_state_text
 
     return render_template('ny.html',
@@ -47,7 +49,8 @@ def wa_state_page():
     # Retrieve all schedule links for homepage and navbar
     links = navbar.retrieve_links()
 
-    bc_state_text = breadcrumb.create_breadcrumb(State=True)
+    url = request.path
+    bc_state_text = breadcrumb.create_breadcrumb(url, State=True)
     # bc_state_text = bc.breadcrumb_state_text
 
     return render_template('wa.html',

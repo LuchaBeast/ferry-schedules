@@ -1,10 +1,10 @@
 from flask import request
 from ferryschedules.models.sitemap import Sitemap
 
-def create_breadcrumb(State=False):
+def create_breadcrumb(url, State=False):
 
     # Get path of the route
-    url = request.path
+    # url = url
 
     # Split each directory in the route
     split_url = url.split('/')
