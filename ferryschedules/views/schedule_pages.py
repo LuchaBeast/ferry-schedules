@@ -51,7 +51,7 @@ def daily_schedule_pages():
 @app.route('/ca/vallejo-san-francisco/')
 def weekday_weekend_holiday_schedule_pages():
     url = request.path
-    next_departures = False
+    next_departures = True
     links = navbar.retrieve_links()
     bc = breadcrumb.create_breadcrumb(url)
     for value in links.values():
