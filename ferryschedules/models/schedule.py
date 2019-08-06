@@ -89,21 +89,28 @@ class Schedule:
 
         if D and str(url).startswith('/ca/') or str(url).startswith('/wa/'):
             current_time = pendulum.now('America/Los_Angeles')
-            print(self.schedule[0])
+            # print(self.schedule[0])
             for departure in self.schedule[0]:
-                print(departure)
-                print(departure[0])
-                format_time = pendulum.from_format(departure, 'h:mm A')\
+                # print(departure)
+                # print(departure[0])
+                try:
+                    format_time = pendulum.from_format(departure[0], 'h:mm A')\
                               .set(tz='America/Los_Angeles')
-                if current_time < format_time:
-                    next_departure_1 = departure[0]
-                    break
+                    if current_time < format_time:
+                        next_departure_1 = departure[0]
+                        break
+                except:
+                    continue
+                
             for departure in self.schedule[1]:
-                format_time = pendulum.from_format(departure, 'h:mm A')\
-                              .set(tz='America/Los_Angeles')
-                if current_time < format_time:
-                    next_departure_2 = departure[0]
-                    break
+                try:
+                    format_time = pendulum.from_format(departure, 'h:mm A')\
+                                .set(tz='America/Los_Angeles')
+                    if current_time < format_time:
+                        next_departure_2 = departure[0]
+                        break
+                except:
+                    continue
 
             self.next_departures = {'Next Departure 1': next_departure_1,
                                     'Next Departure 2': next_departure_2}
