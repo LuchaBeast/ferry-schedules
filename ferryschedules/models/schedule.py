@@ -89,7 +89,10 @@ class Schedule:
 
         if D and str(url).startswith('/ca/') or str(url).startswith('/wa/'):
             current_time = pendulum.now('America/Los_Angeles')
+            print(self.schedule[0])
             for departure in self.schedule[0]:
+                print(departure)
+                print(departure[0])
                 format_time = pendulum.from_format(departure[0], 'h:mm A')\
                               .set(tz='America/Los_Angeles')
                 if current_time < format_time:
