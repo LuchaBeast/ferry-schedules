@@ -1,5 +1,4 @@
 from flask import request
-# from ferryschedules.views import navbar
 from ferryschedules.models.sitemap import Sitemap
 
 def create_breadcrumb(State=False):
