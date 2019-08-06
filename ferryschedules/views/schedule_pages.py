@@ -11,7 +11,7 @@ from flask import render_template, request
 @app.route('/wa/kingston-edmonds/')
 def daily_schedule_pages():
     url = request.path
-    next_departures = False
+    next_departures = True
     links = navbar.retrieve_links()
     bc = breadcrumb.create_breadcrumb(url)
     for value in links.values():
@@ -27,8 +27,12 @@ def daily_schedule_pages():
                             title=meta_data['Title Tag'],
                             h1=meta_data['H1'],
                             leadcopy=meta_data['Lead Copy'],
+                            ndh_1=meta_data['Next Departure Card Header 1'],
+                            ndh_2=meta_data['Next Departure Card Header 2'],
                             h2_1=meta_data['H2 1'],
                             h2_2=meta_data['H2 2'],
+                            next_departure_1=next_departures['Next Departure 1'],
+                            next_departure_2=next_departures['Next Departure 2'],
                             schedule_1=timetables[0],
                             schedule_2=timetables[1],
                             ca_links=links['California'],

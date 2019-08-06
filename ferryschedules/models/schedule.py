@@ -102,7 +102,7 @@ class Schedule:
                     next_departure_2 = departure[0]
                     break
 
-            self.next_departures = dict({'Next Departure 1': next_departure_1, 'Next Departure 2': next_departure_2})
-            print(self.next_departures)
+            self.next_departures = {'Next Departure 1': next_departure_1,
+                                    'Next Departure 2': next_departure_2}
             
         return self.next_departures
