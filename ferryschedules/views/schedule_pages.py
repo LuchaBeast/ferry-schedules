@@ -61,6 +61,7 @@ def weekday_weekend_holiday_schedule_pages():
                 schedule = Schedule(schedule_id)
     meta_data = schedule.retrieve_meta_data()
     timetables = schedule.retrieve_schedules(5, WWH=True)
+    next_departures = schedule.calculate_next_departures(url, WWH=True)
     return render_template('weekday_weekend_holiday_schedule.html',
                             next_departures=next_departures,
                             title=meta_data['Title Tag'],
