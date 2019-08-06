@@ -2197,6 +2197,3 @@ def vallejo_san_francisco():
                            wa_nav_links=nav[1],
                            ca_nav_links=nav[2])
 
-
-# if __name__ == '__main__':
-#     app.run(host='0.0.0.0', port=5000)
