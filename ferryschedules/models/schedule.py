@@ -82,17 +82,9 @@ class Schedule:
 
 
     def calculate_next_departures(self, url, D=False, WWH=False):
-        # if str(url).startswith('/ca/') or str(url).startswith('/wa/'):
-        #     current_time = pendulum.now('America/Los_Angeles')
-        # elif str(url).startswith('/ny/'):
-        #     current_time = pendulum.now('America/New_York')
-
         if D and str(url).startswith('/ca/') or str(url).startswith('/wa/'):
             current_time = pendulum.now('America/Los_Angeles')
-            # print(self.schedule[0])
             for departure in self.schedule[0]:
-                # print(departure)
-                # print(departure[0])
                 try:
                     format_time = pendulum.from_format(departure[0], 'h:mm A')\
                               .set(tz='America/Los_Angeles')
@@ -111,8 +103,115 @@ class Schedule:
                         break
                 except:
                     continue
+        elif WWH and str(url).startswith('/ca/') or str(url).startswith('/wa/'):
+            current_time = pendulum.now('America/Los_Angeles')
+            current_day = current_time.day_of_week
+            if current_day >= 1 and current_day <= 5:
+                for departure in self.schedule[0]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                .set(tz='America/Los_Angeles')
+                        if current_time < format_time:
+                            next_departure_1 = departure[0]
+                            break
+                    except:
+                        continue
+                    
+                for departure in self.schedule[1]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                    .set(tz='America/Los_Angeles')
+                        if current_time < format_time:
+                            next_departure_2 = departure[0]
+                            break
+                    except:
+                        continue
+            else:
+                for departure in self.schedule[2]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                .set(tz='America/Los_Angeles')
+                        if current_time < format_time:
+                            next_departure_1 = departure[0]
+                            break
+                    except:
+                        continue
+                    
+                for departure in self.schedule[3]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                    .set(tz='America/Los_Angeles')
+                        if current_time < format_time:
+                            next_departure_2 = departure[0]
+                            break
+                    except:
+                        continue
+        elif D and str(url).startswith('/ny/'):
+            current_time = pendulum.now('America/New_York')
+            for departure in self.schedule[0]:
+                try:
+                    format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                              .set(tz='America/New_York')
+                    if current_time < format_time:
+                        next_departure_1 = departure[0]
+                        break
+                except:
+                    continue
+                
+            for departure in self.schedule[1]:
+                try:
+                    format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                .set(tz='America/New_York')
+                    if current_time < format_time:
+                        next_departure_2 = departure[0]
+                        break
+                except:
+                    continue
+        elif WWH and str(url).startswith('/ny/'):
+            current_time = pendulum.now('America/New_York')
+            current_day = current_time.day_of_week
+            if current_day >= 1 and current_day <= 5:
+                for departure in self.schedule[0]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                .set(tz='America/New_York')
+                        if current_time < format_time:
+                            next_departure_1 = departure[0]
+                            break
+                    except:
+                        continue
+                    
+                for departure in self.schedule[1]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                    .set(tz='America/New_York')
+                        if current_time < format_time:
+                            next_departure_2 = departure[0]
+                            break
+                    except:
+                        continue
+            else:
+                for departure in self.schedule[2]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                .set(tz='America/New_York')
+                        if current_time < format_time:
+                            next_departure_1 = departure[0]
+                            break
+                    except:
+                        continue
+                    
+                for departure in self.schedule[3]:
+                    try:
+                        format_time = pendulum.from_format(departure[0], 'h:mm A')\
+                                    .set(tz='America/New_York')
+                        if current_time < format_time:
+                            next_departure_2 = departure[0]
+                            break
+                    except:
+                        continue
 
-            self.next_departures = {'Next Departure 1': next_departure_1,
-                                    'Next Departure 2': next_departure_2}
+        self.next_departures = {'Next Departure 1': next_departure_1,
+                                'Next Departure 2': next_departure_2}
             
         return self.next_departures
